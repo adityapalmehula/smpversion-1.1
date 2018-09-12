@@ -1,0 +1,14 @@
+All REST api information related to students.
+
+1. domainurl/api/students/mycourses?q=
+	Get all courses assigned to student. This route expects a query param "q" to be used for selecting fields.
+	query param values must be :-
+	1 = Requset coming from student dashboard
+	2 = Requset coming from my courses page
+	// courseDetails = Requset coming from course detatils page
+
+2. domainurl/api/students/mycourses/assign
+	Assign subscribed course to student based on student id
+
+2. domainurl/api/students/mycourses/:courseId/rating'
+	Update assinged course rating by student 

@@ -1,0 +1,183 @@
+<div class="container-section">
+  <div class="row">
+    <div class="col-md-1 pl-0 pr-0">
+    </div>
+    <div class="col-md-11">
+      <div class="container-section">
+        <div class="row add-new-container header">
+          <div class="col-9 text-left pL20">
+            <!-- Added for Validation Error-->
+            <div class="col-12" class="err-bg px-2 pt-1" *ngIf="showValidationError">
+              Epics, Stories and Tasks can't be empty, so either
+              <ul class="pl-3" style="list-style-type: square">
+                <li>Add Content</li>
+                <li>Or Remove Empty Epics, Stories and Tasks</li>
+              </ul>
+            </div>
+            <!-- Added for Validation Error-->
+            <h3 class="heading">{{projectData?.title}}
+				<span class="rating">
+				</span>
+			</h3>
+            <div class="row pB10">
+              <div class="col-md-4 col-sm-12 pB10">
+                <span class="row ins-title">
+						<star-rating-comp [starType]="'svg'" [rating]="projectData?.rating"></star-rating-comp>
+						<span class="m-1">{{projectData?.rating}}</span> <span class="m-1">({{projectData?.userRatings?.length}} Ratings)</span>
+                </span>
+              </div>
+              <div class="col-md-4 col-sm-12">
+                <span *ngIf="projectData?.students">{{projectData?.students?.length}} Students enrolled</span>
+              </div>
+              <div class="col-md-4 col-sm-12">
+                <span class="m-1">Created by: {{projectData?.createdBy?.name}}</span>
+              </div>
+            </div>
+          </div>
+          <div class="col-3 text-right">
+            <a class="btn btn-outline-info back-button" [routerLink]="['/', urlPrefix, 'projects']"><i class="fa fa-arrow-circle-o-left" aria-hidden="true"></i> Back
+			</a>
+          </div>
+        </div>
+        <div class="row add-new-container mid-section">
+          <div class="col-md-9 col-sm-12">
+            <p class="list-heading pt-4">Description :-</p>
+            <p class="long-description text-left" [innerHtml]="projectData?.description"></p>
+            <hr>
+            <p class="list-heading pt-4">Prerequisites :-</p>
+            <p class="long-description text-left" [innerHtml]="projectData?.prerequisites"></p>
+            <hr>
+            <p class="list-heading pt-4">Tags :-</p>
+            <p class="long-description text-left">
+              <span *ngFor="let tag of projectData.tags">
+					{{tag}} </span></p>
+            <ol class="list-group">
+              <p class="list-heading">Epics</p>
+              <div *ngIf="epicsDetails?.length !== 0">
+                <li class="list-group-item justify-content-between epics-list" *ngFor=" let epics of epicsDetails; let i=index ">
+                  <div (click)="rotate('epics'+i)" class="d-flex w-100 justify-content-between" data-toggle="collapse" [attr.data-target]='"#epics-"+i' aria-expanded="false">
+                    <div class="row epics-title">
+                      <div class="col-md-1 epics-icon" *ngIf="i<=colors.length-1">
+                        <span class="icon-block img-circle half text-white text-center" [ngStyle]="{'background-color': colors[i]}">
+												<i class="fa fa-graduation-cap"></i>
+											</span>
+                      </div>
+                      <div class="col-md-1 epics-icon" *ngIf="i>=colors.length">
+                        <span class="icon-block img-circle half text-white text-center" [ngStyle]="{'background-color': colors[i%colors.length]}">
+												<i class="fa fa-graduation-cap"></i>
+											</span>
+                      </div>
+                      <div class="col-10 text-left">
+                        <span class="pL10 list-heading">{{epics?.title | titleCase}}<br>
+											</span>
+                        <div class="w-100 collapse pL20 mt4 epic-description" [attr.id]='"epics-"+i'>
+                          <p [innerHTML]="epics?.description"></p>
+                        </div>
+                      </div>
+                      <div class="col-1 text-right">
+                        <span>
+												<i id="epics{{i}}"  class="fa fa-chevron-down rotate-down"></i>
+											</span>
+                      </div>
+                    </div>
+                  </div>
+                </li>
+              </div>
+              <div *ngIf="epicsDetails?.length === 0" [ngClass]="{'validation': (epicsDetails?.length===0) }">
+                <li class="list-group-item justify-content-between epic-list">
+                  There is no epics.
+                </li>
+              </div>
+            </ol>
+          </div>
+          <hr>
+          <div class="col-md-3">
+            <ul class="list-group">
+              <li class="list-group-item section-heading">Project</li>
+              <li class="list-group-item list-item">
+                <div class="d-flex w-100 justify-content-between">
+                  <small> <strong>Code : </strong>  {{projectData?.code}}</small>
+                </div>
+                <div class="d-flex w-100 justify-content-between">
+                  <small><strong> Version : </strong> {{projectData?.version}}</small>
+                </div>
+                <div class="d-flex w-100 justify-content-between">
+                  <small> <strong>Level : </strong> {{projectData?.level}}</small>
+                </div>
+                <div class="d-flex w-100 justify-content-between">
+                  <small> <strong>Tenure : </strong>{{projectData?.tenure}}</small>
+                </div>
+                <div class="d-flex w-100 justify-content-between">
+                  <small> <strong>Duration : </strong>{{projectData?.duration}}</small>
+                </div>
+                <div class="d-flex w-100 justify-content-between">
+                  <small> <strong>Actual Price :</strong> <i class="fa fa-inr"></i> {{projectData?.price?.actual}}</small>
+                </div>
+                <div class="d-flex w-100 justify-content-between">
+                  <small><strong> Offered Price :</strong> <i class="fa fa-inr"></i> {{projectData?.price?.offered}}</small>
+                </div>
+            </ul>
+          </div>
+          <div class="col-md-9 col-sm-12">
+            <ol class="list-group">
+              <p class="list-heading">Stories</p>
+              <div *ngIf="stories?.length !== 0">
+                <li class="list-group-item justify-content-between epics-list" [ngClass]="{'validation': story?.isInvalid }" *ngFor=" let story of stories; let i=index; ">
+                  <div (click)="rotateStory('story'+i)" class="d-flex w-100 justify-content-between" data-toggle="collapse" [attr.data-target]='"#story-"+i' aria-expanded="false">
+                    <div class="row story-title">
+                      <div class="col-md-1 story-icon" *ngIf="i<=colors.length-1">
+                        <span class="icon-block img-circle half text-white text-center" [ngStyle]="{'background-color': colors[i]}">
+												<i class="fa fa-graduation-cap"></i>
+											</span>
+                      </div>
+                      <div class="col-md-1 story-icon" *ngIf="i>=colors.length">
+                        <span class="icon-block img-circle half text-white text-center" [ngStyle]="{'background-color': colors[i%colors.length]}">
+												<i class="fa fa-graduation-cap"></i>
+											</span>
+                      </div>
+                      <div class="col-10 text-left">
+                        <span class="pL10 list-heading">{{story?.title | titleCase}}<br>
+											</span>
+                        <div class="w-100 collapse pL20 mt4 epic-description" [attr.id]='"story-"+i'>
+                          <p [innerHTML]="story?.description"></p>
+                          <div class="w-100 col-12 text-left padding-0 ">
+                            <div *ngIf="story?.tasks?.length === 0">
+                              <li class="list-group-item justify-content-between list-heading">
+                                No Tasks
+                              </li>
+                            </div>
+                            <li class="list-group-item mb-2" *ngFor=" let task of story.tasks">
+                              <div class="d-flex w-100 justify-content-between">
+                                <div class="w-100 col-11 text-left padding-0 ">
+                                  <span class="pL10 list-heading ">{{task?.title | titleCase}}<br>
+                                </span>
+                                  <div class="w-100 pL20 mt4 long-description ">
+                                    <div [innerHTML]="task?.description "></div>
+                                  </div>
+                                </div>
+                              </div>
+                            </li>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-1 text-right">
+                        <span>
+												<i id="story{{i}}"  class="fa fa-chevron-down rotate-down"></i>
+											</span>
+                      </div>
+                    </div>
+                  </div>
+                </li>
+              </div>
+              <div *ngIf="stories?.length === 0" [ngClass]="{'validation': stories?.length === 0 }">
+                <li class="list-group-item justify-content-between epic-list">
+                  There is no stories.
+                </li>
+              </div>
+            </ol>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

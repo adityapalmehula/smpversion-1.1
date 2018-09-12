@@ -1,0 +1,182 @@
+.topicHeading {
+  color: #384047;
+  font-weight: 700;
+  /*text-indent: -16px;*/
+  font-size: 12px;
+}
+.fa-chevron-down {
+	font-size: 10px;
+}
+
+.btn {
+  background-color: #fff;
+  border-color: #edeff0;
+}
+.list-group-item {
+	margin-bottom: 10px;
+}
+
+/*steeper css start here*/
+/* Colors */
+/* Stepper Styling */
+.stepper-container {
+  background-color: rgba(255, 255, 255, 0.25);
+  /*padding: 1rem;*/
+  margin-bottom: 0.5em;
+  border-radius: 5em;
+  font-weight: 400;
+  line-height: 1.84rem;
+  font-size: .9rem;
+}
+
+.stepper {
+  /*display: flex;*/
+  justify-content: space-between;
+  align-items: center;
+  cursor: default;
+}
+
+.step {
+  display: flex;
+  flex-direction: row;
+  align-items: baseline;
+  width: 100%;
+  margin-top: 10px;
+}
+.step:after {
+  content: '';
+  display: block;
+  width: 100%;
+  position: relative;
+  height: 3px;
+  top: -5px;
+  background-color: #d8dce1;
+}
+.step:before {
+  content: '';
+  display: block;
+  width: 100%;
+  position: relative;
+  height: 3px;
+  top: -5px;
+  background-color: #d8dce1;
+}
+.step:last-child {
+  flex-basis: 70%;
+}
+.step:last-child:after {
+  display: none;
+}
+.step:first-child {
+  flex-basis: 70%;
+}
+.step:first-child:before {
+  display: none;
+}
+
+.step.active {
+  color: white;
+}
+.step.active:before, .step.active:after {
+  background-color: #1EB53A;
+}
+.step.active + .step:not(.active):before {
+  background-color: #1EB53A;
+}
+
+.step-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.active .step-circle {
+  /*background-color: #1EB53A;*/
+}
+
+.active .step-complete {
+  background-color: #1EB53A;
+}
+
+.active .step-pending {
+  background-color: #c9cac9;
+}
+
+.step-circle {
+  height: 20px;
+  width: 20px;
+  border-radius: 20px;
+  background-color: #d8dce1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.vertical .stepper {
+  flex-direction: column;
+}
+.vertical .step {
+  position: relative;
+  flex-direction: row;
+  align-items: flex-start;
+  width: 100%;
+  /*min-height: 3em;*/
+}
+.vertical .step:after {
+  display: inline;
+  width: 3px;
+  position: absolute;
+  height: 100%;
+  left: .85em;
+  top: .5em;
+  z-index: -1;
+}
+.vertical .step:before {
+  display: none;
+}
+.vertical .step:last-child:after {
+  display: none;
+}
+.vertical .step-content {
+  margin-left: 1em;
+  margin-top: -.5em;
+  color: #3C4859;
+}
+.other-content-title {
+  font-size: 13px;
+  margin-bottom: 5px;
+}
+.mainContent-title {
+  margin-bottom: 8px;
+}
+.other-content-list {
+  list-style-type:circle
+}
+/*Stepper css end here*/
+.list-data {
+  padding: .40rem .70rem !important;
+}
+.grey {
+  color: #ABB2B9;
+}
+.orange {
+  color: #F39C12;    
+}
+.green {
+  color: #449d44;
+}
+.fa-2x {
+  font-size: 1.8em;
+}
+.s-title {
+  font-size: 16px;
+  font-weight: 400;
+}
+.error-warning {
+  color: #dc3545 !important;
+}
+.error-border {
+  border-color: #dc3545 !important;
+}

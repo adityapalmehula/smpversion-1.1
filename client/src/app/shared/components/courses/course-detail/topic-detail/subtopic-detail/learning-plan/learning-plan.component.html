@@ -1,0 +1,203 @@
+<!-- <div class="row">
+<div class="col-12 text-right">
+  <a class="btn btn-outline-info add-new" (click)="clearLearningContent()"><i class="fa fa-plus-circle"> </i> Add</a>
+</div>
+</div> -->
+<div class="row learning-section">
+  <div class="col-md-3 col-sm-12">
+    <div class="card card-outline-primary mb-3" droppable [dragOverClass]="'drag-target-border'" [dragHintClass]="'drag-hint'">
+      <div class="card-header card-inverse card-primary">Contents</div>
+      <div class="card-block scroll-list">
+        <ul class="list-group">
+          <li class="list-group-item">
+            <div class="d-flex w-100 justify-content-between" data-toggle="collapse" aria-expanded="false" aria-controls="video" data-target='#video'  (click)="rotate('toggleVideo')">
+              Videos
+              <span>
+                <i id="toggleVideo"  class="fa fa-chevron-down rotate-down"></i>
+              </span>
+            </div>
+            <div class="collapse" id="video">
+              <ul class="list-group">
+                 <li *ngIf="videos && videos?.length == 0" class="content-list">
+                  <span> No video found.</span>
+                </li>
+                <li draggable class="content-list" *ngFor="let item of videos" [dragData]="item" [dragClass]="'drag-over'">
+                  {{item.title}}
+                </li>
+              </ul>
+            </div>
+          </li>
+          <!-- assessment list start from here  -->
+          <li class="list-group-item">
+            <div class="d-flex w-100 justify-content-between" data-toggle="collapse" ria-expanded="false" aria-controls="assessment" data-target='#assessment'  (click)="rotate('toggleAssessment')">
+              Assessments
+              <span>
+                <i id="toggleAssessment"  class="fa fa-chevron-down rotate-down"></i>
+              </span>
+            </div>
+            <div class="collapse" id="assessment">
+              <ul class="list-group">
+                <li *ngIf="assessments && assessments?.length == 0" class="content-list">
+                  <span> No assessment found.</span>
+                </li>
+                <li draggable class="content-list" *ngFor="let item of assessments" [dragData]="item" [dragClass]="'drag-over'">
+                  {{item.assessment}}
+                </li>
+              </ul>
+            </div>
+          </li>
+          <!-- assessment list end here  -->
+          <li class="list-group-item">
+            <div class="d-flex w-100 justify-content-between" data-toggle="collapse"  aria-expanded="false" aria-controls="notesData" data-target='#notesData' (click)="rotate('toggleNotes')">
+              Notes
+              <span>
+                <i id="toggleNotes"  class="fa fa-chevron-down rotate-down"></i>
+              </span>
+            </div>
+            <div class="collapse" id="notesData">
+              <ul class="list-group">
+                <li *ngIf="notes && notes?.length == 0" class="content-list">
+                  <span> No note found.</span>
+                </li>
+                <li class="content-list" *ngFor="let item of notes" draggable [dragData]="item" [dragClass]="'drag-over'">
+                  {{item.title}}
+                </li>
+              </ul>
+            </div>
+          </li>
+          <!-- Keyppints list start here  -->
+          <li class="list-group-item">
+            <div class="d-flex w-100 justify-content-between" data-toggle="collapse"  aria-expanded="false" aria-controls="keypointsData" data-target='#keypointsData' (click)="rotate('toggleKeypoints')">
+              Keypoints
+              <span>
+                <i id="toggleKeypoints"  class="fa fa-chevron-down rotate-down"></i>
+              </span>
+            </div>
+            <div class="collapse" id="keypointsData">
+              <ul class="list-group">
+                <li *ngIf="keypoints && keypoints?.length == 0" class="content-list">
+                  <span> No keypoint found.</span>
+                </li>
+                <li class="content-list" *ngFor="let item of keypoints" draggable [dragData]="item" [dragClass]="'drag-over'">
+                  {{item.title}}
+                </li>
+              </ul>
+            </div>
+          </li>
+          <li class="list-group-item">
+            <div class="d-flex w-100 justify-content-between" data-toggle="collapse"aria-expanded="false"   aria-controls="referencesData" data-target='#referencesData' (click)="rotate('toggleRefs')">
+              References
+              <span>
+                <i id="toggleRefs"  class="fa fa-chevron-down rotate-down"></i>
+              </span>
+            </div>
+            <div class="collapse" id="referencesData">
+              <ul class="list-group">
+                <li *ngIf="references && references?.length == 0" class="content-list">
+                    <span> No reference found.</span>
+                </li>
+                <li class="content-list" *ngFor="let item of references" draggable [dragData]="item" [dragClass]="'drag-over'">
+                  {{item.title}}
+                </li>
+              </ul>
+            </div>
+          </li>
+          <li class="list-group-item">
+            <div class="d-flex w-100 justify-content-between" data-toggle="collapse"aria-expanded="false"  aria-controls="mediaData"  data-target='#mediaData' (click)="rotate('toggleMedia')">
+              Media files
+              <span>
+                <i id="toggleMedia"  class="fa fa-chevron-down rotate-down"></i>
+              </span>
+            </div>
+            <div class="collapse" id="mediaData">
+              <ul class="list-group">
+                <li *ngIf="media && media?.length == 0" class="content-list">
+                    <span> No media found.</span>
+                </li>
+                <li class="content-list" *ngFor="let item of media" draggable [dragData]="item" [dragClass]="'drag-over'">
+                  {{item.title}}
+                </li>
+              </ul>
+            </div>
+          </li>
+
+          <!-- <li class="list-group-item">
+					<div class="d-flex w-100 justify-content-between" data-toggle="collapse" [attr.data-target]='assignments' aria-expanded="false">
+						Assignments
+						<span><i class="fa fa-chevron-down"></i></span>
+					</div>
+				</li> -->
+      </ul>
+    </div>
+  </div>
+</div>
+<div class="col-md-5 col-sm-12">
+  <div class="card card-outline-primary mb-3">
+    <div class="card-header card-inverse card-primary">{{title}}</div>
+    <div class="add-learning-path">
+      <span class="error-msg">{{errorMessage}}</span>
+      <div class="card card-outline-primary mb-3">
+        <div class="card-header card-inverse card-primary">Learning Path</div>
+        <div class="card-block scroll-list">
+          <input type="text" class="form-control" [(ngModel)]="learningPathTitle" placeholder="Enter learning path title" required="true" />
+        </div>
+      </div>
+      <div class="card card-outline-primary mb-3" droppable [dragOverClass]="'drag-target-border'" [dragHintClass]="'drag-hint'" (onDrop)="onMainContentDrop($event)">
+        <div class="card-header card-inverse card-primary">Main Content</div>
+        <div class="card-block scroll-list">
+          <ul class="list-group">
+            <li draggable *ngIf="mainContent?.title" [dragClass]="'drag-over'" [dragData]="mainContent" class="list-group-item">
+              <div class="d-flex w-100 justify-content-between">
+                {{mainContent?.title}}
+                <span><i class="fa fa-close" (click)="removeMainContentData(mainContent)"></i></span>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="card card-outline-primary mb-3" droppable [dragOverClass]="'drag-target-border'" [dragHintClass]="'drag-hint'" (onDrop)="onOtherContentDrop($event)">
+        <div class="card-header card-inverse card-primary">Other Content</div>
+        <div class="card-block scroll-list">
+          <ul class="list-group">
+            <li draggable *ngFor="let item of otherContents; let i= index " [dragClass]="'drag-over'" [dragData]="item" class="list-group-item ">
+              <div class="d-flex w-100 justify-content-between">
+                {{item?.title}}
+                <span><i class="fa fa-close" (click)="removeOtherContentData(item,i)"></i></span>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="text-right">
+        <button class="btn btn-success cursor-pointer" *ngIf="title==='Add'" (click)="addStepper()">{{title}}</button>
+        <button class="btn btn-success cursor-pointer" *ngIf="title==='Update'" (click)="updateStepper()">{{title}}</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="col-md-4 col-sm-12">
+  <div class="card card-outline-primary mb-3">
+    <div class="card-header card-inverse card-primary">Listing Stepper<small>  ( To rearrange use drag and drop )</small></div>
+    <div class="card-block scroll-list">
+      <ul class="list-group" [sortablejs]="learningData">
+        <li class="list-group-item learningData" *ngFor="let items of learningData">
+          <div class="row">
+            <div class="col-md-9 col-sm-10 stepper-content">
+              <div class="" data-toggle="collapse" [attr.data-target]='stepper1' aria-expanded="false">
+                {{items?.title}}
+              </div>
+            </div>
+            <div class="col-md-3 col-sm-12 text-center"  *ngIf="cStatus===CONFIG.CONTENT_STATUS[3] || cStatus=== CONFIG.CONTENT_STATUS[5]">
+              <span class="cursor-pointer pL10" (click)="setLearningPath(items._id)"><i class="fa fa-pencil"></i></span>&nbsp;&nbsp;
+              <span class="cursor-pointer pL10" (click)="deleteStepper(items._id)"><i class="fa fa-trash"></i></span>
+            </div>
+          </div>
+        </li>
+      </ul>
+       <div class="text-right pt-2" *ngIf="learningData?.length>1">
+     <button type="button" class="btn btn-success" (click)="rearrangeLP()"  *ngIf="cStatus===CONFIG.CONTENT_STATUS[3] || cStatus=== CONFIG.CONTENT_STATUS[5]">Rearrange</button>
+     </div>
+    </div>
+  </div>
+</div>
+</div>

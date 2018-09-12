@@ -1,0 +1,29 @@
+.base {
+  background-color: #FFFF !important;
+  border-color: rgba(0, 0, 0, 0.125);
+  border-width: 1px;
+  box-sizing: border-box;
+  border-style: solid;
+  font-family: RobotoDraft, 'Helvetica Neue', Helvetica, Arial;
+}
+.base > h5 {
+  font-size: 15px;
+}
+.btn:focus {
+  outline: 0;
+  -webkit-box-shadow: 0 0 0 0px rgba(2,117,216,.25); 
+  box-shadow: 0 0 0 0px rgba(2,117,216,.25); 
+}
+.list {
+  font-size: 14px;
+}
+.count {
+  font-size: 13px;
+  padding: 10px;
+  font-weight: 500;
+  color: #014c8c !important;
+}
+.topic-list {
+  overflow-y: auto;
+  max-height: 230px;
+}

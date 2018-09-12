@@ -1,0 +1,100 @@
+<div class="container-section">
+  <div class="row">
+    <div class="col-md-1 pl-0 pr-0">
+    </div>
+    <div class="col-md-11 pr-0">
+      <div class="row">
+        <div class="col-md-9 leftContent">
+          <div class="row">
+            <div class="col-md-6 col-sm-12">
+              <div class="page-section">
+                <h1 class="text-display-1 margin-none">All Courses</h1>
+              </div>
+            </div>
+            <div class="col-md-6 col-sm-12">
+              <div class="page-section">
+                <input type="text" class="form-control" placeholder="Enter text to search ..." [(ngModel)]="searchText" (keyup)="onSearching($event.target.value)" name="">
+              </div>
+            </div>
+          </div>
+          <div class="text-center" *ngIf="courseStatus">
+            <p>There is no course available of your searching</p>
+          </div>
+          <div class="row">
+            <div class="col-xs-12 col-sm-6 col-lg-4 card-section" *ngFor="let data of courses; let i=index; ">
+              <div class="card card-custom">
+                <img *ngIf="data.icon" class="card-img-top img-fluid card-img-custom" [attr.src]="courseImgPath+data.icon" [attr.alt]="data.name">
+                <div *ngIf="i%2===0; else oddImg; then evenImg"></div>
+                <ng-template #evenImg>
+                  <img *ngIf="!data.icon" class="card-img-top img-fluid card-img-custom" src="{{imgPath}}/course-default.jpg" [attr.alt]="data?.title">
+                </ng-template>
+                <ng-template #oddImg>
+                  <img *ngIf="!data.icon" class="card-img-top img-fluid card-img-custom" src="{{imgPath}}/course-default2.jpeg" [attr.alt]="data?.title">
+                </ng-template>
+                <div class="panel-body">
+                  <h4 class="text-headline margin-v-0-10">
+                <a href="javascript:void(0)" [routerLink]="['/', urlPrefix, 'allcourses', 'course-preview', data.courseId ]">{{data.title | slice:0:30}}<span *ngIf="data.title?.length>30">..</span></a>
+              </h4>
+                </div>
+                <hr>
+                <div class="panel-body">
+                  <p [innerHtml]="data?.shortDescription | slice:0:100"><span *ngIf="data.shortDescription?.length>100">..</span> </p>
+                </div>
+                <div class="panel-footer text-right">
+                  <span class="prc-box">
+                <span *ngIf="!data.isAssigned"> 
+                  <a class="btn btn-sm btn-course" href="javascript:void(0)" [routerLink]="['/', urlPrefix, 'allcourses', 'course-preview', data.courseId ]"><i class="fa fa-eye" aria-hidden="true"></i> Preview
+                  </a>
+                </span>
+                  <span *ngIf="data.isAssigned">
+                  <button type="button" class="btn btn-sm btn-course"  [routerLink]="['/', urlPrefix, 'course-details', data.courseId, 'play-contents']">Go To Course</button>
+                </span>
+                  </span>
+                </div>
+              </div>
+            </div>
+            <div class="col-12 custom-pgn" *ngIf="totalItems>itemsPerPage">
+              <pagination class="pagination" [totalItems]="totalItems" [itemsPerPage]="itemsPerPage" [(ngModel)]="currentPage" (pageChanged)="pageChanged($event)"></pagination>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3 col-sm-12 p0 leftContent">
+          <ul class="list-group sidebar-responsive">
+            <li *ngIf="currentApp === apps[0]" class="list-group-item section-heading rightContent-heading  border-0">Board</li>
+            <li *ngIf="currentApp === apps[1]" class="list-group-item section-heading rightContent-heading  border-0">Categories</li>
+            <li *ngIf="currentApp === apps[2]" class="list-group-item section-heading rightContent-heading  border-0">Board</li>
+            <div class="btn-group">
+              <button *ngIf="!textSelected" type="button" class="btn btn-info dropdown-toggle button-size" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Select Your Board
+              </button>
+              <button *ngIf="textSelected" type="button" class="btn btn-info dropdown-toggle button-size" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                {{textSelected}}
+              </button>
+              <div class="dropdown-menu button-size" *ngFor="let item of categoryDetails">
+                <button class="dropdown-item menu-item" (click)="getCourseBasisCategory(item._id,item.name)">{{item.name}}</button>
+              </div>
+            </div>
+            <!-- <li class="list-group-item  border-0 active" id="category"><a href="javascript:void(0)" (click)="loadAllData()">All Categories</a></li>
+            <li class="list-group-item border-0" [attr.id]="item._id" *ngFor="let item of categoryDetails"><a href="javascript:void(0)" class="category-item" (click)="getCourseBasisCategory(item._id)">{{item.name}}</a></li> -->
+          </ul>
+          <ul class="list-group sidebar-modify pb-2 sidebar-responsive">
+            <li *ngIf="currentApp === apps[0]" class="list-group-item section-heading rightContent-heading  border-0">Class</li>
+            <li *ngIf="currentApp === apps[1]" class="list-group-item section-heading rightContent-heading  border-0">Subcategories</li>
+            <li *ngIf="currentApp === apps[2]" class="list-group-item section-heading rightContent-heading  border-0">Class</li>
+            <div class="dropdown">
+              <button *ngIf="!classSelected" class="btn btn-info dropdown-toggle button-size" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Select Your Class
+              </button>
+               <button *ngIf="classSelected" class="btn btn-info dropdown-toggle button-size" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+               	{{classSelected}}
+              </button>
+              <div class="dropdown-menu menu-fixed button-size" aria-labelledby="dropdownMenuButton" *ngFor="let item of subCategories">
+                <a class="dropdown-item menu-item" (click)="getCategory(item.name)">{{item.name}}</a>
+              </div>
+            </div>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

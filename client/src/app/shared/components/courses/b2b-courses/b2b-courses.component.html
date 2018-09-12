@@ -1,0 +1,51 @@
+<div class="container-section">
+  <div class="row add-new-container">
+    <div class="col-8 text-left ">
+      <h3 class="page-heading">Courses</h3>
+      <div *ngxPermissionsOnly="permissions; else elseBlock; then thenBlock"></div>
+      <ng-template #elseBlock>
+        <div></div>
+      </ng-template>
+      <ng-template #thenBlock>
+        <a class="btn btn-outline-info add-new" [routerLink]="['/', urlPrefix, 'courses', 'add']"><i class="fa fa-plus-circle"> </i> Add</a>
+      </ng-template>
+    </div>
+    <div class="col-4 text-right">
+      <a class="btn btn-outline-info back" [routerLink]="['/', urlPrefix]"><i class="fa fa-arrow-circle-o-left" aria-hidden="true"></i> Back
+    </a>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12 text-center errorMessage" *ngIf="errMessage">
+      <h6>{{errMessage}}</h6>
+    </div>
+    <div class="col-md-3 content-list" *ngFor="let data of courses; let i=index;">
+      <div class="card">
+        <div class="card-title text-center" [ngStyle]="{'background-color': colors[i]}">
+          <span class="headingTitle">{{data?.title}}</span>
+        </div>
+        <div class="card-body ">
+          <p class="card-text">{{data?.shortDescription | words: 30}} </p>
+        </div>
+        <div class="card-footer">
+          <div class="row">
+            <div *ngxPermissionsOnly="permissions; else elseBlock; then thenBlock"></div>
+            <ng-template #elseBlock>
+              <div *ngIf="!userFlow"  class="col-12 text-center">
+                <div class="col-12"><a [ngStyle]="{'color': colors[i]}" href="javascript:void(0)" [routerLink]="['/', urlPrefix, 'topic-playlist', data?._id]"><i class="fa fa-eye" title="View Course Details"></i> View Course Details</a></div>
+              </div>
+              <div *ngIf="userFlow" class="col-12 text-center">
+                <div class="col-12"><a [ngStyle]="{'color': colors[i]}" href="javascript:void(0)" [routerLink]="['/', urlPrefix, 'courses', data?._id]" [queryParams]="{'tab':'topics'}"><i class="fa fa-eye" title="View Course Details"></i> View Course Details</a></div>
+              </div>
+            </ng-template>
+            <ng-template #thenBlock>s
+              <div class="col-4"><a [ngStyle]="{'color': colors[i]}" href="javascript:void(0)" (click)="deleteCourse(data?._id)"> <i class="fa fa-trash" title="Delete course"></i> Delete</a></div>
+              <div class="col-4"><a [ngStyle]="{'color': colors[i]}" href="javascript:void(0)" [routerLink]="['/', urlPrefix, 'courses', data._id]" [queryParams]="{'tab':'topics'}"><i class="fa fa-eye" title="View Course Details"></i> View</a></div>
+              <div class="col-4"><a [ngStyle]="{'color': colors[i]}" href="javascript:void(0)" [routerLink]="['/', urlPrefix, 'courses', 'edit', data?._id]"><i class="fa fa-pencil" title="Edit course"></i> Edit</a>
+              </div>
+            </ng-template>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

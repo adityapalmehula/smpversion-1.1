@@ -1,0 +1,82 @@
+<div class="row col-md-12 pt-3 cust-panel pb-3">
+  <div class="col-md-6 mt-3" *ngFor="let dChart of daughnutCharts; let i=index; ">
+    <div class="card chrt-card">
+      <div class="text-center p-3" *ngIf="dChart?.title"><strong>{{dChart?.title}}</strong></div>
+      <app-doughnut-chart [id]="i" [data]="dChart?.data" [labels]="dChart?.labels" [text]="dChart?.text" 
+      [type]="dChart?.type" [toolTipTitle]="dChart?.toolTipTitle" ></app-doughnut-chart>
+    </div>
+  </div>
+<!-- 
+  <div class="col-md-6 pt-3">
+    <app-pie-chart></app-pie-chart>
+  </div> -->
+  
+  <div class="col-md-6 my-3" *ngFor="let barChart of barCharts; let i=index; ">
+    <div class="card">
+      <div class="text-center p-3" *ngIf="barChart?.title"><strong>{{barChart?.title}}</strong></div>
+      <app-bar-chart [id]="i" [data]="barChart?.data" [labels]="barChart?.labels"  [labelText]="barChart?.labelText"></app-bar-chart>
+    </div>
+  </div>
+
+  <div class="col-md-6 my-3" *ngIf="recomandations.length!=0">
+    <div class="card">
+      <div class="text-center p-3"><strong>Recommendation</strong></div>
+      <div class="accordion p-3 acordin" id="topic">
+        <div class="card" *ngFor="let topic of recomandations; let i=index; ">
+          <div class="card-header" id="headingOne">
+            <h5 class="mb-0">
+              <button class="btn btn-link" type="button" data-toggle="collapse" aria-expanded="true" [attr.data-target]='"#topic"+i'>{{topic?.title}}
+              </button>
+            </h5>
+          </div>
+          <div id="topic{{i}}" class="collapse" aria-labelledby="headingOne" data-parent="#topic">
+            <div class="pt-3 px-2">
+             <ul>
+              <li *ngFor="let subtopic of topic?.subtopics; let j=index; ">{{subtopic?.title}}</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- <div *ngIf="result" class="row col-md-12 pt-5">
+  <table class="table">
+    <thead class="bg-info">
+      <tr>
+       <th>Question</th>
+       <th>Options</th>
+       <th>Your Answer</th>
+       <th>Correct Answer</th>
+       <th>Answer Description</th>
+       <th>Status</th>
+     </tr>
+   </thead>
+   <tbody>
+    <tr *ngFor="let resultDetail of result?.questions">
+      <td><div [innerHTML]="resultDetail?.question"></div></td>
+      <td><ul>
+        <li *ngFor="let opt of resultDetail?.options">
+          <div [innerHTML]="opt?.text"></div>
+        </li>
+      </ul></td>
+      <td><ul>
+        <li *ngFor="let ans of resultDetail?.userAnswers">
+          <div [innerHTML]="resultDetail?.options[ans?.id]?.text"></div>
+        </li>
+      </ul></td>
+      <td><ul>
+        <li *ngFor="let ans of resultDetail?.answers">
+          <div [innerHTML]="resultDetail?.options[ans?.id]?.text"></div>
+        </li>
+      </ul></td>
+      <td><div [innerHTML]="resultDetail?.solution"></div></td>
+      <td class="text-left" 
+      [class.text-success]="resultDetail?.ansStatus==='Correct'"
+      [class.text-danger]="resultDetail?.ansStatus==='Incorrect'">{{resultDetail?.ansStatus}}</td>
+    </tr>
+  </tbody>
+</table>
+
+</div> -->

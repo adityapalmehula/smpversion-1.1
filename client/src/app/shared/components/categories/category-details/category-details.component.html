@@ -1,0 +1,174 @@
+<div class="container-section">
+  <div class="row">
+    <div class="col-md-1 pl-0 pr-0">
+    </div>
+    <div class="col-md-11">
+      <div class="container-fluid">
+        <div class="row breadcrumb">
+          <div class="col-8 text-left mt-2 mb-1 ">
+            <a class="page-heading" [routerLink]="['/', urlPrefix, 'categories']"><i class="fa fa-home" aria-hidden="true"></i> Categories</a> / <span class="breadcrumb-active">Subcategories</span>
+          </div>
+          <div class="col-4 text-right">
+            <a class="btn btn-outline-info back" [routerLink]="['/', urlPrefix, 'categories']"><i class="fa fa-arrow-circle-o-left" aria-hidden="true"></i> Back
+            </a>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12 mt-4 mb-1 ">
+            <h3 class="title">{{ categoryData.name | titlecase}}</h3>
+            <p class="description text-left mt-2" [innerHtml]="categoryData.description"></p>
+          </div>
+        </div>
+        <hr>
+        <div class="row add-new-container">
+          <div class="col-12 text-left ">
+            <h4 class="page-subheading">Subcategories
+              <a class="btn btn-outline-info add-new" [routerLink]="['/', urlPrefix, 'categories',categoryId,'subcategories','add']"><i class="fa fa-plus-circle"> </i> Add</a></h4>
+            </div>
+          </div>
+          <div class="row mb-2">
+            <div class="col-12 subcategory-section container-section">
+              <span class="list-group-item list-group-item-action flex-column align-items-start" *ngFor="let data of subCategories; let i=index; ">
+                <div class="d-flex w-100 justify-content-between">
+                  <h5 class="subtitle mb-1">{{data.name | titlecase}}</h5>
+                  <small>
+                    <button type="button" class="btn btn-light btn-sm mr-2" title="Edit Subcategory "><span class="fa fa-pencil" [routerLink]="['/', urlPrefix, 'categories',categoryId,'subcategories','edit',data._id]" ></span></button>
+                    <button type="button" class="btn btn-light btn-sm mr-2" (click)="deleteSubCategory(data._id)" title="Delete Subcategory"><span class="fa fa-trash"></span></button>
+                  </small>
+                </div>
+                <p class="description text-left mt-2" [innerHtml]="data.description"></p>
+              </span>
+            </div>
+          </div>
+          <!-- pagination start here -->
+          <div class="col-12 custom-pgn" *ngIf="totalItems>itemsPerPage">
+            <pagination class="pagination" [totalItems]="totalItems" [itemsPerPage]="itemsPerPage" [(ngModel)]="currentPage" (pageChanged)="pageChanged($event)"></pagination>
+          </div>
+          <!-- pagination end here -->
+        </div>
+
+
+
+        <div class="">
+       <!--  <div class="row add-new-container">
+          <div class="col-8 text-left ">
+            <h3 class="page-heading">{{ categoryData.name}}</h3>
+          </div>
+          <div class="col-4 text-right">
+            <a class="btn btn-outline-info back" [routerLink]="['/', urlPrefix, 'categories']"><i class="fa fa-arrow-circle-o-left" aria-hidden="true"></i> Back
+          </a>
+          </div>
+        </div> -->
+        <div class="row">
+       <!--    <div class="col-12 categoryDetails">
+            <p class="description text-left">{{ categoryData.description}}</p>
+          </div>
+        </div>
+        <hr> -->
+       <!--  <div class="row add-new-container">
+          <div class="col-8 text-left ">
+            <h4 class="page-subheading">Subcategories</h4>
+          </div>
+          <div class="col-4 text-right">
+            <a class="btn btn-outline-info add-new" data-toggle="modal" data-target=".addSubCategoryModal"><i class="fa fa-plus-circle"> </i> Add</a>
+          </div>
+        </div> -->
+       <!--  <div class="row">
+          <div class="col-md-3 content-list" *ngFor="let data of subCategories; let i=index;">
+            <div class="card">
+              <div class="card-title text-center" [ngStyle]="{'background-color': colors[i]}">
+                <span class="headingTitle">{{data.name}}</span>
+              </div>
+              <div class="card-body ">
+                <p class="card-text">{{data.description | words: 30}} </p>
+              </div>
+              <div class="card-footer text-center">
+                <div class="row">
+                  <div class="col-6"><a [ngStyle]="{'color': colors[i]}" href="javascript:void(0)" (click)="getSubCategoryForUpdate(data._id)" data-toggle="modal" data-target=".addSubCategoryModal"><i class="fa fa-pencil" title="Edit Subcategory"></i> Edit</a></div>
+                  <div class="col-6"><a [ngStyle]="{'color': colors[i]}" href="javascript:void(0)" (click)="deleteSubCategory(data._id)"> <i class="fa fa-trash" title="Delete Subcategory"></i> Delete</a></div>
+                </div>
+              </div>
+            </div>
+          </div> -->
+
+          <div class="modal fade addSubCategoryModal" tabindex="-1" role="dialog" aria-labelledby="subCategoryModal" aria-hidden="true" data-backdrop="static" data-keyboard="false" id="subCategoryModal">
+            <div class="modal-dialog modal-lg">
+              <div class="modal-content">
+                <!-- Modal Header -->
+                <div class="modal-header text-center">
+                  <h4 aria-hidden="true ">Subcategory</h4>
+                  <span class="sr-only">Subcategory</span>
+                  <button type="button" class="close" data-dismiss="modal" title="Close" (click)="closeModal()" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <!-- Modal Body -->
+                <div *ngIf="errorMessage">
+                  <div class="errorMessage">
+                    {{errorMessage}}
+                  </div>
+                </div>
+                <form class="form-horizontal" role="form" [formGroup]="formSubCategory">
+                  <div class="modal-body">
+                    <div class="row form-group">
+                      <label class="col-sm-2 control-label" for="category Description">Name : </label>
+                      <div class="col-sm-10">
+                        <input type="text" class="form-control" formControlName="subCategoryName" />
+                        <div *ngIf="formSubCategory.get('subCategoryName').touched && formSubCategory.get('subCategoryName').errors">
+                          <div class="error">
+                            Name is required.
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row form-group">
+                      <label class="col-sm-2 control-label" for="subCategory Description">Description : </label>
+                      <div class="col-sm-10">
+                        <textarea class="form-control" formControlName="subCategoryDescription"></textarea>
+                        <div *ngIf="formSubCategory.get('subCategoryDescription').errors && formSubCategory.get('subCategoryDescription').touched">
+                          <div class="error" *ngIf="formSubCategory.get('subCategoryDescription').errors.required">
+                            Description is required.
+                          </div>
+                          <div class="error" *ngIf="formSubCategory.get('subCategoryDescription').errors.maxlength">
+                            Description exceeded the max length limit.
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row form-group ">
+                      <label class="col-sm-2 control-label" for="subCategory status">Status : </label>
+                      <div class="col-sm-3 col-md-12 col-lg-3">
+                        <div class="form-check form-check-inline">
+                          <label class="form-check-label">
+                            <input class="form-check-input" type="radio" name="statusCheck" [value]="status.ACTIVE" checked formControlName="statusCheck"> Active
+                          </label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                          <label class="form-check-label">
+                            <input class="form-check-input" type="radio" name="statusCheck" [value]="status.INACTIVE" formControlName="statusCheck"> Inactive
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-save" title="Save"  *ngIf="!updateSubCategoryId" data-dismiss="modal" [disabled]="!formSubCategory.valid" (click)="saveSubCategory(formSubCategory)">
+                      Save
+                    </button>
+                    <button type="button" class="btn btn-update" title="Update" *ngIf="updateSubCategoryId" data-dismiss="modal" [disabled]="!formSubCategory.valid" (click)="updateSubCategory(formSubCategory)">
+                      Update
+                    </button>
+                    <button type="button" class="btn btn-cancel" data-dismiss="modal" title="Cancel" (click)="closeModal()" #catModalClose>
+                      Cancel
+                    </button>
+                  </div>
+                </form>
+                <!-- Modal Footer -->
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

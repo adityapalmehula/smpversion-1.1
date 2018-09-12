@@ -1,0 +1,248 @@
+.page-section {
+  padding: 40px 0;
+}
+
+.text-display-1 {
+  font-size: 2.2rem;
+  font-weight: 400;
+  line-height: 3.07rem;
+}
+
+.card-img-custom {
+  height: 150px;
+}
+
+.menu-fixed{
+	position: unset !important;
+}
+/*custom scroll bar css start here*/
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 5px grey;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #708090;
+  border-radius: 10px;
+}
+
+.card-section {
+  padding: 10px 10px;
+}
+
+
+/*::-webkit-scrollbar-thumb:hover {
+  background: #15aabf; 
+  }*/
+
+
+/*custom scroll bar css end here*/
+
+.leftContent {
+  height: 85vh;
+  overflow-y: auto;
+}
+
+.panel-body {
+  padding: 16px;
+  min-height: 105px;
+  max-height: 105px;
+}
+
+.panel-body>.text-headline {
+  margin: 0 0 16px;
+}
+
+.margin-v-0-10 {
+  margin-top: 0px !important;
+  margin-bottom: 10px !important;
+}
+
+.text-headline {
+  font-size: 1.5rem;
+  font-weight: 400;
+  line-height: 2.46rem;
+}
+
+h4 {
+  color: #212121;
+}
+
+a:hover {
+  color: #212121;
+}
+
+hr {
+  border: 0;
+  border-top: 1px solid #eeeeee;
+}
+
+p {
+  margin: 0 0 9px;
+  font-size: 13px;
+  display: block;
+  -webkit-margin-before: 1em;
+  -webkit-margin-after: 1em;
+  -webkit-margin-start: 0px;
+  -webkit-margin-end: 0px;
+}
+
+.btn-course {
+  color: #fff;
+  background-color: #007791;
+  border: 1px solid transparent;
+  margin-bottom: 9px;
+  padding-left: 5px;
+  margin-left: 5px;
+  font-size: 13px;
+}
+
+.panel-footer {
+  padding: 10px;
+  min-height: 20px;
+  height: auto;
+}
+
+.list-group-item {
+  cursor: pointer;
+  text-decoration: none;
+  color: #858585;
+  font-weight: 500;
+  font-size: 13px;
+  font-family: RobotoDraft, 'Helvetica Neue', Helvetica, Arial;
+  text-transform: none;
+  letter-spacing: normal;
+}
+
+.category-item:hover {
+  cursor: pointer;
+  text-decoration: none;
+  color: #212121;
+  font-weight: 500;
+  font-size: 13px;
+  font-family: RobotoDraft, 'Helvetica Neue', Helvetica, Arial;
+  text-transform: none;
+  letter-spacing: normal;
+}
+
+.active {
+  background-color: #42a5f5;
+  border: #42a5f5;
+  color: #fff;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+input[type="text"],
+textarea,
+select {
+  width: 100%;
+  box-shadow: 0px 1px 5px #959595;
+  padding: 10px;
+  display: flex;
+  background: #fff;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  font-size: 20px;
+  color: #333;
+  line-height: 1.29rem;
+}
+
+.rightContent-heading {
+  padding: 16px;
+  font-weight: 500;
+  font-size: 13px;
+  font-family: RobotoDraft, 'Helvetica Neue', Helvetica, Arial;
+  text-transform: none;
+  letter-spacing: normal;
+  margin: 0;
+  color: #42a5f5;
+}
+
+.active a {
+  color: #fff !important;
+  text-decoration: none !important;
+}
+
+.list-group-item.active {
+  z-index: 0 !important;
+}
+
+@media(max-width: 767px) {
+  .leftContent {
+    height: 75vh;
+    overflow-y: auto;
+  }
+  .container-section {
+    margin-bottom: 0%;
+  }
+  .page-section {
+    padding: 10px 0px;
+  }
+}
+
+
+/*modify last section*/
+.button-size{
+	width: 100%;
+	font-weight: 500;
+  font-size: 13px;
+  font-family: RobotoDraft, 'Helvetica Neue', Helvetica, Arial;
+  text-transform: none;
+  letter-spacing: normal;
+}
+.sidebar-modify {
+  padding-top: 3rem;
+}
+
+.btn-modify {
+  margin: 4px;
+  margin-right: 8px;
+  border: 1 solid;
+  border-color: white;
+  box-shadow: inset 0 0 20px rgba(255, 255, 255, 0);
+  outline: 1px solid;
+  outline-color: rgba(90, 80, 80, 0.5);
+  outline-offset: 0px;
+  text-shadow: none;
+  transition: all 1250ms cubic-bezier(0.19, 1, 0.22, 1);
+  font-weight: 500;
+  font-size: 14px;
+  font-family: RobotoDraft, 'Helvetica Neue', Helvetica, Arial;
+  text-transform: none;
+  letter-spacing: normal;
+  color: #858585;
+}
+
+.btn-modify:hover {
+  border: 1px solid;
+  border-radius: 10px;
+  box-shadow: inset 0 0 20px rgba(255, 255, 255, .5), 0 0 20px rgba(255, 255, 255, .2);
+  outline-color: rgba(255, 255, 255, 0);
+  outline-offset: 15px;
+  text-shadow: 1px 1px 2px #427388;
+}
+.menu-item{
+	text-align: center;
+	cursor: pointer;
+	text-decoration: none;
+  color: #212121;
+  font-weight: 500;
+  font-size: 13px;
+  font-family: RobotoDraft, 'Helvetica Neue', Helvetica, Arial;
+  text-transform: none;
+  letter-spacing: normal;
+}
+/* ----------- */
+@media only screen 
+and (min-device-width : 320px) 
+and (max-device-width : 480px) {
+.sidebar-responsive{
+	padding-right: 6px !important;
+}
+}

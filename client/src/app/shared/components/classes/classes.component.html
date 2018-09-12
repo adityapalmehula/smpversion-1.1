@@ -1,0 +1,115 @@
+<div class="container-section">
+  <div class="row col-md-12">
+    <div class="col-md-1"></div>
+    <div class="col-md-11">
+      <div class="row add-new-container pt-2 py-1">
+        <div class="col-8 text-left">
+          <p class="heading m-0">Classes</p>
+        </div>
+        <div class="col-4 text-right">
+          <a class="btn btn-outline-info back" [routerLink]="['/', urlPrefix]"><i class="fa fa-arrow-circle-o-left" aria-hidden="true"></i> Back
+          </a>
+        </div>
+      </div>
+
+      <div class="row cust-table">
+       <div class="col-md-12 cust-table px-2">
+         <div class="table-panel">
+          <div class="table-responsive bg-white">
+            <table class="table v-middle">
+             <thead class="">
+              <tr class="col-md-12">
+                <th>Name</th>
+                <th>Assign Courses</th>
+                <th>Assign Teachers</th>
+                <th>Add Section</th>
+                  <!--  <th class="text-center">Total Attempts</th>
+                  <th class="text-center">Action</th> -->
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let data of classes; let i=index; ">
+                  <td>{{data.name}}</td>
+                  <td><button class="btn btn-sm btn-info" href="javascript:void(0)" (click)="setSubCategory(data?.subCategoryId,data?._id)" data-toggle="modal" data-target="#assign-course">Assign Courses</button></td>
+
+                  <td><button class="btn btn-sm btn-primary" href="javascript:void(0)" (click)="setClassId(data?._id)" data-toggle="modal" data-target="#assign-course">Assign Teachers</button></td>
+
+                  <td><button class="btn btn-sm btn-success" href="javascript:void(0)" (click)="setSubCategory(data?.subCategoryId,data?._id)" data-toggle="modal" data-target="#assign-course"><i class="fa fa-plus-circle"></i> Section</button></td>
+            <!--     <td title="Click for details">
+              <a href="javascript:void(0)" data-toggle="modal" data-target="#assessment-details" (click)="setAssessmentDetails(data._id)" class="qus cursor-pointer">{{data.assessment}}
+            </a>
+          </td> -->
+              <!-- <div *ngIf="CONFIG.ADMIN.indexOf(role) > -1 || data?.createdBy?.id == userId || userId === data?.schoolId">
+                <button type="button" class="btn edt-btn btn-sm" (click)="editAssessment(data._id)" title="Edit Assessment"><span class="fa fa-pencil"></span></button>
+                <button type="button" class="btn del-btn btn-sm mr-1" (click)=deleteAssessment(data._id) title="Delete Assessment"><span class="fa fa-trash"></span>
+                </button>
+              </div> -->
+              <td class="text-center">
+             <!--  <div class="btn-group btn-group-sm" role="group" aria-label="Basic example">
+                <button type="button" class="btn btn-info mr-2" (click)="takeAssessment(data._id)">Take</button>
+                <button *ngIf="data?.totalAttampts" type="button" [class.disabled]="!data?.totalAttampts" class="btn btn-success" (click)="viewResults(data._id,data?.totalAttampts)" >Result</button>
+              </div> -->
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="col-12 text-center no-data" *ngIf="classes?.length===0">No data avaliable</div>
+    </div>
+  </div>
+
+<!--   <div class="row col-md-12 view-container">
+    <div class="col-12 custom-pgn" *ngIf="totalItems>itemsPerPage">
+      <pagination class="pagination" [totalItems]="totalItems" [itemsPerPage]="itemsPerPage" [(ngModel)]="currentPage" (pageChanged)="pageChanged($event)"></pagination>
+    </div>
+  </div> -->
+
+</div>
+</div>
+</div>
+</div>
+
+
+<div class="modal fade" id="assign-course" tabindex="-1" role="dialog" aria-labelledby="title" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4>Assign Course</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" #closeModal>
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div id="accordion" role="tablist" aria-multiselectable="true">
+          <div class="card-block row">
+            <div class="row col-xl-12 col-lg-12 col-md-12 col-sm-12">
+             <!--  <div class="form-group col-md-8 mx-auto">
+                <label for="type">Board</label>
+                <angular2-multiselect [ngModelOptions]="{standalone: true}" [data]="categories" [(ngModel)]="selectedCategories" [settings]="categoriesConfig" (onSelect)="onCategoriesFilterChange($event)" (onSelectAll)="onCategoriesFilterChange($event)" (onDeSelectAll)="onCategoryDeSelectAll($event)"></angular2-multiselect>
+              </div> -->
+
+              <div class="col-md-10 mx-auto">
+                <h4>Courses</h4>
+                <angular2-multiselect [data]="courseList" [(ngModel)]="selectedCourses" [settings]="courseConfig"></angular2-multiselect>
+              </div>
+
+              <div class="col-md-10 mx-auto mt-3">
+                <h4>Teachers</h4>
+                <angular2-multiselect [data]="teacherList" [(ngModel)]="selectedTeachers" [settings]="teacherConfig"></angular2-multiselect>
+              </div>
+
+              <div class="col-md-10 mx-auto mt-3">
+                <h4>Sections</h4>
+                <rl-tag-input class="col-md-10" placeholder="Add Sections" [(ngModel)]="sections"></rl-tag-input>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" (click)="clearAssignCourseFilters()" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-info" (click)="assignCourses()">Assign</button>
+      </div>
+    </div>
+  </div>
+</div>

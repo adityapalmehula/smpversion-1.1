@@ -1,0 +1,201 @@
+<div class="container-section">
+  <div class="row">
+    <div class="col-md-1 pl-0 pr-0">
+    </div>
+    <div class="col-md-11">
+      <div class="container-fluid">
+        <div class="row breadcrumb">
+          <div class="col-8 text-left mt-2 mb-1 ">
+            <a class="page-heading" [routerLink]="['/', urlPrefix, 'instructors']"><i class="fa fa-home" aria-hidden="true"></i> Instructors</a> / <span *ngIf="formType!='edit'" class="breadcrumb-active">Add a new instructor</span>
+            <span *ngIf="formType!='add'" class="breadcrumb-active">Update instructor</span>
+          </div>
+          <div class="col-4 text-right">
+            <a class="btn btn-outline-info back" [routerLink]="['/', urlPrefix, 'instructors']"><i class="fa fa-arrow-circle-o-left" aria-hidden="true"></i> Back
+						</a>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12 pt-4">
+            <div *ngIf="formType!='add'; else elsblock; then thenblock;"></div>
+            <ng-template #elsblock>
+              <h2 class="legend">Add A New Instructor</h2>
+            </ng-template>
+            <ng-template #thenblock>
+              <h2 class="legend">Update Instructor</h2>
+            </ng-template>
+          </div>
+        </div>
+        <div class="row reg-form-container add-new-container">
+          <!-- <div *ngIf="backendErrorMsg">
+            <ul>
+              <li class="backend-errors" *ngFor="let msg of backendErrorMsg.slice().reverse() ">{{msg}}</li>
+            </ul>
+          </div> -->
+          <div class=" col-xl-10 col-lg-8 col-md-10 col-sm-12 reg-form">
+            <form [formGroup]="instructorFormData">
+              <div class="row">
+                <div class="col-md-1"></div>
+                <div class="form-group col-md-5">
+                  <label for="title" class="text-center form-label" class="label label-primary">
+                    <span class="form_required">*</span>Name
+                  </label>
+                  <input type="text" formControlName="name" class="inputModify" class="label label-default">
+                  <div *ngIf="instructorFormData.get('name').touched && instructorFormData.get('name').errors">
+                    <div class="error" *ngIf="instructorFormData.get('name').errors.required">
+                      Name is required.
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group col-md-5">
+                  <label for="title" class="text-center form-label">
+                    <span class="form_required">*</span>Email
+                  </label>
+                  <input type="email" formControlName="email">
+                  <div *ngIf="instructorFormData.get('email').touched && instructorFormData.get('email').errors">
+                    <div class="error" *ngIf="instructorFormData.get('email').errors.required">
+                      Email is required.
+                    </div>
+                    <div class="error" *ngIf="instructorFormData.get('email').errors.pattern">
+                      Enter valid email
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-1"></div>
+              </div>
+              <div class="row">
+                <div class="col-md-1"></div>
+                <div class="form-group col-md-5">
+                  <label for="title" class="text-center form-label">
+                    <span class="form_required">*</span>Mobile
+                  </label>
+                  <input type="text" formControlName="mobile">
+                  <div *ngIf="instructorFormData.get('mobile').touched && instructorFormData.get('mobile').errors">
+                    <div class="error" *ngIf="instructorFormData.get('mobile').errors.required">
+                      Mobile No is required.
+                    </div>
+                    <div class="error" *ngIf="instructorFormData.get('mobile').errors.pattern || instructorFormData.get('mobile').errors.maxlength">
+                      Enter valid mobile number
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group col-md-5">
+                  <label for="title" class="text-center form-label">
+                    <span class="form_required">*</span>Gender
+                  </label>
+                  <select class="form-control" formControlName="gender">
+                    <option value="" disabled selected hidden>Select gender </option>
+                    <option value="{{gender}}" *ngFor="let gender of genders">{{gender}}</option>
+                  </select>
+                  <div *ngIf="instructorFormData.get('gender').touched && instructorFormData.get('gender').errors">
+                    <div class="error" *ngIf="instructorFormData.get('gender').errors.required">
+                      Gender is required.
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-1"></div>
+              </div>
+              <div class="row">
+                <div class="col-md-1"></div>
+                <div class="form-group col-md-5">
+                  <label for="country" class="form-label">
+                    <span class="form_required">*</span>Country
+                  </label>
+                  <select class="form-control" formControlName="country" (change)="getStates($event.target.value)">
+                    <option value="" disabled selected>Select country </option>
+                    <option value="{{country}}" *ngFor="let country of countries">{{country}}</option>
+                  </select>
+                  <div *ngIf="instructorFormData.get('country').touched && instructorFormData.get('country').errors">
+                    <div class="error">
+                      Country is required.
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group col-md-5">
+                  <div class="row">
+                    <label for="state" class="form-label">
+                      <span class="form_required">*</span>State
+                    </label>
+                  </div>
+                  <select class="form-control" formControlName="state" (change)="getCities($event.target.value)">
+                    <option value="" disabled selected>Select state </option>
+                    <option value="{{state}}" *ngFor="let state of states">{{state}}</option>
+                  </select>
+                  <div *ngIf="instructorFormData.get('state').touched && instructorFormData.get('state').errors">
+                    <div class="error">
+                      State is required.
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-1"></div>
+              </div>
+              <div class="row">
+                <div class="col-md-1"></div>
+                <div class="form-group col-md-5">
+                  <label for="city" class="form-label">
+                    <span class="form_required">*</span>City
+                  </label>
+                  <select class="form-control" formControlName="city">
+                    <option value="" disabled selected>Select city </option>
+                    <option value="{{city}}" *ngFor="let city of cities">{{city}}</option>
+                  </select>
+                  <div *ngIf="instructorFormData.get('city').touched && instructorFormData.get('city').errors">
+                    <div class="error" *ngIf="instructorFormData.get('city').errors.required">
+                      City is required.
+                    </div>
+                    <div class="error" *ngIf="instructorFormData.get('city').errors.pattern">
+                      Enter valid city name
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group col-md-5">
+                  <label for="title" class="text-center form-label">
+                    <span class="form_required">*</span>Pin Code
+                  </label>
+                  <input type="text" formControlName="pincode">
+                  <div *ngIf="instructorFormData.get('pincode').touched && instructorFormData.get('pincode').errors">
+                    <div class="error" *ngIf="instructorFormData.get('pincode').errors.required">
+                      Pin code is required.
+                    </div>
+                    <div class="error" *ngIf="instructorFormData.get('pincode').errors.pattern || instructorFormData.get('pincode').errors.maxlength">
+                      Please enter valid pin code
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-1"></div>
+              </div>
+              <div class="row">
+                <div class="col-md-1"></div>
+                <div class="form-group col-md-10">
+                  <label for="title" class="text-center form-label">
+                    <span class="form_required">*</span>Address
+                  </label>
+                  <textarea class="form-control" formControlName="address"></textarea>
+                  <div *ngIf="instructorFormData.get('address').touched && instructorFormData.get('address').errors">
+                    <div class="error" *ngIf="instructorFormData.get('address').errors.required">
+                      Address is required.
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-1"></div>
+              </div>
+              <div class="row">
+                <div *ngIf="formType!='edit'" class="col-12 form-actions">
+                  <button type="button" class="btn btn-cancel" [routerLink]="['/', urlPrefix, 'instructors']">Cancel</button>
+                  <button type="button" *ngIf="formType!='edit'" class="btn btn-save" title="Save" [disabled]="!instructorFormData.valid" (click)="save(instructorFormData)" [ngStyle]="{'cursor':instructorFormData.valid ? 'pointer' : 'not-allowed' }">
+                    Save
+                  </button>
+                </div>
+                <div *ngIf="formType!='add'" class="col-12  form-actions">
+                  <button type="button" class="btn btn-cancel" title="Cancel" [routerLink]="['/', urlPrefix, 'instructors']">Cancel</button>
+                  <button type="button" *ngIf="formType!='add'" class="btn btn-update" title="Update" [disabled]="!instructorFormData.valid" (click)="update()" [ngStyle]="{'cursor':instructorFormData.valid ? 'pointer' : 'not-allowed' }">
+                    Update
+                  </button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

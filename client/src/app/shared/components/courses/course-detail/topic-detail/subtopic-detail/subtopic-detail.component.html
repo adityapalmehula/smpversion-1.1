@@ -1,0 +1,122 @@
+<div class="container-section">
+  <div class="row">
+    <div class="col-md-1 pl-0 pr-0">
+    </div>
+    <div class="col-md-11">
+      <div class="container-fluid">
+      <!--   <div class="row add-new-container">
+          <div class="col-8 text-left ">
+            <h3 class="page-heading">{{ subTopicData?.title}}</h3>
+          </div>
+          <div class="col-4 text-right">
+             [routerLink]="['/', urlPrefix, 'courses', 'topics', topicId]"
+            <a class="btn btn-outline-info back"  (click)="navigate()">
+              <i class="fa fa-arrow-circle-o-left" aria-hidden="true"></i> Back
+            </a>
+          </div>
+        </div> -->
+        <div class="row breadcrumb">
+          <div class="col-8 text-left mt-2 mb-1 ">
+            <a class="page-heading" [routerLink]="['/', urlPrefix, 'courses']"><i class="fa fa-home" aria-hidden="true"></i> Courses</a> / <a class="page-heading" [routerLink]="['/', urlPrefix, 'courses', courseId]" [queryParams]="{'tab':'topics'}"><i class="fa fa-home" aria-hidden="true" ></i> Topics</a> /<a class="page-heading" [routerLink]="['/', urlPrefix, 'courses', courseId,'topics', topicId]" [queryParams]="{'tab':'subtopics'}"><i class="fa fa-home" aria-hidden="true"></i> Subtopics
+            </a> /<span class="breadcrumb-active">Subtopic</span>
+          </div>
+          <div class="col-4 text-right">
+            <a class="btn btn-outline-info back" [routerLink]="['/', urlPrefix, 'courses', courseId,'topics', topicId]" [queryParams]="{'tab':'subtopics'}"><i class="fa fa-arrow-circle-o-left" aria-hidden="true"></i> Back
+            </a>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12 mt-3 mb-1 ">
+            <h3 class="title">{{ subTopicData.title | titlecase}}</h3>
+            <p class="description text-left mt-2" [innerHtml]="subTopicData.description"></p>
+          </div>
+        </div>
+        <hr>
+        <div class="row add-new-container">
+          <div class="col-12">
+            <nav class="nav nav-pills flex-column flex-sm-row  pl-3" role="tablist">
+              <a class="flex-sm-fill text-sm-center nav-link" [ngClass]="{'active': isDefaultTab ==='videos'  || isDefaultTab ==='' }" (click)="setDefaultTab('videos')" data-toggle="tab" href="#videos" role="tab">Videos</a>
+
+              <a class="flex-sm-fill text-sm-center nav-link" [ngClass]="{'active': isDefaultTab ==='questions'}" (click)="setDefaultTab('questions')" data-toggle="tab" href="#questions" role="tab">Questions</a>
+
+              <a class="flex-sm-fill text-sm-center nav-link" [ngClass]="{'active': isDefaultTab ==='notes'}" (click)="setDefaultTab('notes')" data-toggle="tab" href="#notes" role="tab">Notes
+              </a>
+
+              <a class="flex-sm-fill text-sm-center nav-link" [ngClass]="{'active': isDefaultTab ==='keypoints' }" (click)="setDefaultTab('keypoints')" data-toggle="tab" href="#keypoints" role="tab">KeyPoints</a>
+
+              <a class="flex-sm-fill text-sm-center nav-link" [ngClass]="{'active': isDefaultTab ==='media' }" (click)="setDefaultTab('media')" data-toggle="tab" href="#media" role="tab">Media</a>
+
+              <a class="flex-sm-fill text-sm-center nav-link" [ngClass]="{'active': isDefaultTab ==='references' }" (click)="setDefaultTab('references')" data-toggle="tab" href="#references" role="tab">References</a>
+
+              <a class="flex-sm-fill text-sm-center nav-link" [ngClass]="{'active': isDefaultTab ==='learning-plan' }" (click)="setDefaultTab('learning-plan')" data-toggle="tab" href="#learning-plan" role="tab" *ngIf="CONFIG.ADMIN.indexOf(role) > -1 || subTopicOwnerUserId == userId">Learning Plans</a>
+
+              <!-- <a class="flex-sm-fill text-sm-center nav-link" [ngClass]="{'active': isDefaultTab ==='assessments'}" (click)="setDefaultTab('assessments')" data-toggle="tab" href="#assessments" role="tab">Assessments</a> -->
+
+            </nav>
+          </div>
+
+          <div class="col-12 subTopics">
+            <!-- Tab panes -->
+            <div class="tab-content">
+              <div class="tab-pane" [ngClass]="{'active': isDefaultTab ==='videos' || isDefaultTab ==='' }" id="videos" role="tabpanel">
+                <app-videos [inputParams]="inputParams" [subTopicVideos]="subTopicVideos" (videosUpdated)="handleUpdated()" [subTopicOwnerUserId]="subTopicOwnerUserId" [courseStatus] = "courseStatus"></app-videos>
+              </div>
+
+              <!-- question div starts from here -->
+              <div class="tab-pane" [ngClass]="{'active': isDefaultTab ==='questions'}" id="questions" role="tabpanel">
+                <div *ngxPermissionsOnly="permissions; else queselse; then questhen"></div>
+                <ng-template #queselse>
+                  <div></div>
+                </ng-template>
+                <ng-template #questhen>
+                  <div class="col-12 text-right" *ngIf="CONFIG.ADMIN.indexOf(role) > -1 || subTopicOwnerUserId == userId">
+                    <a class="btn btn-outline-info add-new" [routerLink]="['/', urlPrefix, 'courses',courseId,'topics',topicId,'subtopics',subTopicId,'questions','add']"><i class="fa fa-plus-circle">
+                    </i> Add</a>
+                  </div>
+                </ng-template>
+                <app-questions [subTopicOwnerUserId]="subTopicOwnerUserId"></app-questions>
+              </div>
+              <!-- question div end here -->
+
+              <div class="tab-pane " [ngClass]="{'active': isDefaultTab ==='notes'}" id="notes" role="tabpanel">
+                <app-notes [subTopicNotes]="subTopicNotes" [subTopicId]="subTopicId" (notesUpdated)="handleUpdated()" [subTopicOwnerUserId]="subTopicOwnerUserId" [courseStatus] = "courseStatus"></app-notes>
+              </div>
+
+              <div class="tab-pane" [ngClass]="{'active': isDefaultTab ==='keypoints' }" id="keypoints" role="tabpanel">
+                <app-keypoints [subTopicKeyPoints]="subTopicKeyPoints"
+                [subTopicId]="subTopicId" (keyPointsUpdated)="handleUpdated()" [subTopicOwnerUserId]="subTopicOwnerUserId" [courseStatus] = "courseStatus"></app-keypoints>
+              </div>
+
+              <div class="tab-pane" [ngClass]="{'active': isDefaultTab ==='media' }" id="media" role="tabpanel">
+                <app-media-files [subTopicId]="subTopicId" [subTopicMediaFiles]="subTopicMediaFiles" (mediaFileUpdated)="handleUpdated()" [subTopicOwnerUserId]="subTopicOwnerUserId" [courseStatus] = "courseStatus"></app-media-files>
+              </div>
+
+              <div class="tab-pane" [ngClass]="{'active': isDefaultTab ==='references' }" id="references" role="tabpanel">
+                <app-references [subTopicId]="subTopicId" [subTopicReferences]="subTopicReferences" (referencesUpdated)="handleUpdated()" [subTopicOwnerUserId]="subTopicOwnerUserId" [courseStatus] = "courseStatus"></app-references>
+              </div>
+
+              <div class="tab-pane" [ngClass]="{'active': isDefaultTab ==='learning-plan' }" id="learning-plan" role="tabpanel" *ngIf="CONFIG.ADMIN.indexOf(role) > -1 || subTopicOwnerUserId == userId">
+                <app-learning-plan [subTopicId]="subTopicId" (learningPlanUpdated)="handleUpdated()" [subTopicData]="subTopicData" [courseStatus] = "courseStatus" ></app-learning-plan>
+              </div>
+
+              <!-- <div class="tab-pane" [ngClass]="{'active': isDefaultTab ==='assessments'}" id="assessments" role="tabpanel">
+                <div *ngxPermissionsOnly="permissions; else assessmentelse; then assessmentthen"></div>
+                <ng-template #assessmentelse>
+                  <div></div>
+                </ng-template>
+                <ng-template #assessmentthen>
+                  <div class="col-12 text-right">
+                    <a class="btn btn-outline-info add-new" [routerLink]="['/', urlPrefix, 'courses', 'topics','subtopics','assessments','add',subTopicId ]"><i class="fa fa-plus-circle">
+                    </i> Add</a>
+                  </div>
+                </ng-template>
+                <app-assessments [subTopicId]="subTopicId"></app-assessments>
+              </div> -->
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

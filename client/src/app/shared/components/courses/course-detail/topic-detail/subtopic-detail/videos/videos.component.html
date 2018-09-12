@@ -1,0 +1,65 @@
+<div class="row addContent">
+  <div class="col-sm-12 add text-right" *ngIf="CONFIG.ADMIN.indexOf(role) > -1 || videoOwnerUserId == userId">
+    <a class="btn btn-outline-info add-new" [routerLink]="['/', urlPrefix, 'courses', inputParams.courseId, 'topics', inputParams.topicId, 'subtopics', inputParams.subtopicId, 'videos',  'search-video']" *ngIf="cStatus===CONFIG.CONTENT_STATUS[3] || cStatus=== CONFIG.CONTENT_STATUS[5]"><i class="fa fa-plus-circle"> </i> Add</a>
+  </div>
+</div>
+<!-- <div class="row videoSection">
+  <div class="col-md-2 col-sm-12 videoContainer" *ngFor="let video of subTopicVideos;">
+
+    <a [routerLink]="['/', urlPrefix, 'courses', 'topics', 'subtopics', 'videos', 'play-video']" [queryParams]="{'videoId':video.videoId, 'subTopicId':subTopicId}">
+
+      <div class="image">
+        <img class="img-thumbnail" [src]="video.thumbnail" [alt]="video.title">
+      </div>
+      <div class="videoDescription">
+        <a class="videoTitle" [title]="video.title">{{video.title}}</a>
+      </div>
+      <div class="videoStats">
+        <span>{{video.statistics?.viewCount | formatNumber}} Views</span>
+      </div>
+    </a>
+    <div *ngxPermissionsOnly="permissions; else elseBlock; then thenBlock"></div>
+    <ng-template #elseBlock>
+      <div></div>
+    </ng-template>
+    <ng-template #thenBlock>
+      <div class="text-center">
+        <button class="btn btn-danger btn-sm " (click)="deleteVideo(video._id)" title="Delete Video"> Delete Video</button>
+      </div>
+    </ng-template>
+
+  </div>
+</div> -->
+
+<div class="row">
+  <div class="col-12 middle-section container-section">
+    <ul class="list-group">
+     <li class="list-group-item d-flex justify-content-between" *ngFor="let video of videos; let i= index; ">
+       <div class="row w-100">
+         <div class="col-md-1">
+           <img class="card-img-top img-fluid" [src]="video.thumbnail" [alt]="video.title">
+         </div>
+         <div class="col-md-8 text-left">
+          <div class="row">
+            <a href="javascript:void(0)" class="anchor-link" [routerLink]="['/', urlPrefix, 'courses', inputParams.courseId, 'topics', inputParams.topicId, 'subtopics', inputParams.subtopicId,'videos', 'play-video']" [queryParams]="{'videoId':video.videoId}">
+              <h5 class="mb-1 pt-1 subtitle"> {{video.title | titlecase}}
+              </h5>
+            </a>
+          </div>
+          <div class="row">
+           <span class="view-count">{{video.statistics?.viewCount | formatNumber}} Views</span>
+         </div>
+       </div>
+       <div class="col-md-3 text-right"  *ngIf="CONFIG.ADMIN.indexOf(role) > -1 || videoOwnerUserId == userId">
+         <button type="button" class="btn btn-light mr-2"  (click)="deleteVideo(video._id)" title="Delete Video" *ngIf="cStatus===CONFIG.CONTENT_STATUS[3] || cStatus=== CONFIG.CONTENT_STATUS[5]"><span class="fa fa-trash"></span></button>
+       </div>
+     </div>
+   </li>
+ </ul>
+</div>
+</div>
+<!-- pagination start here -->
+<!-- <div class="col-12 custom-pgn" *ngIf="totalItems>itemsPerPage">
+  <pagination class="pagination" [totalItems]="totalItems" [itemsPerPage]="itemsPerPage" [(ngModel)]="currentPage" (pageChanged)="pageChanged($event)"></pagination>
+</div> -->
+<!-- pagination end here -->

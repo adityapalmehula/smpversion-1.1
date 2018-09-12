@@ -1,0 +1,277 @@
+.manage-form-container{
+  padding: 17px;
+}
+.manage-form {
+  height: 210px;
+  height: 100%;
+  background: #ECEFF1;
+  position: relative;
+  padding: 5px;
+  border-radius: 10px;
+}
+.body{
+ /*background-color: #009688;*/
+}
+.qz-info { 
+  font-weight: 300;
+}
+.mt0 {
+  margin-top: 0px !important;
+}
+.manage-form textarea, input[type='text'], input[type='time'] {
+  border: none;
+  border-bottom: 1px solid rgb(210, 210, 210);
+  color: #333333;
+  font-size: 17px;
+  font-weight: normal;
+  line-height: 16px;
+  outline: none;
+  width: 90%;
+  /*padding-top: 25px;*/
+  padding-left: 4px;
+  padding-right: 20px;
+  margin-top: 17px;
+  text-transform: capitalize;
+}
+.qz-meta {
+ margin-top: 16px;
+}
+.mendatoryField{
+  color:red;
+}
+input[type='checkbox'] {
+  width: 12%
+}
+.checkbox-inline {
+  width: 100%;
+}
+.flow-h1 {
+  margin-top: 45px;
+  /*margin-bottom: 30px;*/
+  font-size: 36px;
+  line-height: 40px;
+  text-align: center;
+  font-weight: lighter;
+}
+.manage-form select {
+  padding: 1px;
+  border: none;
+  /*margin-top: 13px;*/
+  border-bottom: 1px solid rgb(210, 210, 210);
+  margin-left: -2px;
+  width: 92%;
+  display: inline;
+  /*color: rgb(210, 210, 210);*/
+  font-weight: 500;
+
+}
+.form-group{
+  margin-top: 20px;
+}
+.fst-opt {
+ color: rgb(210, 210, 210);
+}
+.form-actions {
+  margin-top: 30px;
+  text-align: center;
+  margin-bottom: 30px;
+}
+.cust{
+  padding-left: 25px;
+  padding-right: 25px;
+}
+::-webkit-input-placeholder {
+ text-transform: initial;
+}
+
+:-moz-placeholder { 
+ text-transform: initial;
+}
+
+::-moz-placeholder {  
+ text-transform: initial;
+}
+
+:-ms-input-placeholder { 
+ text-transform: initial;
+}
+.txt-trans {
+  text-transform: lowercase !important;
+}
+.danger-alert {
+ background-color: #dd2e1f;
+ color: #fff;
+ font: bold;
+ font-size: 15px;
+}
+.custom-success-alert{
+  background-color: #4CAF50;
+  color: #fff;
+  font: bold;
+  font-size: 15px;
+}
+.radio-btn label {
+  width: 40%;
+  font-size: 14px;
+  padding-top: 10px;
+}
+.radio-btn input {
+  width: 20%;
+}
+.checkbox-custom {
+  margin-left: 6px;
+  margin-top: 20px;
+}
+form {
+  width: 100%;
+}
+.cbx {
+  margin-top: 22px !important;
+}
+.card-section {
+  padding-left: 0px;
+  padding-right: 0px;
+  margin-top: 25px;
+}
+.card-title {
+  background-color: rgb(52, 113, 127);
+  height: 45px;
+  color: #fff;
+  padding-top: 10px;
+  padding-left: 12px;
+}
+.card-block{
+  padding: 0px 0px 20px 0px;
+}
+@media only screen and (min-width: 768px) and (max-width: 992px) {
+  .radio-btn label {
+    width: 70%;
+    font-size: 12px;
+    margin-top: -6px;
+    padding-top: 0px !important;
+  }
+  select {
+    margin-top: 0px !important;
+  }
+  textarea {
+    padding-top: 0px !important;
+  }
+}
+
+/* =================== question details css section start here ================== */ 
+
+.qus-card-title {
+  background-color: rgb(92, 183, 97);
+  height: 45px;
+  color: #fff;
+  padding-top: 10px;
+  padding-left: 12px;
+}
+.qus-card-section {
+  padding-left: 8px;
+  padding-right: 8px;
+  margin-top: 25px;
+}
+.card {
+  border:none;
+}
+.collapse {
+  border: 1px solid;
+  border-color: rgba(0, 0, 0, 0.125);
+  margin-bottom: 8px;
+}
+.content {
+  margin-top: 15px;
+  padding-bottom: 26px;
+}
+.qs {
+  background-color: #CFD8DC;
+}
+.qs p{
+  margin-top: 16px;
+}
+.opt {
+  margin-top: 13px!important;
+}
+.opt strong {
+  width: 8%;
+}
+.opt h6 {
+  width: 92%;
+  margin-bottom: 0px;
+  margin-top: 4px;
+}
+.sol{
+  padding-top: 8px;
+}
+.sol h6 {
+  margin-bottom: 0px;
+  margin-top: 4px;
+  margin-left: 15px;
+}
+.sol p{
+  margin-bottom: 0px;
+}
+@media (max-width: 992px) and (min-width: 768px){
+  .sol h6{
+    padding-left: 22px;
+  }
+}
+
+@media(min-width: 768px){
+  .spc {
+    margin-top: 50px;
+  }
+}
+.csp-title {
+  width: 80%;
+}
+.tgl-icon {
+  width: 19%;
+  margin-top: -20px;
+}
+@media(max-width: 768px){
+  .csp-title{
+    font-size: 15px;
+    padding-top: 3px;
+  }
+  .qz-info h4 {
+    font-size: 15px;
+    font-weight: 500;
+  }
+  .qz-info div {
+    font-size: 12px;
+  }
+}
+.mx-mrk {
+  padding: 7px 0px 0px 10px;
+}
+
+input[type="number"] {
+  width: 60px;
+  height: 30px;
+  border-radius: 8px;
+  border: solid 2px rgba(0, 0, 0, 0.31);
+  padding: 3px;
+  outline: none;
+  margin-top: -2px;
+}
+/*input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+  -webkit-appearance: none; 
+  margin: 0; 
+  }*/
+
+  /* =================== question details css section end here ================== */ 
+  .fa-check-square-o{
+    background-color: #28a745;
+    color: #FFF;
+    padding: 2px 4px 3px 5px;
+    font-size: 1.9em;
+  }
+  .fa-plus-square{
+    background-color: #868e96;;
+    color: #FFF;
+    padding: 2px 5px 3px 5px;
+    font-size: 1.9em;
+  }

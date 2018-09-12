@@ -1,0 +1,174 @@
+<div class="container-section">
+  <div class="row">
+    <div class="col-md-1 pl-0 pr-0">
+    </div>
+    <div class="col-md-11">
+      <div class="container-fluid">
+        <div class="row breadcrumb">
+          <div class="col-8 text-left mt-2 mb-1 ">
+            <h3 class="page-heading">Students</h3>
+            <div *ngxPermissionsOnly="permissions; else elseBlock; then thenBlock"></div>
+            <ng-template #elseBlock>
+              <div></div>
+            </ng-template>
+            <ng-template #thenBlock>
+              <a class="btn btn-outline-info add-new" [routerLink]="['/',urlPrefix,'students','add']"><i class="fa fa-plus-circle"> </i> Add</a>
+            </ng-template>
+          </div>
+          <div class="col-4 text-right">
+            <a class="btn btn-outline-info back" [routerLink]="['/', urlPrefix]"><i class="fa fa-arrow-circle-o-left" aria-hidden="true"></i> Back
+            </a>
+          </div>
+        </div>
+        <div class="row col-md-12">
+          <div class="form-group col-md-3">
+            <label for="type">Date Range: </label>
+            <input type="text" name="daterangeInput" daterangepicker [options]="options" (selected)="selectedDate($event, daterange)"/>
+            <i (click)="clearDateFilter()" class="fa fa-times-circle mt-1" aria-hidden="true" title="Clear"></i>
+          </div>
+          <div class="form-group col-md-3">
+            <label for="type">Status: </label>
+            <angular2-multiselect [ngModelOptions]="{standalone: true}" [data]="statusList" [(ngModel)]="selectedStatus" [settings]="statusConfig" (onSelect)="onStatusChange($event)" (onDeSelect)="onStatusChange($event)" (onSelectAll)="onStatusChange($event)" (onDeSelectAll)="onStatusChange($event)"></angular2-multiselect>
+          </div>
+
+          <div class="form-group col-3"></div>
+
+          <div class="form-group col-3 search-d mt-4">
+            <input class="ml-5" type="text" [(ngModel)]="searchText" placeholder="Search.." (keydown)="searchUser($event)" (input)="searchInputChange()">
+            <i (click)="clearSearch()" class="fa fa-times-circle mt-1" aria-hidden="true" title="Clear"></i>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-2 mt-1">
+            <input type="checkbox" [(ngModel)]='selectAllCheckbox' (change)="selectAllStudent($event)"> Select All
+          </div>
+          <div class="col-6"></div>
+          <div class="col-2 mt-1 text-right">
+            <button class="btn btn-info btn-md" (click)="updateFlockJoinStatus()">Joined Flock</button>
+          </div>
+          <div class="col-2 mt-1 pl-0">
+            <select class="form-control" (change)="setStatus($event)">
+             <option value="">Set Status</option>
+             <option *ngFor="let status of configStatus">{{status}}</option>
+           </select>
+         </div>
+       </div>
+       <div class="row">
+        <div class="col-md-12 mt-2 table-responsive">
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th scope="col"></th>
+                <th scope="col">Name</th>
+                <th scope="col">Email</th>
+                <th scope="col">Mobile</th>
+                <th scope="col">Type</th>
+                <th scope="col">Reg Date</th>
+                <th scope="col">Flock Joined</th>
+                <th scope="col">Status</th>
+                <th scope="col">Send Mail</th>
+                <th scope="col">&nbsp;&nbsp;Action&nbsp;&nbsp;</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let student of students; let i=index; ">
+                <th scope="row">
+                  <input type="checkbox" [checked]="student.selected"  (change)="selectStudent($event, student)"></th>
+                  <td><a (click)="getStudentDetails(student._id)" data-toggle="modal" data-target="#stu-details">{{student.name | titleCase}}</a></td>
+                  <td>{{student.email}}</td>
+                  <td>{{student.mobile}}</td>
+                  <td>{{student.type}}</td>
+                  <!-- <td>{{student.creationDate | amDateFormat:'LL'}}</td> -->
+                  <td>{{student?.createdBy?.date | date:'dd-MMM-yyyy,  HH:mm'}}</td>
+                  <td class="text-center">{{student.isFlockJoined ? 'Yes': 'No'}}</td>
+                  <td>{{student.status}}</td>
+                  <td>
+                    <button *ngIf="!student.isMailSend" class="btn btn-success btn-sm" (click)="sendWelcomeMail(student)">Welcome Mail</button>
+                    <button *ngIf="student.isMailSend" class="btn btn-info btn-sm" (click)="sendWelcomeMail(student)">Resend Mail</button>
+                  </td>
+                  <td>
+                    <div *ngIf="CONFIG.ADMIN.indexOf(role) > -1 || student?.createdBy?.id == userId || userId === student?.academicDetails.schoolId">
+                      <a href="javascript:void(0)" [routerLink]="['/', urlPrefix, 'students', 'edit', student._id]"><i class="fa fa-pencil" title="Edit student"></i></a>&nbsp;&nbsp;&nbsp;
+                      <a href="javascript:void(0)" (click)="delete(student._id)"> <i class="fa fa-trash" title="Delete student"></i></a>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- header div end here -->
+        <div class="row col-md-12 view-container">
+          <div class="col-12 custom-pgn" *ngIf="totalItems>itemsPerPage">
+            <pagination class="pagination" [totalItems]="totalItems" [itemsPerPage]="itemsPerPage" [(ngModel)]="currentPage" (pageChanged)="pageChanged($event)"></pagination>
+          </div>
+          <!-- pagination end here -->
+        </div>
+      </div>
+
+      <!--student details modal start here -->
+      <div class="modal fade" id="stu-details" tabindex="-1" role="dialog"
+      aria-labelledby="title" aria-hidden="true"> <!-- data-backdrop="static" -->
+      <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="title">Student Details</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close" #close>
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+
+            <div id="accordion" role="tablist" aria-multiselectable="true">
+              <div class="card-block row">
+                <div class="col-xl-4 col-lg-12 col-md-12 col-sm-12">
+                  <div class="profile-img2 text-center">
+                    <img *ngIf="stuDetails.gender=='Male'" class="card-img-top rounded-circle" alt="Responsive image" src="./../../../assets/images/user/user_profile_male.jpg" alt="Male">
+                    <img *ngIf="stuDetails.gender=='Female'" class="card-img-top rounded-circle" alt="Responsive image" src="./../../../assets/images/user/user_profile_female.jpg" alt="Female">
+                    <img *ngIf="!stuDetails.gender" class="card-img-top rounded-circle" alt="Responsive image" src="./../../../assets/images/user/user_profile_male.jpg" alt="Image not uploaded">
+                  </div>
+                </div>
+                <div class="col-xl-8 col-lg-12 col-md-12 col-sm-12">
+                  <table class="table">
+                    <tbody>
+                      <tr>
+                        <td>Name</td>
+                        <td>{{stuDetails.name}}</td>
+                      </tr>
+                      <tr *ngIf="stuDetails.schoolName">
+                        <td>School</td>
+                        <td>{{stuDetails.schoolName}}</td>
+                      </tr>
+                      <tr *ngIf="stuDetails.class">
+                        <td>Class</td>
+                        <td>{{stuDetails.class}}</td>
+                      </tr>
+                      <tr *ngIf="stuDetails.gender">
+                        <td>Gender</td>
+                        <td>{{stuDetails.gender}}</td>
+                      </tr>
+                      <tr>
+                        <td>Email</td>
+                        <td>{{stuDetails.email}}</td>
+                      </tr>
+                      <tr>
+                        <td>Mob. No.</td>
+                        <td>{{stuDetails.mobile}}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+    <!--student details modal end here -->
+  </div>
+</div>
+</div>

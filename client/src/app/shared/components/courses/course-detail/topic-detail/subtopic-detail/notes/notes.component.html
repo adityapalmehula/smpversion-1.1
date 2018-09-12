@@ -1,0 +1,145 @@
+<div class="row">
+  <div class="col-12 text-right pB10" *ngIf="CONFIG.ADMIN.indexOf(role) > -1 || notesOwnerUserId == userId">
+    <div *ngxPermissionsOnly="permissions; else elseBlock; then thenBlock"></div>
+    <ng-template #elseBlock>
+      <div></div>
+    </ng-template>
+    <ng-template #thenBlock>
+      <a class="btn btn-outline-info add-new" (click)="openNotesModel()" data-toggle="modal" data-target=".addNotesModal" *ngIf="cStatus===CONFIG.CONTENT_STATUS[3] || cStatus=== CONFIG.CONTENT_STATUS[5]"><i class="fa fa-plus-circle"> </i> Add</a>
+    </ng-template>
+  </div>
+</div>
+<!-- Start notes list -->
+<div class="row">
+  <div class="col-12 text-center" *ngIf="subTopicsNotesData?.length==0">
+    There is no notes available
+  </div>
+</div>
+<div class="row">
+  <div class="col-12 middle-section container-section">
+    <ul class="list-group">
+     <li class="list-group-item d-flex justify-content-between" *ngFor="let notes of subTopicsNotesData; let i=index">
+       <div class="row w-100">
+        <div class="col-9 text-left p-0">
+          <div class="row">
+            <a data-toggle="collapse" data-parent="#notesAccordion" href="{{'#collapseNotes'+i}}" [attr.aria-expanded]="true" [attr.aria-controls]="'collapseNotes'+i" class="anchor-link">
+              <h5 class="mb-1 pt-1 subtitle"> {{notes.title | titlecase}}
+              </h5>
+            </a>
+          </div>
+        </div>
+        <div class="col-3 text-right p-0" *ngIf="CONFIG.ADMIN.indexOf(role) > -1 || notesOwnerUserId == userId">
+          <div *ngxPermissionsOnly="permissions; else elseBlock; then thenBlock"></div>
+          <ng-template #elseBlock>
+          </ng-template>
+          <ng-template #thenBlock>
+            <div *ngIf="cStatus===CONFIG.CONTENT_STATUS[3] || cStatus=== CONFIG.CONTENT_STATUS[5]">
+              <button type="button" class="btn btn-light btn-sm" title="Edit notes" (click)="editNotes(notes._id)" data-toggle="modal" data-target=".addNotesModal" >
+               <span class="fa fa-pencil"></span>
+             </button>
+             <button type="button" class="btn btn-light btn-sm" (click)="delelteNotes(notes._id)" title="Delete notes"><span class="fa fa-trash"></span>
+             </button>
+           </div>
+         </ng-template>
+       </div>
+       <div id="{{'collapseNotes'+i}}" class="collapse" role="tabpanel" [attr.aria-labelledby]="'notes'+i">
+        <div class="p-0">
+          <div class="row">
+            <div class="col-12 mt-3 description-text" [innerHtml]="notes.description"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </li>
+</ul>
+<div class="col-12 custom-pgn" *ngIf="totalItems>itemsPerPage">
+  <pagination class="pagination" [totalItems]="totalItems" [itemsPerPage]="itemsPerPage" [(ngModel)]="currentPage" (pageChanged)="pageChanged($event)"></pagination>
+</div>
+</div>
+</div>
+
+<!-- Add and edit model for notes -->
+<div class="modal fade addNotesModal" tabindex="-1" role="dialog" aria-labelledby="notesModal" aria-hidden="true" data-backdrop="static" data-keyboard="false" id="notesModal">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <!-- Modal Header -->
+      <div class="modal-header text-center">
+        <h4 aria-hidden="true ">Notes</h4>
+        <span class="sr-only">Notes</span>
+        <button type="button" class="close" data-dismiss="modal" title="Close" #close (click)="closeModal()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <!-- Modal Body -->
+   <!--    <div *ngIf="errorMessage">
+        <div class="errorMessage">
+          {{errorMessage}}
+        </div>
+      </div> -->
+      <div *ngIf="backendErrorMsg">
+        <ul>
+          <li class="backend-errors" *ngFor="let msg of backendErrorMsg.slice().reverse() ">{{msg}}</li>
+        </ul>
+      </div>
+      <form class="form-horizontal" role="form" [formGroup]="formNotes">
+        <div class="modal-body">
+          <div class="row form-group">
+            <label class="col-sm-2 control-label" for="Notes Title">Title : </label>
+            <div class="col-sm-10">
+              <input type="text" class="form-control" placeholder="" formControlName="title" />
+              <div *ngIf="formNotes.get('title').touched && formNotes.get('title').errors">
+                <div class="error">
+                  <div *ngIf="formNotes.get('title').errors.minlength">
+                    {{Config.title.minlength[1]}}
+                  </div>
+                  <div *ngIf="formNotes.get('title').errors.maxlength">
+                    {{Config.title.maxlength[1]}}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row form-group">
+            <label class="col-sm-2 control-label" for="Notes Description">Description : </label>
+            <div class="col-sm-10">
+              <ckeditor class="form-control" [(ngModel)]="descriptionValue"  debounce="500" [ngModelOptions]="{standalone: true}">
+              </ckeditor>
+              <div>
+                <div class="error" *ngIf="descriptionError">
+                 {{descriptionError}}
+               </div>
+             </div>
+           </div>
+         </div>
+         <div class="row form-group ">
+          <label class="col-sm-2 control-label" for="Topic status">Status : </label>
+          <div class="col-sm-3 col-md-12 col-lg-3">
+            <div class="form-check form-check-inline">
+              <label class="form-check-label">
+                <input class="form-check-input" type="radio" name="statusCheck" [value]="status.ACTIVE" checked formControlName="statusCheck"> Active
+              </label>
+            </div>
+            <div class="form-check form-check-inline">
+              <label class="form-check-label">
+                <input class="form-check-input" type="radio" name="statusCheck" [value]="status.INACTIVE" formControlName="statusCheck"> Inactive
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-cancel" data-dismiss="modal" title="Cancel" (click)="closeModal()">
+          Cancel
+        </button>
+        <button type="button" class="btn btn-save" *ngIf="!notesId"  title="Save" [disabled]="!formNotes.valid" (click)="saveNotes(formNotes)" [ngStyle]="{'cursor':formNotes.valid ? 'pointer' : 'not-allowed' }">
+          Save
+        </button>
+        <button type="button" class="btn btn-save" *ngIf="notesId" title="Update" data-dismiss="modal" [disabled]="!formNotes.valid" (click)="updateNotes(formNotes)" [ngStyle]="{'cursor':formNotes.valid ? 'pointer' : 'not-allowed' }">
+          Update
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+</div>
+

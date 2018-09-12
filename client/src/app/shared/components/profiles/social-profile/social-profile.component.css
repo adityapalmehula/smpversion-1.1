@@ -1,0 +1,24 @@
+/* table data rezise*/
+.tableData-resize
+{
+  width: 136px !important;
+  height: 45px !important;
+}
+
+.modal-heading{
+  font-weight: 800;
+  color: #212121;
+}
+/* modify platform name inside table*/
+.platform-name{
+  font-weight: 600;
+  font-size: 15px;
+  color: #606060;
+}
+/* modify platform url inside table*/
+.platform-url
+{
+  font-weight: 500;
+  font-size: 14px;
+  color: #606060;
+}

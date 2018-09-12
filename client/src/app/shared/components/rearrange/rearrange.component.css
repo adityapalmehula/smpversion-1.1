@@ -1,0 +1,11 @@
+.rearrange-content {
+	margin-top: 20px !important;
+}
+.item {
+	cursor: pointer !important;
+}
+.card-primary {
+  background-color: #4f6f8f;
+  border-color: #4f6f8f;
+  color: #fff;
+}

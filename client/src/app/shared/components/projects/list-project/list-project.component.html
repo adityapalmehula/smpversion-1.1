@@ -1,0 +1,59 @@
+<div class="container-section">
+  <div class="row">
+    <div class="col-md-1 pl-0 pr-0">
+    </div>
+    <div class="col-md-11">
+      <div class="container-fluid">
+      	<div class="row breadcrumb">
+      		<div class="col-8 text-left mt-2 mb-1 ">
+      		<h3 class="page-heading">Projects</h3>
+      		</div>
+      		<div class="col-4 text-right">
+      			<a class="btn btn-outline-info back" [routerLink]="['/', urlPrefix]"><i class="fa fa-arrow-circle-o-left" aria-hidden="true"></i> Back
+      			</a>
+      		</div>
+      	</div>
+
+      	<div class="row content">
+      		<div class="col-lg-2 col-md-3 col-sm-12 content-list" *ngFor="let project of projects; let i=index; ">
+      		<div class="col-lg-2 col-md-3 col-sm-12 content-list">
+      			<div class="card card-custom">
+
+             <img *ngIf="project.icon" class="card-img-top card-img-custom" [attr.src]="courseImgPath+project.icon"
+            [attr.alt]="project.title">
+             <div *ngIf="i%2===0; else oddImg; then evenImg"></div>
+             <ng-template #evenImg>
+               <img *ngIf="!project.icon" class="card-img-top card-img-custom" src="{{imgPath}}/course-default.jpg" [attr.alt]="project.title">
+             </ng-template>
+             <ng-template #oddImg>
+               <img *ngIf="!project.icon" class="card-img-top card-img-custom" src="{{imgPath}}/course-default2.jpeg" [attr.alt]="project.title">
+             </ng-template>
+             <div class="card-body">
+             	<p class="card-text title-cust">{{project.title}}</p>
+             	<!-- <p class="ins-title" [innerHtml]="project.description | words: 15"></p> -->
+             	<span> <span class="created-by">Created by:</span>
+             	<span class="ins-title">{{project?.createdBy?.name}}</span></span>
+
+             	<span class="row ins-title">
+             		<star-rating-comp [starType]="'svg'" [rating]="project?.rating"></star-rating-comp>
+             		<span class="m-1">{{project?.rating}}</span>
+             		<span class="m-1">({{project?.userRatings.length}})</span>
+             	</span><br/>
+             	<span class="prc-box">
+
+             		<span>
+             			<span class="act-prc-box"></span>
+             			<span class="act-prc"><i class="fa fa-inr"></i>{{project?.price?.actual}}</span>
+             			<span><i class="fa fa-inr"></i>{{project?.price?.offered}}</span>
+             		</span>
+             		<span> <a class="btn btn-sm btn-course" [routerLink]="['/', urlPrefix,'projects','preview-projects',project._id]" ><i class="fa fa-eye" aria-hidden="true"></i> Preview
+             		</a></span>
+             	</span>
+             </div>
+           </div>
+         </div>
+       </div>
+     </div>
+    </div>
+  </div>
+</div>

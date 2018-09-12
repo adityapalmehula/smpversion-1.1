@@ -1,0 +1,31 @@
+ <div class="row">
+ 	<div class="col-12 middle-section">
+ 		<ul class="list-group">
+ 			<li class="list-group-item d-flex justify-content-between" *ngFor="let task of taskDetails; let i=index; ">
+ 				<div class="row w-100">
+ 					<div class="col-9 text-left p-0">
+ 						<div class="row">
+ 							<a data-toggle="collapse" data-parent="#taskAccordion" href="{{'#taskAccordion'+i}}" [attr.aria-expanded]="true" [attr.aria-controls]="'taskAccordion'+i" class="anchor-link">
+ 								<h5 class="mb-1 pt-1 subtitle"> {{task.title | titlecase}}
+ 								</h5>
+ 							</a>
+ 						</div>
+ 					</div>
+ 					<div class="col-3 text-right p-0" *ngIf="CONFIG.ADMIN.indexOf(role) > -1 || projectOwnerUserId == userId">
+ 					 <div *ngIf="projectData.status===CONFIG.CONTENT_STATUS[3] || projectData.status=== CONFIG.CONTENT_STATUS[5]">
+ 						<button type="button" class="btn btn-light btn-sm mr-2" title="Edit task" [routerLink]="['/', urlPrefix, 'projects', projectId, 'stories', storyId,'tasks', 'edit',task._id]"><span class="fa fa-pencil"></span></button>
+ 						<button type="button" class="btn btn-light btn-sm mr-2" title="Delete task" (click)="delete(task._id)"><span class="fa fa-trash"></span></button>
+ 						</div>
+ 					</div>
+ 				<div id="{{'taskAccordion'+i}}" class="collapse" role="tabpanel" [attr.aria-labelledby]="'task'+i">
+ 						<div class="p-0">
+ 							<div class="row">
+ 								<div class="col-12 mt-3 description-text" [innerHtml]="task.description"></div>
+ 							</div>
+ 						</div>
+ 					</div>
+ 				</div>
+ 			</li>
+ 		</ul>
+ 	</div>
+ </div>

@@ -1,0 +1,327 @@
+.header {
+	background-color: #fff;
+	border-bottom: 2px solid #ebebeb;
+}
+.mid-section {
+	margin-top: 12px;
+	margin-bottom: 12px;
+	padding-right: 60px;
+	padding-left: 60px;
+}
+.heading {
+ font-size: 1.50rem;
+ font-weight: 400;
+ line-height: 2.46rem;
+ color: black;
+}
+.topicHeading {
+ color: #333333;
+ font-size: 1.24rem;
+ font-weight: 400;
+}
+.subtopic-length {
+ font-size: .8rem;
+}
+.subHeading {
+ font-size: 1rem;
+ font-weight: 400;
+ line-height: 1.84rem;
+}
+.short-description {
+ font-weight: 500;
+ line-height: 1.84rem;
+ color: #212121;
+ font-size: .9rem;
+}
+.long-description {
+ font-weight: 400;
+ line-height: 1.84rem;
+ font-size: .9rem;
+}
+.list-item {
+ line-height: 1.53rem;
+ font-size: 0.9rem;
+}
+
+.pL20pT5fW300 {
+ padding-left: 20px;
+ padding-top: 5px;
+ font-weight: 300;
+}
+
+.pL10 {
+ padding-left: 10px;
+}
+.pL20 {
+ padding-left: 20px;
+}
+.pL45 {
+ padding-left: 45px;
+}
+
+.pB10 {
+ padding-bottom: 10px;
+}
+.pR10 {
+ padding-right: 10px;
+}
+.fa-chevron-down {
+ font-size: 10px;
+}
+p {
+ display: block;
+ -webkit-margin-before: 1em;
+ -webkit-margin-after: 1em;
+ -webkit-margin-start: 0px;
+ -webkit-margin-end: 0px;
+}
+a:hover {
+ color:#42a5f5;
+ text-decoration: none;
+}
+.back-button {
+ margin-left: 10px;
+ color: #4f6f8f;
+ border: none;
+ font-size: 19px;
+ text-align: right;
+ padding-bottom: 5px;
+}
+.back-button:hover {
+ color: #fff !important;
+ background-color: #4f6f8f;
+ border: #4f6f8f;
+}
+.section-heading {
+ font-size: 1.10rem;
+ font-weight: 400;
+ line-height: 2.46rem;
+ color: black;
+}
+.curriculam-section {
+ padding-bottom: 20px;
+}
+.topic-list {
+ margin-bottom: 10px;
+ cursor: pointer;
+}
+.list-heading {
+ color: #757575;
+ margin-bottom: 10px;
+ font-weight: 500 !important;
+}
+.icon-block.half {
+ width: 50px;
+ height: 50px;
+ line-height: 50px;
+ font-size: 27px;
+ padding: 1px;
+}
+.img-circle {
+ border-radius: 50%;
+}
+.topic-title {
+ width: 100%;
+}
+.subTopic-details {
+ padding-top: 10px;
+}
+.topic-icon {
+ padding-right: 0px;
+}
+.btn-default {
+ background-color: #fff;
+ border-color: #e2e9e6;
+ cursor: pointer;
+}
+.btn-default:hover {
+ background-color: #fff;
+ border-color: #e2e9e6;
+ cursor: pointer;
+}
+.btn-down {
+  padding: .40rem .75rem;
+}
+
+.feedback-container {
+  width: 100%;
+}
+.feedback-title {
+  font-weight: 500;
+  color: #212121;
+  font-size: .9rem;
+}
+.rating {
+  float: left;
+  justify-content: left !important;
+}
+.progress-bar {
+  /*width: 25%;*/
+}
+.progress {
+  margin-top: 10px;
+}
+.like-dislike {
+  /*padding-top: 20px;*/
+  padding-left: 2px
+}
+.f-s-14 {
+  font-size: 14px;
+}
+.showSection {
+  cursor: pointer;
+}
+.course-rating {
+  padding-right: 20px;
+}
+.pb-50 {
+  padding-bottom: 50px;
+}
+@media(max-width: 768px) {
+ .back-button {
+  color: #4f6f8f;
+  border: none;
+  font-size: 12px;
+  text-align: left;
+  padding-right: 5px;
+  padding-left: 5px;
+}
+.mid-section {
+  padding-right: 0px;
+  padding-left: 0px;
+}
+.topicHeading {
+  color: #333333;
+  font-size: .9rem;
+  font-weight: 400;
+}
+.subtopic-length {
+  font-size: .7rem;
+}
+.icon-block.half {
+  width: 50px;
+  height: 50px;
+  line-height: 50px;
+  font-size: 15px;
+}
+.topic-icon {
+  position: relative;
+  width: 120%;
+  min-height: 1px;
+  padding-right: 8px;
+  padding-left: 8px;
+}
+}
+.list-data {
+  padding: .25rem .50rem !important;
+}
+.grey {
+  color: #ABB2B9;
+}
+.orange {
+  color: #F39C12;    
+}
+.green {
+  color: #449d44;
+}
+.fa-3x {
+  font-size: 2.35em;
+}
+
+@media (max-width:568px) {
+  .fa-3x {
+    font-size: 1.35em;
+  }
+  .topicHeading {
+    padding-left: 10px;
+  }
+}
+@media(max-width:768px) {
+ .topicHeading {
+  padding-left: 10px;
+}
+.c-btn {
+  font-size: 11px;
+  padding-left: 6px;
+  padding-right: 6px;
+  font-weight: 500;
+}
+}
+.error-warning {
+  color: #dc3545 !important;
+}
+.error-border {
+  border-color: #dc3545 !important;
+}
+.err-bg {
+  background-color: #dc3545 !important;
+  color: #ffffff;
+}
+.mendatoryField {
+  color: #dc3545 !important;
+}
+
+.pratice-form input[type='text'], input[type='number'] {
+  border: none;
+  border-bottom: 1px solid rgb(210, 210, 210);
+  color: #333333;
+  font-size: 17px;
+  font-weight: normal;
+  line-height: 16px;
+  outline: none;
+  width: 80%;
+  padding-left: 4px;
+  padding-right: 20px;
+}
+
+
+.pratice-form label {
+  font-size: 14px;
+  font-weight: 500;
+  font-family: RobotoDraft;
+  color: #42a5f5;
+  display: block !important;
+  margin-bottom: 0px !important;
+}
+
+.pratice-form select {
+  padding: 1px;
+  border: none;
+  border-bottom: 1px solid rgb(210, 210, 210);
+  margin-left: -2px;
+  width: 80%;
+  display: inline;
+  font-weight: 500;
+}
+.pratice-form fieldset {
+  border: 2px #D3D3D3 solid !important;
+}
+fieldset.scheduler-border {
+  border: 1px groove #ddd !important;
+  padding: 0 1.4em 1.4em 1.4em !important;
+  margin: 0 0 1.5em 0 !important;
+  -webkit-box-shadow:  0px 0px 0px 0px #f5f5f5;
+  box-shadow:  0px 0px 0px 0px #f5f5f5;
+}
+
+legend.scheduler-border {
+  font-size: 1.2em !important;
+  font-weight: bold !important;
+  text-align: left !important;
+  width:auto;
+  padding:0 10px;
+  border-bottom:none;
+}
+
+fieldset {
+  border: 1px #F5F5F5 solid !important;
+}
+.pratice-form {
+  max-height: 450px;
+  overflow-y: auto;
+}
+
+.modal-cust {
+  background-color: #FFFF !important;
+  margin-top: -1px;
+}

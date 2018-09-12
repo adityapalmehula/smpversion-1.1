@@ -1,0 +1,212 @@
+<div class="container-section">
+  <div class="row">
+    <div class="col-md-1 pl-0 pr-0">
+      <!-- <div class="sidebar-container">
+        <app-sidebar></app-sidebar>
+      </div> -->
+    </div>
+    <div class="col-md-11">
+
+
+      <div class="row add-new-container header">
+            <!--  <div class="col-md-4 col-sm-12 pB10"> 
+
+          <span class="row ins-title">
+            <star-rating-comp  [starType]="'svg'" [rating]="courseData?.rating"></star-rating-comp>
+            <span class="m-1">{{courseData?.rating}}</span> <span *ngIf="courseData?.userRatings"
+            class="m-1">({{courseData?.userRatings?.length}} Ratings)</span>
+          </span>
+        </div> -->
+            <!--  <div class="col-md-4 col-sm-12">
+         <span *ngIf="courseData?.totalStudents">{{courseData?.totalStudents}} Students enrolled</span>
+       </div> -->
+            <!--  <div class="col-md-4 col-sm-12">
+         <span class="m-1" *ngIf="courseData?.createdBy">Created by: {{courseData?.createdBy.name}}</span>
+       </div>
+     </div> -->
+          <!--  <div class="col-3 text-right">
+     <a class="btn btn-outline-info back-button" (click)="back()"><i class="fa fa-arrow-circle-o-left" aria-hidden="true"></i> Back
+     </a>
+   </div> -->
+        <!--  <div *ngIf="errorMessage" class="alert alert-danger danger-alert text-center" role="alert">
+    <strong>{{errorMessage}}</strong>
+  </div>
+-->
+<div *ngIf="courseData" class="row add-new-container">
+  <div class="col-md-9 col-sm-12 pB-50">
+    <h3 class="heading">{{courseData?.title}}
+    </h3>
+    <p class="list-heading">Description :-</p>
+    <p class="short-description text-left" [innerHtml]="courseData?.shortDescription"></p>
+    <p class="long-description text-left" [innerHtml]="courseData?.longDescription"></p>
+    <div *ngIf="courseData?.prerequisites">
+      <p class="list-heading">Prerequisites:-</p>
+      <p class="long-description text-left" [innerHtml]="courseData?.prerequisites"></p>
+    </div>
+    <div class="row">
+      <div class="col-12">
+        <ol class="list-group">
+          <p class="list-heading">Curriculum</p>
+          <div class="row" *ngIf="topicData?.length !== 0">
+            <div class="col-12">
+              <li class="list-group-item list-data justify-content-between topic-list" *ngFor=" let topic of topicData; let i=index ">
+                <div (click)="rotate('topic'+i)" class="d-flex w-100 justify-content-between" data-toggle="collapse" [attr.data-target]='"#topic-"+i' aria-expanded="false">
+                  <div class="row topic-title">
+                    <div class="col-md-1 topic-icon" *ngIf="i<=colors.length-1">
+                      <span class="icon-block img-circle half text-white text-center" [ngStyle]="{'background-color': colors[i]}">
+                        <i class="fa fa-graduation-cap"></i>
+                      </span>
+                    </div>
+                    <div class="col-md-1 topic-icon" *ngIf="i>=colors.length">
+                      <span class="icon-block img-circle half text-white text-center" [ngStyle]="{'background-color': colors[i%colors.length]}">
+                        <i class="fa fa-graduation-cap"></i>
+                      </span>
+                    </div>
+                    <div class="col-8 text-left">
+                      <span class="topicHeading pL10">{{topic.title | titleCase}}<br>
+                      </span>
+                      <span class="subtopic-length pL10">{{topic.subtopics?.length}} Subtopics</span>
+                    </div>
+                    <div class="col-2 text-right">
+                      <span class="btn btn-secondary btn-down">
+                        <i id="topic{{i}}"  class="fa fa-chevron-down rotate-down"></i>
+                      </span>
+
+                    </div>
+                  </div>
+                </div> 
+
+                <div class="w-100 collapse pL20 subTopic-details" [attr.id]='"topic-"+i'>
+                 <ol class="list-group">
+                  <div *ngIf="topic.subtopics.length === 0">
+                    <li class="list-group-item justify-content-between">
+                      There is no subtopic available.
+                    </li>
+                  </div>
+                  <div>
+                   <div *ngFor=" let subTopic of topic.subtopics; let j=index ">
+                    <app-contents [subTopic]="subTopic" [index]="j" [flow]="flow"></app-contents>
+                  </div>
+                </div>
+              </ol>
+            </div>
+          </li>
+        </div>
+      </div>
+      <div class="row" *ngIf="topicData?.length === 0">
+       <div class="col-12">
+         <li class="list-group-item justify-content-between topic-list">
+          There is no topic.
+        </li>
+      </div>
+    </div>
+  </ol>
+</div>
+</div>
+</div>
+<div class="col-md-3">
+  <ul class="list-group">
+    <li class="list-group-item rightContent-heading">Course</li>
+<!--     <li class="list-group-item list-item">
+      <div class="d-flex w-100 justify-content-between">
+        <small class="list-content"> Actual Price :  <i class="fa fa-inr"></i> {{courseData?.price?.actual}}</small>
+      </div>
+      <div class="d-flex w-100 justify-content-between">
+        <small class="list-content"> Offered Price : <i class="fa fa-inr"></i> {{courseData?.price?.offered}}</small>
+      </div>
+    </li> -->
+    <li class="list-group-item list-item text-center" *ngIf="!courseStatus">
+     <button *ngIf="courseData?.activationMethod==='Auto'" type="button" class="btn btn-primary btn-sm btn-course" (click)="takeCourse(courseData?.courseId)">Take Course</button>
+
+     <!-- <button *ngIf="courseData?.activationMethod ==='Paid'" type="button" class="btn btn-primary btn-sm btn-course" (click)="buyCourse(courseData?.courseId)">Buy Now</button> -->
+
+      <button *ngIf="courseData?.activationMethod ==='Paid'" type="button" class="btn btn-primary btn-sm btn-course" (click)="addToCart(courseData?.courseId)">Add To Cart</button>
+
+     <button *ngIf="courseData?.activationMethod==='Promotion'  && !studentInfo?.isSubscribed" type="button" class="btn btn-primary btn-sm btn-course" (click)="subscribeCourse(courseData?.activationMethod ,share)" data-toggle="modal">Subscribe</button>
+
+     <button *ngIf="courseData?.activationMethod==='Promotion' && studentInfo?.isSubscribed" type="button" class="btn btn-primary btn-sm btn-course" (click)="takeCourse(courseData?.courseId)" data-toggle="modal">Take Course</button>
+   </li>
+   <li class="list-group-item list-item text-center" *ngIf="courseStatus">
+    <button type="button" class="btn btn-primary btn-sm btn-course"  [routerLink]="['/', urlPrefix, 'course-details', courseId, 'play-contents']">Go To Course</button>
+  </li>
+</ul>
+</div>
+
+<!-- <div class="col-md-9">
+ <ol class="list-group">
+  <p class="list-heading">Feedbacks ({{courseData?.userRatings?.length}})</p>
+  <div *ngIf="courseData?.userRatings?.length !== 0" >
+    <li class="list-group-item justify-content-between topic-list" *ngFor=" let userRating of courseData?.userRatings; let i=index ">
+     <div class="row">
+      <div class="col-12">
+       <span class="feedback-title">{{userRating?.title}} 
+        <star-rating-comp class="rating" [starType]="'svg'" [rating]="userRating?.rating"></star-rating-comp>
+      </span>
+
+      <p class="long-description">{{userRating?.description}}</p>
+    </div>
+    <div class="col-md-3 col-sm-12 f-s-14"><i class="fa fa-user"></i> &nbsp; {{userRating?.name}}</div>
+    <div class="col-md-3 col-sm-12 f-s-14"><i class="fa fa-calendar"></i> &nbsp; {{userRating?.ratedOn | date:'mediumDate'}}</div>
+    <div class="col-md-3 col-sm-12 f-s-14"><i class="fa fa-thumbs-up"></i> &nbsp; {{userRating?.likes?.length}} &nbsp; <i class="fa fa-thumbs-down"></i> &nbsp; {{userRating?.dislikes?.length}}</div>
+  </div>
+</li>
+<div *ngIf="feedbackLength==1">
+ <p  class="text-center showSection" (click)="showMoreFeedback()">show more</p>
+</div>
+<div *ngIf="feedbackLength!=1">
+ <p class="text-center showSection" (click)="showLessFeedback()">show less</p>
+</div>
+</div>
+
+<div *ngIf="courseData?.userRatings?.length === 0">
+ <li class="list-group-item justify-content-between topic-list">
+  There is no feedback.
+</li>
+</div>
+</ol>
+</div> -->
+</div>
+</div>
+<button style="display:none" data-toggle="modal" class="btn btn-primary" data-target="#shareModal" #share></button>
+<!-- Modal div start here -->
+<div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="shareModal" aria-hidden="true" data-keyboard="false" id="shareModal">
+  <div class="modal-dialog modal-md">
+    <div class="modal-content">
+      <!-- Modal Header -->
+      <!-- <div class="modal-header">
+        <h4 aria-hidden="true" class="modal-heading"><strong>Interested? Share to Friends, Get Free Access & Let the World Know
+         Benefits of Sharing:</strong></h4>
+         <button type="button" class="close" data-dismiss="modal" title="Close" (click)="closeModal()" aria-label="Close" #close>
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div> -->
+      <!-- Modal Body -->
+      <div class="modal-body row text-center">
+        <!-- <div clas="col-xl-8 col-lg-8 col-md-12 col-sm-12" style="margin-left: 15px !important;">
+          <ul class="ml-20 pl-3">
+            <li><strong>Free access</strong> to the course for 1 month.</li>
+            <li><strong>Free videos</strong> in the playlists</li>
+            <li><strong>Free Assessments </strong></li>
+            <li><strong>Free Notes + Keypoints </strong></li>
+            <li>No restrictions on any material given in the course </li>
+            <li>Friends can also get the access of the course</li>
+            <li>Community contributions to make the learning better</li>
+          </ul>
+          Wait no more! Hit the “share” button and get started now…
+        </div> -->
+        <!-- <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 text-center">
+      </div> -->
+      <img class="shr-img pl-2" src="{{imgPath}}/facebookshare.png" alt="Card image cap">
+    </div>
+    <div class="modal-footer">
+      <!-- Disabled facebook sharing -->
+      <!-- <a href="javascript:void(0)" class="btn btn-primary fb-btn" (click)="socialMediaShare()"><span class="fa fa-facebook fa-1x"></span>&nbsp;&nbsp;Share</a> -->
+
+      <a href="javascript:void(0)" class="btn btn-primary fb-btn" (click)="socialMediaShare()"><span class="fa fa-youtube fa-1x"></span>&nbsp;&nbsp;Subscribe</a>
+      <button type="button" class="btn btn-secondary"  data-dismiss="modal" #close>Close</button>
+    </div>
+    <!-- Modal Footer -->
+  </div>
+</div>
+</div>
+<!-- Modal div end here -->

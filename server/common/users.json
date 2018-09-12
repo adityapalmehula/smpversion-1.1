@@ -1,0 +1,17 @@
+[{
+	"year" : "",
+	"schoolId" : "",
+	"class" : "",
+	"rollNo" : "",
+	"userId" : "",
+	"firstName" : "",
+	"lastName" : "",
+	"email" : "",
+	"mobile" : "",
+	"courses" : [],
+	"playLists" : [],
+	"sharedPlayLists" : [],
+	"status" : "",
+	"loginName" : "",
+	"password" : ""
+}]

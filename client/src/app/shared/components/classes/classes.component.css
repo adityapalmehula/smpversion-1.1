@@ -1,0 +1,15 @@
+.heading {
+  font-size: 1.50rem;
+  font-weight: 400;
+  line-height: 2.46rem;
+  color: black;
+}
+.modal-header > h4{
+  font-weight: 500;
+  font-size: 18px;
+  margin-bottom: 0px;
+}
+.modal-body h4 {
+ font-weight: 500;
+ font-size: 15px;
+}

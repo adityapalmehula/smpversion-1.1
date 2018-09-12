@@ -1,0 +1,117 @@
+<div class="row">
+  <div class="col-md-1 pl-0 pr-0"></div>
+  <div class="col-md-11 pl-0 pr-3 container-fluid">
+   <div class="row breadcrumb" *ngIf="role!=config.USER_STUDENT">
+    <div class="col-8 text-left mt-2 mb-1 ">
+      <a class="page-heading" [routerLink]="['/', urlPrefix, 'courses']"><i class="fa fa-home" aria-hidden="true"></i> Courses</a> / 
+      <a class="page-heading" [routerLink]="['/', urlPrefix, 'courses',courseId]" [queryParams]="{'tab':'assessments'}"><i class="fa fa-home" aria-hidden="true"></i> Assessments</a> / 
+      <span class="breadcrumb-active">Results</span>
+    </div>
+    <div class="col-4 text-right">
+      <a class="btn btn-outline-info back"  [routerLink]="['/', urlPrefix, 'courses',courseId]" [queryParams]="{'tab':'assessments'}" ><i class="fa fa-arrow-circle-o-left" aria-hidden="true"></i> Back
+      </a>
+    </div>
+  </div>
+
+  <div class="row breadcrumb" *ngIf="role==config.USER_STUDENT">
+    <div class="col-8 text-left mt-2 mb-1 ">
+      <a class="page-heading" [routerLink]="['/', urlPrefix, 'mycourses']"><i class="fa fa-home" aria-hidden="true"></i> Courses</a> / 
+      <a class="page-heading" [routerLink]="['/', urlPrefix, 'course-details',courseId,'assessments']" [queryParams]="{'tab':'assessments'}"><i class="fa fa-home" aria-hidden="true"></i> 
+        Assessments</a> / 
+        <span class="breadcrumb-active">Results</span>
+      </div>
+      <div class="col-4 text-right">
+       <a class="btn btn-outline-info back" [routerLink]="['/', urlPrefix, 'course-details',courseId,'assessments']">
+        <i class="fa fa-arrow-circle-o-left" aria-hidden="true"></i> Back
+      </a>
+    </div>
+  </div>
+
+  <div class="container-section">
+    <div class="row add-new-container">
+      <div class="col-8 text-left p-2">
+        <h4 class="cust-head">{{assessmentInfo?.assessment}}</h4>
+      </div>
+      <!-- <div class="col-4 text-right" *ngIf="role==config.USER_STUDENT"></div> -->
+      <div class="mgt-10 ml-2">
+        <span class="ht-tm-element badge badge-danger">Type: {{assessmentInfo?.type}}</span> |
+        <span class="ht-tm-element badge badge-primary">Level: {{assessmentInfo?.level}} </span> |
+        <span class="ht-tm-element badge badge-success">Questions: {{assessmentInfo?.totalQuestion}} </span> |
+        <span class="ht-tm-element badge badge-warning">Marks: {{assessmentInfo?.totalMarks}} </span> |
+        <span class="ht-tm-element badge badge-danger">Passing Percentage: {{assessmentInfo?.passPercentage}} %</span>
+      </div>
+      <div class="col-md-12 p-0 pt-3">
+        <app-assessment-detail-result [assessmentInfo]="assessmentInfo"></app-assessment-detail-result>
+      </div> 
+      <div class="row col-md-12 p-3 cust-panel">
+       <div class="col-md-1 p-2 filter">
+        <h4>Status</h4>
+      </div>
+      <div class="col-md-2 pr-0">
+        <select id="status" class="form-control pl-2" (change)="selectedStatus($event.target.value)">
+          <option [selected]="!status" value="">All attempts </option>
+          <option [selected]="status==sts" value="{{sts}}" *ngFor="let sts of resultStatus">{{sts}}</option>
+        </select>
+      </div>
+    </div>
+
+  </div>
+  <hr>
+  <div class="row cust-table">
+   <div class="col-md-12 cust-table p-0">
+     <div class="table-panel">
+      <div class="table-responsive bg-white">
+        <table class="table v-middle">
+         <thead class="">
+          <tr class="col-md-12">
+            <th class="text-center">No.</th>
+            <th class="text-center">Correct Answered</th>
+            <th class="text-center">Incorrect Answered</th>
+            <th class="text-center">Score</th>
+            <th class="text-center">Percentage</th>
+            <th class="text-center">Status</th>
+            <th class="text-center">Date</th>
+            <th class="text-center">Time</th>
+            <th class="text-center">Detail</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let assessmentResult of assessmentResults; let i=index; ">
+            <td class="text-center"><strong>{{i+1}}.</strong></td>
+            <td class="text-center">{{assessmentResult.correctAns}}</td>
+            <td class="text-center">{{assessmentResult.totalQuestion-assessmentResult.correctAns}}</td>
+            <td class="text-center">{{assessmentResult.score}}</td>
+            <td class="text-center">{{assessmentResult.scorePercentage}}%</td>
+            <td class="text-center" [class.correct]="assessmentResult.resultStatus===resultStatus[0]"
+            [class.incorrect]="assessmentResult.resultStatus===resultStatus[1]">{{assessmentResult.resultStatus}}</td>
+            <td class="text-center">{{assessmentResult.createdBy.date | date:'dd/MM/yyyy'}}</td>
+            <td class="text-center">{{assessmentResult.createdBy.date | date:'shortTime'}}</td>
+            <td class="text-center">
+              <div *ngIf="role==config.USER_STUDENT; else elseblock; then thenblock;"></div>
+              <ng-template #thenblock>
+               <a title="Result Details" href="javascript:void(0)" [routerLink]="['/',urlPrefix,'course-details',courseId,'assessments','result','detail',assessmentResult._id]">View</a>
+             </ng-template>
+             <ng-template #elseblock>
+               <a title="Result Details" href="javascript:void(0)" [routerLink]="['/',urlPrefix,'courses',courseId,'assessments', assessmentId, 'result','detail',assessmentResult._id]">View</a>
+             </ng-template>
+           </td>
+         </tr>
+
+       </tbody>
+     </table>
+     <div class="col-12 text-center no-data" *ngIf="assessmentResults?.length===0">No data avaliable</div>
+   </div>
+ </div>
+
+ <div class="row col-md-12 view-container">
+  <div class="col-12 custom-pgn" *ngIf="totalItems>itemsPerPage">
+    <pagination class="pagination" [totalItems]="totalItems" [itemsPerPage]="itemsPerPage" [(ngModel)]="currentPage" (pageChanged)="pageChanged($event)"></pagination>
+  </div>
+</div>
+
+</div>
+</div>
+
+</div>
+</div>
+</div>

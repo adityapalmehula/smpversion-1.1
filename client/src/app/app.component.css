@@ -1,0 +1,15 @@
+.container-fluid {
+	padding-right: 0px;
+	padding-left: 0px;
+}
+.body-section {
+	height: 85vh;
+  overflow-y: auto;
+}
+
+@media(max-width: 768px) {
+.body-section {
+	height: 75vh;
+  overflow-y: auto;
+}
+}

@@ -1,0 +1,502 @@
+<div class="container-section">
+  <div class="row">
+    <div class="col-md-1 pl-0 pr-0" *ngIf="!nestedComp"></div>
+    <div class="col-md-11 container-fluid" [ngClass]="{'col-md-12 p-0': nestedComp}">
+      <div class="row breadcrumb" *ngIf="!nestedComp">
+        <div class="col-8 text-left mt-2 mb-1 ">
+          <a class="page-heading" [routerLink]="['/', urlPrefix, 'courses']"><i class="fa fa-home" aria-hidden="true"></i> Courses</a> / 
+          <a class="page-heading" [routerLink]="['/', urlPrefix, 'courses',courseId]" [queryParams]="{'tab':'assessments'}"><i class="fa fa-home" aria-hidden="true"></i> Assessments</a> / 
+
+          <span *ngIf="formType=='add'" class="breadcrumb-active">Add new assessment</span>
+          <span *ngIf="formType!='add'" class="breadcrumb-active">Update assessment</span>
+        </div>
+        <div class="col-4 text-right">
+          <a class="btn btn-outline-info back" [routerLink]="['/', urlPrefix,'courses',courseId]" [queryParams]="{'tab':'assessments'}" ><i class="fa fa-arrow-circle-o-left" aria-hidden="true"></i> Back
+          </a>
+        </div>
+      </div>
+      <div class="body">
+       <!--  <div class="col-12 back-button text-right mt-3">
+          <a class="btn btn-outline-info back" ><i class="fa fa-arrow-circle-o-left" aria-hidden="true"></i>Back
+          </a>
+        </div> -->
+        <div class="row">
+          <div class=" col-xl-12 col-lg-12 col-md-12 col-sm-12 p-0">
+            <div  *ngIf="!nestedComp">
+              <h1 *ngIf="formType=='add'" class="flow-h1">Add Assessment</h1>
+              <h1 *ngIf="formType=='edit'" class="flow-h1">Update Assessment</h1>
+            </div>
+            <div class="row">
+              <div class="card col-lg-12 col-md-12 card-section">
+                <div class="row base">
+                  <!-- assessment form start from here -->
+                  <form class="row" [formGroup]="form">
+                    <div class="form-group col-md-4">
+                      <label for="assessment">Assessment name<span class="mendatoryField">*</span></label>
+                      <input type="text" formControlName="assessment">
+                      <div *ngIf="form.get('assessment').touched && form.get('assessment').errors">
+                        <div class="error-msg ml-3" *ngIf="form.get('assessment').errors.required">Assessment name is required</div>
+                      </div>
+                    </div>
+                    <div class="form-group col-md-4">
+                      <label for="type">Assessment type<span class="mendatoryField">*</span></label>
+                      <select class="form-control" formControlName="type">
+                        <option [selected]="i==1" *ngFor="let type of types; let i=index; " [attr.value]="type">{{type}}</option>
+                      </select>
+                      <div *ngIf="form.get('type').touched && form.get('type').errors">
+                        <div class="error-msg ml-3" *ngIf="form.get('type').errors.required">
+                          Assessment type is required
+                        </div>
+                      </div>
+                    </div>
+                    <div class="form-group col-md-4">
+                      <label for="level">Assessment level<span class="mendatoryField">*</span></label>
+                      <select class="form-control" formControlName="level" (change)="getLevelBasedQuestion()">
+                        <option [selected]="i==3" *ngFor="let level of levels; let i=index;" [attr.value]="type"> {{level}}</option>
+                      </select>
+                      <div *ngIf="form.get('level').touched && form.get('level').errors">
+                        <div class="error-msg ml-3" *ngIf="form.get('level').errors.required">
+                          Assessment level is required
+                        </div>
+                      </div>
+                    </div>
+                    <div class="form-group col-md-4">
+                      <label for="passPercentage">Passing percentage<span class="mendatoryField">* &nbsp;</span>
+                        <span _ngcontent-c5="" class="badge badge-pill badge-success">{{passPercentage}} %</span>
+                      </label>
+                      <ion-range-slider class="col-md-8" type="single" min="1" [max]="100" [from]="defaultPassPercentage" [to]="100" (onChange)="handleChange($event)"></ion-range-slider>
+                      <!-- <input type="text" formControlName="passPercentage">%
+                        <div *ngIf="form.get('passPercentage').touched && form.get('passPercentage').errors">
+                        <div class="error-msg ml-3" *ngIf="form.get('passPercentage').errors.required">Passing percentage is required</div>
+                      </div> -->
+                    </div>
+                    <div class="form-group col-md-4">
+                      <label for="status">Status<span class="mendatoryField">*</span></label>
+                      <select class="form-control" formControlName="status">
+                        <option [selected]="i===0" *ngFor="let sts of status; let i=index;" [attr.value]="sts"> {{sts}}</option>
+                      </select>
+                    </div>
+                    <div class="form-group col-md-4" *ngIf="form.get('type').value!= types[0]">
+                      <label for="tags">Max time (HH:MM)<span class="mendatoryField">*</span></label>
+                      <input id="time" type="time" formControlName="maxTime">
+                    </div> 
+
+                    <div class="form-group col-md-4" *ngIf="form.get('type').value=== types[2]">
+                      <label for="tags">Set Date<span class="mendatoryField">*</span></label>
+                      <my-date-range-picker name="mydaterange" [options]="myDateRangePickerOptions"
+                      formControlName="myDateRange"></my-date-range-picker>
+                    </div>
+
+                    <div class="row col-md-12 ml-0">
+                      <div class="col-md-2">
+                        <button class="btn btn-white paper-shadow relative" data-toggle="collapse" data-target="#adv"><i class="fa fa-cog" aria-hidden="true"></i> Advance</button>
+                      </div>
+                      <div class="col-md-10 form-group" style="display:inherit!important">
+                        <label for="type" class="mt-3">Keywords</label>&nbsp;&nbsp;&nbsp;
+                        <rl-tag-input class="col-md-10" placeholder="Add keywords" [(ngModel)]="tags" [ngModelOptions]="{standalone: true}"></rl-tag-input>
+                      </div>
+                      <!-- advance setting div start from here -->
+                      <div id="adv" class="collapse">
+                        <hr class="row col-11" />
+                        <div class="form-group row col-md-12 mt-20">
+                          <label class="col-md-2" for="tags">Instructions at start<span class="mendatoryField">*</span></label>
+                          <ckeditor class="col-md-8 form-control" [(ngModel)]="insAtStart" debounce="500" [ngModelOptions]="{standalone: true}">
+                          </ckeditor>
+                        </div>
+                        <div class="form-group row col-md-12 mt-20">
+                          <label class="col-md-2" for="tags">Instructions at the end<span class="mendatoryField">*</span></label>
+                          <ckeditor class="col-md-8 form-control" [(ngModel)]="insAtTheEnd" debounce="500" [ngModelOptions]="{standalone: true}">
+                          </ckeditor>
+                        </div>
+                        <div class="form-group row col-md-12 mt-20">
+                          <label class="col-md-2" for="tags">Show feedback<span class="mendatoryField">*</span></label>
+                          <div class="col-md-10">
+                            <div class="rd">
+                              <label>
+                                <input type="radio" formControlName="showFeedbackAt" name="showFeedbackAt" [value]="showFeedbackAt[0]">&nbsp;&nbsp; {{showFeedbackAt[0]}}
+                              </label>
+                            </div>
+                            <div class="rd">
+                              <label>
+                                <input type="radio" formControlName="showFeedbackAt" name="showFeedbackAt" [value]="showFeedbackAt[1]">&nbsp;&nbsp; {{showFeedbackAt[1]}}
+                              </label>
+                            </div>
+                            <div class="rd">
+                              <label>
+                                <input type="radio" formControlName="showFeedbackAt" name="showFeedbackAt" [value]="showFeedbackAt[2]">&nbsp;&nbsp; {{showFeedbackAt[2]}}
+                              </label>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="form-group row col-md-12 mt-20">
+                          <label class="col-md-2" for="tags">Show score to learner<span class="mendatoryField">*</span></label>
+                          <div class="col-md-10">
+                            <div class="rd">
+                              <label>
+                                <input type="radio" formControlName="showScoreAt" [value]="showScoreAt[0]">&nbsp;&nbsp; {{showScoreAt[0]}}
+                              </label>
+                            </div>
+                            <div class="rd">
+                              <label>
+                                <input type="radio" formControlName="showScoreAt" [value]="showScoreAt[1]">&nbsp;&nbsp; {{showScoreAt[1]}}
+                              </label>
+                            </div>
+                            <div class="rd">
+                              <label>
+                                <input type="radio" formControlName="showScoreAt" [value]="showScoreAt[2]">&nbsp;&nbsp; {{showScoreAt[2]}}
+                              </label>
+                            </div>
+                            <div class="rd">
+                              <label>
+                                <input type="radio" formControlName="showScoreAt" [value]="showScoreAt[3]">&nbsp;&nbsp; {{showScoreAt[3]}}
+                              </label>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="form-group row col-md-12 mt-20">
+                          <label class="col-md-2" for="tags">Shuffle answers<span class="mendatoryField">*</span></label>
+                          <div class="col-md-10">
+                            <div class="rd">
+                              <label>
+                                <input type="radio" formControlName="shuffleAns" [value]="shuffleAns[0]"> &nbsp;&nbsp;{{shuffleAns[0]}}
+                              </label>
+                            </div>
+                            <div class="rd">
+                              <label>
+                                <input type="radio" formControlName="shuffleAns" [value]="shuffleAns[1]"> &nbsp;&nbsp;{{shuffleAns[1]}}
+                              </label>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="form-group row col-md-12 mt-20">
+                          <label class="col-md-2" for="tags">Max number of attempts<span class="mendatoryField">*</span></label>
+                          <div class="col-md-6">
+                            <select class="form-control" formControlName="maxAttempts">
+                              <option *ngFor="let attempt of maxAttempt; let i=index;" [attr.value]="attempt">{{attempt}}
+                              </option>
+                            </select>
+                          </div>
+                        </div>
+                      </div>
+                      <!-- advance setting div end from here -->
+                      <hr class="row col-11" />
+                      <!-- filter div start from here -->
+                      <div class="form-group row col-md-12 mt-20">
+                        <div class="form-group col-md-4">
+                          <label for="type">Topics</label>
+                          <angular2-multiselect [ngModelOptions]="{standalone: true}" [data]="topicsList" [(ngModel)]="selectedTopics" [settings]="topicsConfig" (onSelect)="onTopicsChange($event)" (onDeSelect)="onTopicsDeSelect($event)" (onSelectAll)="onTopicsChange($event)" (onDeSelectAll)="onTopicsDeSelectAll($event)"></angular2-multiselect>
+                        </div>
+                        <div class="form-group col-md-4">
+                          <label for="type">Sub-topics</label>
+                          <angular2-multiselect [ngModelOptions]="{standalone: true}" [data]="subTopicsList" [(ngModel)]="selectedSubTopics" [settings]="subTopicsConfig"></angular2-multiselect>
+                        </div>
+                        <div class="form-group col-md-4">
+                          <label for="type">Date range</label>
+                          <input type="text" name="daterangeInput" daterangepicker [options]="options" (selected)="selectedDate($event, daterange)" />
+                        </div>
+                        <div class="form-group col-md-4">
+                          <label for="type">Question types</label>
+                          <angular2-multiselect [ngModelOptions]="{standalone: true}" [data]="qusTypesList" [(ngModel)]="selectedQusTypes" [settings]="qusTypesConfig"></angular2-multiselect>
+                        </div>
+                        <div class="form-group col-md-4">
+                          <label for="type">Question selection type</label>
+                          <select [ngModelOptions]="{standalone: true}" class="form-control" [(ngModel)]="queSelectionType">
+                            <option *ngFor="let qusList of qusLists;" [attr.value]="qusList"> {{qusList}}</option>
+                          </select>
+                        </div>
+                     <!--  <div class="form-group col-md-2">
+                        <label for="type">Minimum time appeared</label>
+                        <input type="number" class="mt-3" [ngModelOptions]="{standalone: true}" [(ngModel)]="minAppeared.value" (input)="validate(minAppeared)">
+                        <div *ngIf="minAppeared.required">
+                          <div class="error-msg ml-2">Minimum time appeared required</div>
+                        </div>
+                        <div *ngIf="minAppeared.notNumber">
+                          <div class="error-msg ml-2">Please enter valid number</div>
+                        </div>
+                      </div> -->
+                      <div *ngIf="form.get('level').value===levels[3]; else elseBlock" class="row col-md-12">
+                        <fieldset class=" row col-md-12 scheduler-border" style="border: 2px #D3D3D3 solid !important;">
+                          <legend class="scheduler-border">
+                            <div class="form-group">
+                              <label for="type">Total question</label>
+                              <input type="number" [ngModelOptions]="{standalone: true}" [(ngModel)]="totalQuestion.value" (input)="validate(totalQuestion)">
+                              <div *ngIf="totalQuestion.required">
+                                <div class="error-msg ml-3">Total question required</div>
+                              </div>
+                              <div *ngIf="totalQuestion.notNumber">
+                                <div class="error-msg ml-3">Please enter valid number</div>
+                              </div>
+                              <div *ngIf="totalQuestion.notMatch || totalBasicLevelQus.notMatch || totalItmLevelQus.notMatch || totalAdvLevelQus.notMatch " class="col-md-12 text-center error-msg ml-3" style="font-size: 18px;">
+                                Sum of all the question levels not match to total question
+                              </div>
+                            </div>
+                          </legend>
+                          <div class="row control-group">
+                            <div class="form-group col-md-4">
+                              <label for="type">No. of basic level questions</label>
+                              <input type="number" [ngModelOptions]="{standalone: true}" [(ngModel)]="totalBasicLevelQus.value" (input)="validate(totalBasicLevelQus)">
+                              <div *ngIf="totalBasicLevelQus.required">
+                                <div class="error-msg ml-3">No. of basic level question required</div>
+                              </div>
+                              <div *ngIf="totalBasicLevelQus.notNumber">
+                                <div class="error-msg ml-3">Please enter valid number</div>
+                              </div>
+                            </div>
+                            <div class="form-group col-md-4">
+                              <label for="type">No. of intermediate level questions</label>
+                              <input type="number" [ngModelOptions]="{standalone: true}" [(ngModel)]="totalItmLevelQus.value" (input)="validate(totalItmLevelQus)">
+                              <div *ngIf="totalItmLevelQus.required">
+                                <div class="error-msg ml-3">No. of intermediate level question required</div>
+                              </div>
+                              <div *ngIf="totalItmLevelQus.notNumber">
+                                <div class="error-msg ml-3">Please enter valid number</div>
+                              </div>
+                            </div>
+                            <div class="form-group col-md-4">
+                              <label for="type">No of advance level questions</label>
+                              <input type="number" [ngModelOptions]="{standalone: true}" [(ngModel)]="totalAdvLevelQus.value" (input)="validate(totalAdvLevelQus)">
+                              <div *ngIf="totalAdvLevelQus.required">
+                                <div class="error-msg ml-3">No. of advance level question required</div>
+                              </div>
+                              <div *ngIf="totalAdvLevelQus.notNumber">
+                                <div class="error-msg ml-3">Please enter valid number</div>
+                              </div>
+                            </div>
+                          </div>
+                        </fieldset>
+                      </div>
+                      <ng-template #elseBlock>
+                        <div class="form-group col-md-2">
+                          <label for="type">Total question</label>
+                          <input type="number" class="mt-3" [ngModelOptions]="{standalone: true}" [(ngModel)]="totalQuestion.value" (input)="validateTotalQuestionCount(totalQuestion)">
+                          <div *ngIf="totalQuestion.required">
+                            <div class="error-msg ml-2">Total question required</div>
+                          </div>
+                          <div *ngIf="totalQuestion.notNumber">
+                            <div class="error-msg ml-2">Please enter valid number</div>
+                          </div>
+                        </div>
+                      </ng-template>
+                    </div>
+                    <!-- filter div ends here -->
+                    <div class="col-md-12 text-right">
+                      <button class="btn btn-primary" (click)="applyFilter()">Apply</button>
+                    </div>
+                    <hr class="row col-11" />
+                    <!-- question list div start from here -->
+                    <div class="row form-group row col-md-12 mt-20">
+                      <div class="col-md-6 mt-20 pr-0">
+                        <nav class="nav nav-pills flex-column flex-sm-row  pl-3" role="tablist">
+                          <a *ngIf="form.get('level').value == levels[3] || form.get('level').value == levels[0]" class="flex-sm-fill text-sm-center nav-link" [ngClass]="{'active': form.get('level').value == levels[0] || form.get('level').value == levels[3] }" data-toggle="tab" href="#bscQus" role="tab">Basic level &nbsp;<span class="badge badge-pill badge-success">{{bscQuestions.length}}</span></a>
+                          <a *ngIf="form.get('level').value == levels[3] || form.get('level').value == levels[1]" class="flex-sm-fill text-sm-center nav-link" [ngClass]="{'active': form.get('level').value == levels[1]}" data-toggle="tab" href="#itmQus" role="tab">Intermediate level &nbsp;<span class="badge badge-pill badge-success">{{itmQuestions.length}}</span></a>
+                          <a *ngIf="form.get('level').value == levels[3] || form.get('level').value == levels[2]" class="flex-sm-fill text-sm-center nav-link" [ngClass]="{'active': form.get('level').value == levels[2]}" data-toggle="tab" href="#advQus" role="tab">Advance level  &nbsp;<span class="badge badge-pill badge-success">{{advQuestions.length}}</span></a>
+                        </nav>
+                          <!--  <div class="col-md-12">
+          <input type="number" class="mt-3" [ngModelOptions]="{standalone: true}" [(ngModel)]="search" (input)="search(minAppeared)">
+        </div> -->
+        <div class="col-12 hgt">
+          <!-- Tab panes -->
+          <div class="tab-content">
+            <div class="tab-pane" [ngClass]="{'active show': form.get('level').value == levels[0] || form.get('level').value == levels[3] }" id="bscQus" role="tabpanel">
+              <div class="list-group mt-4 mb-4">
+                <a *ngFor="let data of bscQuestions; let i=index;" class="list-group-item list-group-item-action flex-column align-items-start">
+                  <div class="d-flex w-100 justify-content-between">
+                    <p>
+                      <span *ngIf="data.question" [innerHtml]="data.question"></span>
+                      <span *ngIf="data.qusIcon" class="text-right">
+                        <img [attr.src]="basePath+data.qusIcon">
+                      </span>
+                    </p>
+                    <small class="pl-1">
+                      <i href="javascript:void(0)" data-toggle="modal" data-target="#qus-details" class="fa fa fa-eye fa-2x" aria-hidden="true" (click)="getQuestionDetails(data._id,qusLevels[0])" title="View"></i>&nbsp;&nbsp;
+
+                      <i class="fa fa-cart-plus fa-2x" aria-hidden="true" title="Add to list" (click)="addToList(data._id,0)"></i>
+
+                    </small>
+                  </div>
+                  <p class="mb-1 lst-itm">
+                    <span>Type:&nbsp;</span>{{data.qusType}} &nbsp;&nbsp;
+                    <span>Marks:&nbsp;</span>
+                    <input type="number" [ngModelOptions]="{standalone: true}" [(ngModel)]="bscQuestions[i].marks">
+                  </p>
+                </a>
+              </div>
+            </div>
+            <div class="tab-pane" [ngClass]="{'active show': form.get('level').value == levels[1]}" id="itmQus" role="tabpanel">
+              <div class="list-group mt-4 mb-4">
+                <a *ngFor="let data of itmQuestions; let i=index;" class="list-group-item list-group-item-action flex-column align-items-start">
+                  <div class="d-flex w-100 justify-content-between">
+                    <p>
+                      <span *ngIf="data.question" [innerHtml]="data.question"></span>
+                      <span *ngIf="data.qusIcon" class="text-right">
+                        <img [attr.src]="basePath+data.qusIcon">
+                      </span>
+                    </p>
+                    <small>
+                     <i href="javascript:void(0)" data-toggle="modal" data-target="#qus-details" class="fa fa fa-eye fa-2x" aria-hidden="true" (click)="getQuestionDetails(data._id,qusLevels[1])" title="View"></i>&nbsp;&nbsp;
+                     <i class="fa fa-cart-plus fa-2x" (click)="addToList(data._id,1)" aria-hidden="true" title="Add to list"></i></small>
+                   </div>
+                   <p class="mb-1 lst-itm">
+                    <span>Type:&nbsp;</span>{{data.qusType}} &nbsp;&nbsp;
+                    <span>Marks:&nbsp;</span>
+                    <input type="number" [ngModelOptions]="{standalone: true}" [(ngModel)]="itmQuestions[i].marks">
+                  </p>
+                  <small></small>
+                </a>
+              </div>
+            </div>
+            <div class="tab-pane" [ngClass]="{'active show': form.get('level').value == levels[2]}" id="advQus" role="tabpanel">
+              <div class="list-group mt-4 mb-4">
+                <a *ngFor="let data of advQuestions; let i=index;" class="list-group-item list-group-item-action flex-column align-items-start">
+                  <div class="d-flex w-100 justify-content-between">
+                    <p>
+                      <span *ngIf="data.question" [innerHtml]="data.question"></span>
+                      <span *ngIf="data.qusIcon" class="text-right">
+                        <img [attr.src]="basePath+data.qusIcon">
+                      </span>
+                    </p>
+                    <small>
+                     <i href="javascript:void(0)" data-toggle="modal" data-target="#qus-details" class="fa fa fa-eye fa-2x" aria-hidden="true" (click)="getQuestionDetails(data._id,qusLevels[2])" title="View"></i>&nbsp;&nbsp;
+                     <i class="fa fa-cart-plus fa-2x" (click)="addToList(data._id,2)" aria-hidden="true" title="Add to list"></i></small>
+                   </div>
+                   <p class="mb-1 lst-itm">
+                    <span>Type:&nbsp;</span>{{data.qusType}} &nbsp;&nbsp;
+                    <span>Marks:&nbsp;</span>
+                    <input type="number" [ngModelOptions]="{standalone: true}" [(ngModel)]="advQuestions[i].marks">
+                  </p>
+                  <small></small>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="form-group row col-md-6 mt-20">
+        <div class="col-md-12">
+          <div class="col-md-12 text-right">
+            <div *ngIf="totalMarks>0" class="display-inline">
+              <label class="display-inline" for="type">Total marks:&nbsp;</label>
+              <span class="badge badge-pill badge-primary">{{totalMarks}}</span>&nbsp;&nbsp;
+            </div>
+            <label class="display-inline" for="type">Total question:&nbsp;</label>
+            <span class="badge badge-pill badge-success">{{qusDataArr.length}}</span>/<span class="badge badge-pill badge-danger">{{totalQuestion.value}}</span>
+          </div>
+          <div class="mt-4 mb-4 ml-0 pt-2 pr-2 hgt">
+            <div class="list-group">
+              <a *ngFor="let data of questions; let i=index;" class="list-group-item list-group-item-action flex-column align-items-start">
+                <div class="d-flex w-100 justify-content-between">
+                  <p>
+                    <span *ngIf="data.question" [innerHtml]="data.question"></span>
+                    <span *ngIf="data.qusIcon" class="text-right">
+                      <img [attr.src]="basePath+data.qusIcon">
+                    </span>
+                  </p>
+                  <small>
+                    <i href="javascript:void(0)" data-toggle="modal" data-target="#qus-details" class="fa fa fa-eye fa-2x" aria-hidden="true" (click)="getQuestionDetails(data._id,'qusCartList')" title="View"></i>&nbsp;&nbsp;
+                    <i class="fa fa-times-circle fa-2x" (click)="removeFromList(data._id,data.level)"aria-hidden="true" title="Remove from list"></i>
+                  </small>
+                </div>
+                <p class="mb-1 lst-itm">
+                  <span>Type:&nbsp;</span>{{data.qusType}} &nbsp;
+                  <span>Level:&nbsp;</span>{{data.level}} &nbsp;&nbsp;
+                  <span>Marks:&nbsp;</span>
+                  <input type="number" [ngModelOptions]="{standalone: true}" (input)="sumMarks()" [(ngModel)]="questions[i].marks">
+                </p>
+                <small></small>
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="col-12 custom-pgn" *ngIf="itemsPerPage<qusDataArr.length">
+          <pagination [ngModelOptions]="{standalone: true}" class="pagination" [totalItems]="totalItems" [itemsPerPage]="itemsPerPage" [(ngModel)]="currentPage" (pageChanged)="pageChanged($event)"></pagination>
+        </div>
+      </div>
+    </div>
+    <!-- question list div ends here -->
+  </div>
+  <div class=" col-12  form-actions">
+    <button type="button" class="btn btn-default" (click)="cancel()">Cancel</button>
+    <button *ngIf="formType=='add'" type="submit" [disabled]="form.invalid" class="btn btn-primary" (click)="save()">Submit</button>
+    <button *ngIf="formType=='edit'" type="submit" class="btn btn-primary" [disabled]="form.invalid" (click)="update()">Update</button>
+  </div>
+</form>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- question details modal start fron here  -->
+<div class="modal fade" id="qus-details" tabindex="-1" role="dialog" aria-labelledby="title" aria-hidden="true">
+  <!-- data-backdrop="static" -->
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="title">Question Details</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" #close>
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="content">
+          <div class="row">
+            <div class="col-md-11 p-0">
+              <p>
+                <span *ngIf="qusDetails.question" [innerHtml]="qusDetails.question"></span>
+                <span *ngIf="qusDetails.qusIcon" class="text-right">
+                  <img [attr.src]="basePath+qusDetails.qusIcon">
+                </span>
+              </p>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-5" *ngFor="let option of qusDetails.options; let i=index;">
+              <div class="row disp">
+                <strong>{{i+1}}.&nbsp;</strong>
+                <p *ngIf="option.text" class="mt-1" [innerHtml]="option.text"></p>
+                <p *ngIf="option.icon" class="mt-1"><img [attr.src]="basePath+option.icon"></p>
+              </div>
+            </div>
+          </div>
+          <hr>
+          <div class="row">
+            <div class="col-md-2"><strong>Categories :-</strong></div>
+            <div class="col-md-10 m-l">
+              <span *ngFor="let category of qusDetails.qusCategories; let i=index">{{category}}, </span>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-2"><strong>Type :-</strong></div>
+            <div class="col-md-10 m-l">
+              <h6>{{qusDetails.qusType}}</h6>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-2"><strong>Level :-</strong></div>
+            <div class="col-md-10 m-l">
+              <h6>{{qusDetails.level}}</h6></div>
+            </div>
+            <div class="row" style="word-wrap: break-word;">
+              <div class="col-md-2"><strong>Answers :-</strong></div>
+              <div  class="col-md-10 m-l" *ngFor="let answer of qusDetails.answers; let i=index;">
+                <p *ngIf="qusDetails.options[answer.id].text" [innerHtml]="qusDetails.options[answer.id].text"></p>
+                <p *ngIf="qusDetails.options[answer.id].icon"><img [attr.src]="basePath+qusDetails.options[answer.id].icon">
+                </p>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-2"><strong>Solutions :-</strong></div>
+              <div class="col-md-10 m-l">
+                <p *ngIf="qusDetails.solution"  [innerHtml]="qusDetails.solution"></p>
+                <p *ngIf="qusDetails.solutionIcon"><img [attr.src]="basePath+qusDetails.solutionIcon"></p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- question details modal end here  -->
+</div>
+</div>
+</div>

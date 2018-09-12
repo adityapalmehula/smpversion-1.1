@@ -1,0 +1,59 @@
+<div class="container-section">
+	<div class="row">
+		<div class="col-md-1 pl-0 pr-0">
+		</div>
+		<div class="col-md-11">
+			<div class="container-fluid">
+				<div class="row breadcrumb">
+					<div class="col-8 text-left mt-2 mb-1 ">
+						<h3 class="page-heading">Instructors</h3>
+						<div *ngxPermissionsOnly="permissions; else elseBlock; then thenBlock"></div>
+						<ng-template #elseBlock>
+						<div></div>
+						</ng-template>
+						<ng-template #thenBlock>
+						<a class="btn btn-outline-info add-new" [routerLink]="['/', urlPrefix, 'instructors', 'add']" ><i class="fa fa-plus-circle"> </i> Add</a>
+						</ng-template>
+					</div>
+					<div class="col-4 text-right">
+						<a class="btn btn-outline-info back" [routerLink]="['/', urlPrefix]"><i class="fa fa-arrow-circle-o-left" aria-hidden="true"></i> Back
+						</a>
+					</div>
+				</div>
+				<div class="row cust-table">
+					<div class="col-md-12 mt-4 cust-table px-2">
+						<div class="table-panel">
+							<div class="table-responsive bg-white">
+								<table class="table v-middle">
+									<thead class="">
+										<tr class="col-md-12">
+											<th>#</th>
+											<th>Name</th>
+											<th>Email</th>
+											<th>Mobile</th>
+											<th>Gender</th>
+											<th>Status</th>
+											<th>Action</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr *ngFor="let instructor of instructors; let i= index; ">
+											<td>{{i+1}}</td>
+											<td>{{instructor.name}}</td>
+											<td>{{instructor.email}}</td>
+											<td>{{instructor.mobile}}</td>
+											<td>{{instructor.gender}}</td>
+											<td>{{instructor.status}}</td>
+											<td><button class="btn btn-default btn-sm"><a href="javascript:void(0)" [routerLink]="['/', urlPrefix, 'instructors', 'edit', instructor._id]" ><i class="fa fa-pencil" title="Edit Instructor"></i></a></button>&nbsp;&nbsp;&nbsp;
+											<button class="btn btn-default btn-sm" (click)="delete(instructor._id)"><a href="javascript:void(0)" > <i class="fa fa-trash" title="Delete Instructor"></i></a></button></td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

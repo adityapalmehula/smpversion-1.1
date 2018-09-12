@@ -1,0 +1,112 @@
+<div class="body">
+  <div class="row form-container">
+   <div class="col-xl-2 col-lg-8 col-md-1"></div>
+   <div class=" col-xl-8 col-lg-8 col-md-10 col-sm-12 form-style">
+     <h1 class="flow-h1">Assign Courses</h1>
+
+     <!-- error and success message div start here -->
+     <div *ngIf="errorMessage" class="alert alert-danger danger-alert text-center" role="alert">
+       <strong>{{errorMessage}}</strong>
+     </div>
+     <div *ngIf="successMessage" class="alert alert-success custom-success-alert text-center" role="alert">
+       <strong>{{successMessage}}</strong>
+     </div>
+     <!-- error and success message div end here -->
+
+     <form [formGroup]="assignCoursesForm" >
+       <div class="row col-12 form-grid">
+
+         <!-- school filter -->
+         <div *ngIf="role!='School'" class="col-6">
+          <label class="col-12">School:<span class="mendatoryField">*</span></label>
+          <div class="form-group col-12 assign-courses-info-description-container">
+            <select class="form-control" formControlName="schoolId" #schoolId
+            (change)="getSchoolDetails(schoolId,classFilter)" >
+            <option  value="" disabled selected>Select school </option>
+            <option value="{{school._id}}" *ngFor="let school of schools">{{ school.schoolName }}</option>
+          </select>
+        </div>
+      </div>
+      <!-- school filter end here -->
+
+      <!-- class filter  start here-->
+      <div class="col-6">
+        <label class="col-12">Class:<span class="mendatoryField">*</span></label>
+        <div class="form-group col-12 assign-courses-info-description-container">
+          <select class="form-control"   formControlName="standard" #classFilter
+          (change)="onClassSelect()" >
+          <option value="" selected>Select class </option>
+          <option value="{{class}}" *ngFor="let class of classes">{{class}}</option>
+        </select>
+      </div>
+    </div>
+    <!-- class filter end here -->
+
+    <!-- category filter  start here-->
+    <div class="col-6">
+      <label class="col-12">Categories:</label>
+      <div class="form-group col-12">
+        <angular2-multiselect class="form-control" formControlName="categories" [data]="categoriesList"
+        [(ngModel)]="selectedCatgories"
+        [settings]="catDropdownConfig"
+        (onSelect)="onCategorySelect($event)"
+        (onDeSelect)="onCategoryDeSelect($event)"
+        (onSelectAll)="onCategoriesChange($event)"
+        (onDeSelectAll)="onCategoriesChange($event)" ></angular2-multiselect>
+      </div>
+    </div>
+    <!-- category filter end here -->
+
+    <!-- sub-category filter start here -->
+    <div class="col-6" >
+      <label class="col-12">Sub-Categories:</label>
+      <div class="form-group col-12">
+        <angular2-multiselect class="form-control" formControlName="subCategories" [data]="subCategoriesList" [(ngModel)]="selectedSubCategories"
+        [settings]="subCatDropdownConfig"
+        (onSelect)="onSubCategorySelect($event)"
+        (onDeSelect)="onSubCategoryDeSelect($event)"
+        (onSelectAll)="onSubCategoriesChange($event)"
+        (onDeSelectAll)="onSubCategoriesChange($event)"></angular2-multiselect>
+      </div>
+    </div>
+    <!-- button div start here -->
+
+    <!-- course filter start here -->
+   <!--  <div class="col-6" >
+      <label class="col-12">Courses:<span class="mendatoryField">*</span></label>
+      <div class="form-group col-12">
+        <angular2-multiselect class="form-control" formControlName="courses" [data]="coursesList" [(ngModel)]="selectedCourses"
+        [settings]="coursesDropdownConfig"></angular2-multiselect>
+      </div>
+    </div> -->
+    <div class="col-12" *ngIf="coursesList.length>0" >
+      <label class="col-12">Courses:<span class="mendatoryField">*</span></label>
+      <div class="card">
+        <div class="row col-md-12">
+          <div class="col-md-6 content" *ngFor="let course of coursesList;" >
+            <input type="checkbox" value="{{course.id}}" (change)="updateSelectedCourses($event)" [checked]="verifyCourse(course.id)"> <label for="{{course.id}}">{{course.itemName}}</label>
+       <!-- <div class="btn-group" data-toggle="buttons">
+         <label class="btn btn-success" [class.active]="verifyCourse(course.id)" (click)="updateSelectedCourses($event)">
+          <input type="checkbox" autocomplete="off" value="{{course.id}}" >
+          <span class="fa fa-check"></span>
+        </label>{{course.itemName}}
+      </div> -->
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- course div start here -->
+
+<div class=" col-12  form-actions">
+  <button type="button" class="btn btn-default" [routerLink]="['/', urlPrefix]">Cancel</button>
+ <button type="submit" class="btn btn-primary"
+ [disabled]="assignCoursesForm.invalid" (click)="assignCourses()" >Submit</button>
+</div>
+<!-- button div end here -->
+</div>
+</form>
+
+</div>
+</div>
+</div>

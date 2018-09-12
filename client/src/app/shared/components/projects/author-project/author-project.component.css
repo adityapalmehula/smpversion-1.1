@@ -1,0 +1,92 @@
+.reg-form-container{
+  padding: 17px;
+}
+.img-size {
+  height: 60px;
+  max-width: 60px;
+  border-radius: 50%;
+}
+.reg-form {
+  height: 210px;
+  height: 100%;
+  background: #fff;
+  position: relative;
+  padding: 5px;
+  border-radius: 10px;
+  padding-top: 20px;
+}
+.reg-form input, textarea {
+  border: none;
+  border-bottom: 1px solid rgb(210, 210, 210);
+  color: #333333;
+  font-size: 17px;
+  font-weight: normal;
+  line-height: 16px;
+  outline: none;
+  width: 90%;
+  padding-top: 10px;
+  padding-left: 4px;
+  padding-right: 20px;
+  margin-top: 6px;
+}
+.mendatoryField{
+  color:red;
+}
+.flow-h1 {
+  margin-top: 45px;
+  margin-bottom: 30px;
+  font-size: 36px;
+  line-height: 40px;
+  text-align: center;
+  font-weight: lighter;
+}
+.reg-form select {
+  padding: 1px;
+  border: none;
+  margin-top: 13px;
+  border-bottom: 1px solid rgb(210, 210, 210);
+  margin-left: -2px;
+  width: 92%;
+  display: inline;
+  /*color: rgb(210, 210, 210);*/
+  font-weight: 500;
+
+}
+.fst-opt {
+ color: rgb(210, 210, 210);
+}
+.form-actions {
+  margin-top: 30px;
+  text-align: center;
+  margin-bottom: 30px;
+}
+.cust{
+  padding-left: 25px;
+  padding-right: 25px;
+}
+.back-button {
+  padding-top: 10px;
+}
+.page-heading {
+  font-size: 22px;
+}
+.form-check-input {
+  width: 20% !important;
+  margin-left: 0px;
+}
+.reg-form select  {
+  margin-top: 0px !important;
+}
+.reg-form input  {
+  margin-top: 0px !important;
+}
+@media(max-width: 568px) {
+ .img-size {
+  font-size: 12px;
+}
+}
+@media(max-width: 768px) {
+  label {
+   font-size: 15px;
+ }
+}

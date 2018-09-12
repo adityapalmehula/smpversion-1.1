@@ -1,0 +1,171 @@
+<div class="container-section">
+	<div class="row add-new-container header">
+		<div class="col-9 text-left pL20">
+			<h3 class="heading">{{courseData?.title}}</h3>
+		</div>
+	<!-- 		<h3 class="page-heading">{{courseData?.title}}<span class="course-rating">
+				<star-rating-comp [starType]="'svg'" [rating]="courseData?.rating"></star-rating-comp>
+			</span></h3>
+			<div class="badge badge-pill" [ngClass]="{'badge-danger': courseStatus === progressStatus[0],
+			'badge-warning': courseStatus === progressStatus[1], 
+			'badge-success': courseStatus === progressStatus[2]}">{{courseStatus}}</div>
+		</div> -->
+		<div class="col-3 text-right">
+			<a class="btn btn-outline-info back-button" (click)="back()"><i class="fa fa-arrow-circle-o-left" aria-hidden="true"></i> Back
+			</a>
+		</div>
+	</div>
+	<div class="row add-new-container mid-section">
+		<div class="col-md-9 col-sm-12"> 
+			<p class="short-description text-left">{{courseData?.shortDescription}}</p>
+			<p class="long-description text-left">{{courseData?.longDescription}}</p>
+			<div class="row pB10">
+				<div class="col-md-6 col-sm-12 pB10">
+					<span class="badge badge-success">new</span>
+					<i class="fa fa-star"></i>
+					<i class="fa fa-star"></i>
+					<i class="fa fa-star"></i>
+					<i class="fa fa-star"></i>
+					<i class="fa fa-star"></i>
+					<span>4.8 (1,500 ratings)</span>
+				</div>
+				<div class="col-md-6 col-sm-12">
+					<span>10,000 students enrolled</span>
+				</div>
+			</div>
+			<div class="row pB10">
+				<div class="col-md-4 col-sm-12">
+					<span>Created by Rohit pal</span>
+					<span class="pL10"><i class="fa fa-comment"></i> English</span>
+				</div>
+			</div>
+			<!-- <p class="long-description text-left">{{courseData?.longDescription}}</p> -->
+			<div class="row pB10">
+			<div class="col-md-8 col-sm-12">
+			<ol class="list-group">
+				<p class="list-heading">Curriculum</p>
+				<!-- <li class="list-group-item section-heading">Curriculum</li> -->
+				<li class="list-group-item justify-content-between topic-list" *ngFor=" let topic of topicData; let i=index ">
+					<div class="d-flex w-100 justify-content-between" data-toggle="collapse" [attr.data-target]='"#topic-"+i' aria-expanded="false">
+					<div class="row topic-title">
+						<div class="col-1 topic-icon">
+							<span class="icon-block img-circle half text-white text-center"  [ngStyle]="{'background-color': colors[i]}">
+								<i class="fa fa-graduation-cap"></i>
+							</span>
+						</div>
+						<div class="col-10 text-left">
+							<span class="topicHeading pL10">{{topic.title | titleCase}}<br>
+							</span>
+							<span class="subtopic-length pL10">{{topic.subtopics?.length}} Subtopics</span>
+						</div>
+						<!-- <div class="col-2 text-right"> -->
+						<!-- <span><button [attr.id]="i" class="btn btn-default btn-sm">open</button></span> -->
+						<!-- </div> -->
+					</div>
+						<!-- div class="">
+							<span class="icon-block img-circle half text-white text-center"  [ngStyle]="{'background-color': colors[i]}">
+								<i class="fa fa-graduation-cap"></i>
+							</span>	
+						</div>
+						<div class=" text-left ">
+							<span class="topicHeading pL10">{{topic.title | titleCase}}</span>
+						</div>
+						-->
+					</div> 
+					
+				<!-- 	<div class="w-100 collapse pL20 subTopic-details" [attr.id]='"topic-"+i'>
+						<ol class="list-group">
+							<div *ngFor=" let subTopic of topic.subtopics; let j=index ">
+								<app-contents [subTopicId]="subTopic._id" [index]="j"></app-contents>
+							</div>
+						</ol>
+					</div> -->
+				</li>
+			</ol>
+			</div>
+			<div class="col-md-4 col-sm-12">
+			<p class="list-heading">Testimonials</p>
+			<div class="row">
+			<div class="col-12">
+			<div class="panel-body">
+			<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam amet doloremque enim error id, inventore magni odio odit quo tenetur.</p>
+			</div>
+			</div>
+			<div class="col-3 ">
+			<img class="img-fluid testimonial-image-section" src="./../../../../assets/images/user/user_profile_male.jpg">
+			</div>
+			<div class="col-9 testimonail-content">
+			<span class="long-description"> @Smartppathshala Inc.<br>
+				<i class="fa fa-star"></i>
+					<i class="fa fa-star"></i>
+					<i class="fa fa-star"></i>
+					<i class="fa fa-star"></i>
+					<i class="fa fa-star"></i></span>
+			</div>
+			</div>
+			</div>
+			</div>
+		</div>
+		<div class="col-md-3">
+			<ul class="list-group">
+				<li class="list-group-item section-heading">Course</li>
+				<li class="list-group-item list-item">
+						<div class="d-flex w-100 justify-content-between">
+						<small> <i class="fa fa-clock-o"></i> 4 hrs. &nbsp; <i class="fa fa-calendar"></i> 21/02/2018</small>
+						</div>
+						<div class="d-flex w-100 justify-content-between">
+						<small><i class="fa fa-user"></i> Instructor : Rohit Pal</small>
+						</div>
+							<div class="d-flex w-100 justify-content-between">
+						<small><i class="fa fa-graduation-cap"></i> Max. student 50</small>
+						</div>
+							<div class="d-flex w-100 justify-content-between">
+						<small><i class="fa fa-check"></i> Attending : 30</small>
+						</div>
+				</li>
+				<li class="list-group-item list-item text-center">
+					<button class="btn btn-success">Start Course</button>
+					<span><a href="javascript:void(0)" class="buy-course pL10">or buy course for $1</a> </span>
+				</li>
+				<li class="list-group-item list-item">
+					<i class="fa fa-facebook"></i>&nbsp; Share on facebook
+				</li>
+			</ul>
+		</div>
+	</div>
+<!-- 	<div class="mid-section">
+		<div class="row">
+			<div class="col-12">
+				<h2 class="heading">
+					Description
+				</h2>
+				<p> {{courseData?.longDescription}}</p>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-9 curriculam-section">
+				<ol class="list-group">
+					<li class="list-group-item section-heading">Curriculum For This Course</li>
+					<li class="list-group-item justify-content-between" *ngFor=" let topic of topicData; let i=index " >
+						<div class="d-flex w-100 justify-content-between" data-toggle="collapse" [attr.data-target]='"#topic-"+i' aria-expanded="false">
+
+							<h5 class="mb-1">
+							<i class="fa fa-graduation-cap  pR10"></i>
+							<span class="topicHeading">{{topic.title}}</span>
+							</h5>
+							<span><i class="fa fa-chevron-down"></i></span>
+						</div>
+						<small class="pL45 pB10">{{topic.subtopics?.length}} Subtopics</small>
+						<div class="w-100 collapse pL20" [attr.id]='"topic-"+i'>
+							<ol class="list-group">
+								<div *ngFor=" let subTopic of topic.subtopics; let j=index ">
+									<app-contents [subTopicId]="subTopic._id" [index]="j"></app-contents>
+								</div>
+							</ol>
+						</div>
+					</li>
+				</ol>
+			</div>
+		</div>
+	</div> -->
+</div>

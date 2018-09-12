@@ -1,0 +1,39 @@
+.qus-mgmt {
+  font-family: RobotoDraft, 'Helvetica Neue', Helvetica, Arial;
+}
+
+.qus-mgmt > h4 {
+  font-weight: 500;
+  font-size: 22px;
+}
+
+.filter > h4 {
+  font-weight: 500;
+  font-size: 15px;
+}
+
+.fliter-btn {
+ line-height: 4.90rem;
+ vertical-align: middle;
+}
+
+.flow-h1 {
+  font-size: 1.3rem;
+  font-weight: 500;
+  margin-bottom: 0px !important;
+}
+.filter-panel {
+  background-color: #fff !important;
+  border-left-color: rgba(0, 0, 0, 0.125);
+  border-right-color: rgba(0, 0, 0, 0.125);
+  border-bottom-color: rgba(0, 0, 0, 0.125);
+  border-left-width: 1px;
+  border-right-width: 1px;
+  border-bottom-width: 1px;
+  border-top-color: #fff;
+  box-sizing: border-box;
+  border-style: solid;
+}
+.mendatoryField {
+  color:red;
+}

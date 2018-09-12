@@ -1,0 +1,259 @@
+<div class="body">
+  <div class="row manage-form-container">
+
+    <div class="col-12 back-button text-right">
+     <a class="btn btn-outline-info back"
+     [routerLink]="['/', urlPrefix, 'courses','topics','subtopics',topicId]"
+     [queryParams]="{'tab' : 'assessments'}"><i class="fa fa-arrow-circle-o-left" aria-hidden="true"></i> Back
+   </a>
+ </div>
+
+ <div class="col-xl-1 col-lg-1 col-md-1"></div>
+ <div class=" col-xl-10 col-lg-10 col-md-10 col-sm-12 manage-form">
+  <!-- error and success message div start here -->
+  <div *ngIf="errorMessage" class="alert alert-danger danger-alert text-center" role="alert">
+    <strong>{{errorMessage}}</strong>
+  </div>
+  <!-- error and success message div end here -->
+  <div class="row">
+    <div class="card col-md-12 card-section mt0" >
+      <div class="card-block">
+        <div class="row card-title">
+          <div class="col-md-6">
+            <h4 class="text-left">Assessment Details</h4>
+          </div>
+        </div>
+        <!-- question details collapse div starts from here -->
+        <div id="qusDetails" class="collapse show">
+          <div class="row">
+            <div class="row col-md-12">
+              <div class="col-md-3"></div>
+
+              <div class="col-lg-6 col-md-12 col-sm-12 qz-meta">
+
+                <div class="list-group">
+                  <div class="list-group-item list-group-item-action flex-column align-items-start">
+
+                    <div class="w-100 text-center qz-info">
+                      <h4>{{assessmentDetails?.assessment}}</h4>
+                      <div class="row col-md-12 text-left" >
+                        <div class="col-md-6"><span>Level:-&nbsp;</span>{{assessmentDetails?.level}}</div>
+                        <div class="col-md-6"><span>Questions:-&nbsp;</span> {{assessmentDetails?.totalQuestion}}</div>
+                        <div class="col-md-6"><span>Max Marks:-&nbsp;</span>{{assessmentDetails?.totalMarks}}</div>
+                        <div class="col-md-6"><span>Max Time:-&nbsp;</span>{{assessmentDetails?.maxTime}}</div>
+                        <div class="col-md-6"><span>Min Marks:-&nbsp;</span>{{assessmentDetails?.passPercentage}} %</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-2"></div>
+            </div>
+            <!-- basic level questions div starts here -->
+            <div class="card col-md-12 card-section qus-card-section" >
+              <div class="card-block">
+                <div class="row card-title qus-card-title">
+                  <h4 class="text-left csp-title">Basic Level Question</h4>
+                  <div class="text-right tgl-icon">
+                    <i class="fa fa-2x fa-chevron-circle-down" id="basiclevel" (click)="toggleCard('basiclevel')" data-toggle="collapse" data-target="#basic" ></i>
+                  </div>
+                </div>
+                <div id="basic" class="collapse show">
+                  <div class="row col-md-12 mx-mrk">
+                    Max Marks: {{assessmentDetails?.marksForBasic}}
+                  </div>
+                  <div class="content" *ngFor="let basicQuestion of basicLevelQues; let i=index" >
+                    <div class="row">
+                      <div class="col-md-12 qs">
+                        <p>Q{{i+1}}:- <span>{{basicQuestion.question}}</span></p>
+                      </div>
+                    </div>
+                    <div class="row opt">
+                      <div class="col-md-5">
+                        <div class="row ">
+                          <strong>A.&nbsp;</strong>
+                          <h6>{{basicQuestion.options[0]}}</h6>
+                        </div>
+                      </div>
+                      <div class="col-md-5">
+                        <div class="row ">
+                          <strong>B.&nbsp;</strong>
+                          <h6>{{basicQuestion.options[1]}}</h6>
+                        </div>
+                      </div>
+                      <div class="col-md-2 spc"></div>
+                      <div class="col-md-5">
+                        <div class="row ">
+                          <strong>C.&nbsp;</strong>
+                          <h6>{{basicQuestion.options[2]}}</h6>
+                        </div>
+                      </div>
+                      <div class="col-md-5">
+                        <div class="row ">
+                          <strong>D.&nbsp;</strong>
+                          <h6>{{basicQuestion.options[3]}}</h6>
+                        </div>
+                      </div>
+                    </div>
+                    <br/>
+                    <hr>
+                    <div class="row sol">
+                      <div class="col-md-1"><strong>Subtopic:-</strong></div>
+                      <div class="col-md-11">
+                        <h6>{{basicQuestion.subTopicTitle}}</h6>
+                      </div>
+                    </div>
+                    <div class="row sol">
+                      <div class="col-md-1"><strong>Solutions:-</strong></div>
+                      <div class="col-md-11">
+                        <h6>{{basicQuestion.solution}}</h6>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- basic level questions div end here -->
+            <!-- intermediate level questions div starts here -->
+            <div class="card col-md-12 card-section qus-card-section" >
+              <div class="card-block">
+                <div class="row card-title qus-card-title">
+                  <h4 class="text-left csp-title">Intermediate Level Question</h4>
+                  <div class="text-right tgl-icon">
+                    <i class="fa fa-chevron-circle-down fa-2x" id="intmlevel" (click)="toggleCard('intmlevel')" data-toggle="collapse" data-target="#intermediate" ></i>
+                  </div>
+                </div>
+                <div id="intermediate" class="collapse show">
+                  <div class="row col-md-12 mx-mrk">
+                    Max Marks: {{assessmentDetails?.marksForItm}}
+                  </div>
+                  <div class="content" *ngFor="let intermediateQuestion of intermediateLevelQues; let i=index" >
+                    <div class="row">
+                      <div class="col-md-12 qs">
+                        <p>Q{{i+1}}:- <span>{{intermediateQuestion.question}}</span></p>
+                      </div>
+                    </div>
+                    <div class="row opt">
+                      <div class="col-md-5">
+                        <div class="row ">
+                          <strong>A.&nbsp;</strong>
+                          <h6>{{intermediateQuestion.options[0]}}</h6>
+                        </div>
+                      </div>
+                      <div class="col-md-5">
+                        <div class="row ">
+                          <strong>B.&nbsp;</strong>
+                          <h6>{{intermediateQuestion.options[1]}}</h6>
+                        </div>
+                      </div>
+                      <div class="col-md-2 spc"></div>
+                      <div class="col-md-5">
+                        <div class="row ">
+                          <strong>C.&nbsp;</strong>
+                          <h6>{{intermediateQuestion.options[2]}}</h6>
+                        </div>
+                      </div>
+                      <div class="col-md-5">
+                        <div class="row ">
+                          <strong>D.&nbsp;</strong>
+                          <h6>{{intermediateQuestion.options[3]}}</h6>
+                        </div>
+                      </div>
+                    </div>
+                    <br/>
+                    <hr>
+                    <div class="row sol">
+                      <div class="col-md-1"><strong>Subtopic:-</strong></div>
+                      <div class="col-md-11">
+                        <h6>{{intermediateQuestion.subTopicTitle}}</h6>
+                      </div>
+                    </div>
+                    <div class="row sol">
+                      <div class="col-md-1"><strong>Solutions:-</strong></div>
+                      <div class="col-md-11">
+                        <h6>{{intermediateQuestion.solution}}</h6>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- intermediate level questions div end here -->
+            <!-- expert level questions div starts here -->
+            <div class="card col-md-12 card-section qus-card-section" >
+              <div class="card-block">
+                <div class="row card-title qus-card-title">
+                  <h4 class="text-left csp-title">Expert Level Question</h4>
+                  <div class="text-right tgl-icon">
+                    <i class="fa fa-chevron-circle-down fa-2x" data-toggle="collapse" id="explevel" 
+                    (click)="toggleCard('explevel')" data-target="#expert" ></i>
+                  </div>
+                </div>
+                <div id="expert" class="collapse show">
+                  <div class="row col-md-12 mx-mrk">
+                    Max Marks: {{assessmentDetails?.marksForExp}}
+                  </div>
+                  <div class="content" *ngFor="let expertQuestion of expertLevelQues; let i=index" >
+                    <div class="row">
+                      <div class="col-md-12 qs">
+                        <p>Q{{i+1}}:- <span>{{expertQuestion.question}}</span></p>
+                      </div>
+                    </div>
+                    <div class="row opt">
+                      <div class="col-md-5">
+                        <div class="row ">
+                          <strong>A.&nbsp;</strong>
+                          <h6>{{expertQuestion.options[0]}}</h6>
+                        </div>
+                      </div>
+                      <div class="col-md-5">
+                        <div class="row ">
+                          <strong>B.&nbsp;</strong>
+                          <h6>{{expertQuestion.options[1]}}</h6>
+                        </div>
+                      </div>
+                      <div class="col-md-2 spc"></div>
+                      <div class="col-md-5">
+                        <div class="row ">
+                          <strong>C.&nbsp;</strong>
+                          <h6>{{expertQuestion.options[2]}}</h6>
+                        </div>
+                      </div>
+                      <div class="col-md-5">
+                        <div class="row ">
+                          <strong>D.&nbsp;</strong>
+                          <h6>{{expertQuestion.options[3]}}</h6>
+                        </div>
+                      </div>
+                    </div>
+                    <br/>
+                    <hr>
+                    <div class="row sol">
+                      <div class="col-md-1"><strong>Subtopic:-</strong></div>
+                      <div class="col-md-11">
+                        <h6>{{expertQuestion.subTopicTitle}}</h6>
+                      </div>
+                    </div>
+                    <div class="row sol">
+                      <div class="col-md-1">
+                        <p>Solutions:-</p>
+                      </div>
+                      <div class="col-md-11">
+                        <h6>{{expertQuestion.solution}}</h6>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- expert level questions div end here -->
+          </div>
+        </div>
+        <!-- question details collapse div ends here -->
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+</div>

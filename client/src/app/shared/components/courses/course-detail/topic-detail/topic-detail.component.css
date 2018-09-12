@@ -1,0 +1,27 @@
+.topicDetails {
+  padding-top: 20px;
+}
+
+.topicDetailSection {
+  background-color: #fafafa;
+}
+
+.addSubTopic {
+  padding-top: 20px;
+  height: 50px;
+}
+.form-group {
+  padding-top: 10px;
+}
+
+.subTopics, .keyNotes {
+  padding-top: 20px;
+  text-align: justify;
+}
+.pl-4 {
+	padding-left: 0px !important;
+}
+.subtopic-detail {
+	padding-left:0px; 
+	padding-right: 0px;
+}

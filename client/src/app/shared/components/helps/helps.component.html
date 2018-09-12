@@ -1,0 +1,62 @@
+<div class="container-section">
+  <div class="row">
+    <div class="col-md-1 pl-0 pr-0">
+    </div>
+    <div class="col-md-11">
+      <div class="container-fluid">
+        <div class="row breadcrumb">
+          <div class="col-12 text-left mt-2 mb-1 ">
+            <h3 class="page-heading">Queries</h3>
+            <a class="btn btn-outline-info add-new" [routerLink]="['/', urlPrefix, 'helps', 'add']"><i class="fa fa-plus-circle"> </i> Add</a>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12 mt-4 table-responsive">
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th class="text-center" scope="col">#</th>
+                  <th scope="col">Description
+                  </th>
+                  <th *ngIf="!isStudent" scope="col">Name</th>
+                  <th class="text-center" scope="col">
+                    <div class="dropdown">
+                      <a class="btn btn-secondary dropdown-toggle" href="https://example.com" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Date
+                      </a>
+                      <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                        <a *ngFor="let dateOrder of dates" class="dropdown-item" href="javascript:void(0)" (click)="dateFilter(dateOrder)">{{dateOrder}}</a>
+                      </div>
+                    </div>
+                  </th>
+                  <th class="text-center" scope="col">Status</th>
+                  <th class="text-center" scope="col">Attachment</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor=" let help of helps; let i= index; ">
+                  <td class="text-center">{{i+1}}</td>
+                  <td>
+                    <a href="javascript:void(0)" class="anchor-link" [routerLink]="['/', urlPrefix, 'helps', help._id]">
+                    {{help.description | slice:0:60}}
+                    </a>
+                  </td>
+                  <td *ngIf="!isStudent" class="text-left">{{help.createdBy.name}}</td>
+                  <td class="text-center">{{help.createdBy.date | amDateFormat:'LL'}}</td>
+                  <td class="text-center">{{help.status}}</td>
+                  <td class="text-center">
+                    <a target="_blank" [attr.href]="mediaPath+help.attachment?.path">
+                    <img class="card-img-top mediaImage" *ngIf="pdf.indexOf(help.attachment?.type.toLowerCase())!=defaultValue"  [attr.src]="imgPath+'contents/pdf.jpg'">
+                    <img class="card-img-top mediaImage" *ngIf="image.indexOf(help.attachment?.type.toLowerCase())!=defaultValue"  [attr.src]="imgPath+'contents/image.jpeg'">
+                    <img class="card-img-top mediaImage" *ngIf="docx.indexOf(help.attachment?.type.toLowerCase())!=defaultValue"  [attr.src]="imgPath+'contents/docx.jpeg'">
+                    </a>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

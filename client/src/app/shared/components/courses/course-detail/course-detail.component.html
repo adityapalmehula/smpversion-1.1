@@ -1,0 +1,110 @@
+<div class="container-section">
+  <div class="row">
+    <div class="col-md-1 pl-0 pr-0">
+    </div>
+    <div class="col-md-11">
+      <div class="container-fluid">
+        <div class="row breadcrumb">
+          <div class="col-8 text-left mt-2 mb-1 ">
+            <a class="page-heading" [routerLink]="['/', urlPrefix, 'courses']"><i class="fa fa-home" aria-hidden="true"></i> Courses</a> / <span class="breadcrumb-active">Topics</span>
+          </div>
+          <div class="col-4 text-right">
+            <a class="btn btn-outline-info back" [routerLink]="['/', urlPrefix, 'courses']"><i class="fa fa-arrow-circle-o-left" aria-hidden="true"></i> Back
+            </a>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12 mt-4 mb-1 ">
+            <h3 class="title">{{ courseData.title | titlecase}}</h3>
+            <p class="description text-left mt-2" [innerHtml]="courseData.shortDescription"></p>
+            <p class="description text-left mt-2" [innerHtml]="courseData.longDescription"></p>
+            <div *ngIf="courseData?.prerequisites">
+              <h4 class="mt-4"><strong>Prerequisites :- </strong></h4>
+              <p class="description" [innerHtml]="courseData?.prerequisites"></p>
+            </div>
+          </div>
+        </div>
+        <hr>
+      </div>
+      <div class="">
+        <div class="col-12 add-new-container">
+          <nav class="nav nav-pills flex-column flex-sm-row  pl-3" role="tablist">
+
+            <a class="flex-sm-fill text-sm-center nav-link" [ngClass]="{'active': isDefaultTab ==='topics'  || isDefaultTab ==='' }" (click)="setDefaultTab('topics')" data-toggle="tab" href="#topics" role="tab">Topics</a>
+
+            <a class="flex-sm-fill text-sm-center nav-link" [ngClass]="{'active': isDefaultTab ==='assessments'}" (click)="setDefaultTab('assessments')" data-toggle="tab" href="#assessments" role="tab">Assessments</a>
+          </nav>
+        </div>
+
+        <div class="col-12">
+          <div class="tab-content">
+            <!-- topics tab start from here -->
+            <div class="tab-pane" [ngClass]="{'active': isDefaultTab ==='topics' || isDefaultTab ==='' }" id="topics" role="tabpanel">
+
+              <div class="row">
+                <div class="col-8 text-left ">
+                  <!-- <h4 class="page-subheading">Topics</h4> -->
+                </div>
+                <div *ngxPermissionsOnly="permissions; else elseBlock; then thenBlock"></div>
+                <ng-template #elseBlock>
+                </ng-template>
+                <ng-template #thenBlock>
+                  <div class="col-md-4 text-right" *ngIf="CONFIG.ADMIN.indexOf(role) > -1 || courseOwnerUserId == userId">
+                  <div  *ngIf="courseData?.status===CONFIG.CONTENT_STATUS[3] || courseData.status=== CONFIG.CONTENT_STATUS[5]">
+                    <a class="btn btn-outline-info add-new" [routerLink]="['/', urlPrefix, 'courses', courseId, 'topics', 'add']"><i class="fa fa-plus-circle"> </i> Add</a>
+                    <a class="btn btn-outline-info add-new" [routerLink]="['/', urlPrefix, 'courses', courseId, 'rearrange']"><i class="fa fa-reorder"> </i> Rearrange</a>
+                  </div>
+                  </div>
+                </ng-template>
+              </div>
+
+              <div class="row pb-4">
+                <div class="col-12 text-center errMessage" *ngIf="errMessage">
+                  <h6>{{errMessage}}</h6>
+                </div>
+                <div class="col-12 middle-section container-section">
+                  <ul class="list-group">
+                   <li class="list-group-item d-flex justify-content-between"  *ngFor="let topic of topics; let i=index; ">
+                    <a href="javascript:void(0)" class="anchor-link text-capitalize" [routerLink]="['/', urlPrefix, 'courses',courseId, 'topics', topic._id]" title="{{topic?.title}}" [queryParams]="{'tab':'subtopics'}">
+                      {{topic?.title | titlecase:true | slice:0:100}}<span *ngIf="topic?.title?.length>100">..</span>
+                    </a>
+                    <!--  <button type="button" class="btn btn-light btn-sm mr-2" title="Submit for review">Submit</button> -->
+                    <!-- <button type="button" class="btn btn-light btn-sm mr-2" title="Add Topic">+ Topic</button> -->
+                    <div class="row text-right" *ngIf="CONFIG.ADMIN.indexOf(role) > -1 || courseOwnerUserId == userId">
+                    <div *ngIf="courseData.status===CONFIG.CONTENT_STATUS[3] || courseData.status=== CONFIG.CONTENT_STATUS[5]">
+
+                     <button type="button" class="btn btn-light btn-sm mr-2" title="Edit Topic" [routerLink]="['/', urlPrefix, 'courses', courseId, 'topics','edit',topic._id]"><span class="fa fa-pencil"></span></button>
+                     <button type="button" class="btn btn-light btn-sm mr-2"  (click)="deleteTopic(topic._id)" title="Delete Topic"><span class="fa fa-trash"></span></button>
+                     </div>
+                   </div>
+                 </li>
+               </ul>
+               <div class="col-12 custom-pgn" *ngIf="totalItems>itemsPerPage">
+                <pagination class="pagination" [totalItems]="totalItems" [itemsPerPage]="itemsPerPage" [(ngModel)]="currentPage" (pageChanged)="pageChanged($event)"></pagination>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- topics tab ends here -->
+        <!-- assessment tab stats here -->
+        <div class="tab-pane" [ngClass]="{'active': isDefaultTab ==='assessments' }" id="assessments" role="tabpanel">
+          <div *ngxPermissionsOnly="permissions; else assessmentelse; then assessmentthen"></div>
+          <ng-template #assessmentelse>
+            <div></div>
+          </ng-template>
+          <ng-template #assessmentthen>
+            <div class="col-12 text-right">
+              <a class="btn btn-outline-info add-new" [routerLink]="['/', urlPrefix, 'courses', courseId, 'assessments','add']"><i class="fa fa-plus-circle">
+              </i> Add</a>
+            </div>
+          </ng-template>
+          <app-assessments [courseOwnerUserId]='courseOwnerUserId'></app-assessments>
+        </div>
+        <!-- assessment tab ends here -->
+
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+</div>

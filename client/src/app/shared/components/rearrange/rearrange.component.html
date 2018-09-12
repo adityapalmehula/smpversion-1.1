@@ -1,0 +1,64 @@
+<div class="container-section">
+  <div class="row">
+    <div class="col-md-1 pl-0 pr-0">
+    </div>
+    <div class="col-md-11">
+			<div class="container-fluid">
+ 		 	<div class="row breadcrumb">
+ 		 		<div class="col-8 text-left mt-2 mb-1 ">
+ 		 			<div *ngIf="!topicId">
+ 		 				<a class="page-heading" [routerLink]="['/', urlPrefix, 'courses']"><i class="fa fa-home" aria-hidden="true"></i> Courses</a> / <a  [routerLink]="['/', urlPrefix, 'courses', courseId]"> <span class="breadcrumb-active">{{courseData?.title}}</span></a> / <span>Rearrange</span>
+ 		 			</div>
+ 		 			<div *ngIf="topicId">
+ 		 				<a class="page-heading" [routerLink]="['/', urlPrefix, 'courses']"><i class="fa fa-home" aria-hidden="true"></i> Courses</a>
+ 		 				<!-- /<a [routerLink]="['/', urlPrefix, 'courses', courseId]" > {{topicData?.title}}</a> -->
+ 		 				/<a  [routerLink]="['/', urlPrefix, 'courses', courseId, 'topics', topicId]"> <span class="breadcrumb-active">{{topicData?.title}}</span></a> / <span>Rearrange</span>
+ 		 			</div>
+ 		 		</div>
+ 		 	<!-- 	<div class="col-4 text-right">
+ 		 			<a class="btn btn-outline-info back" [routerLink]="['/', urlPrefix, 'courses']"><i class="fa fa-arrow-circle-o-left" aria-hidden="true"></i> Back
+ 		 			</a>
+ 		 		</div> -->
+ 		 	</div>
+ 		 	<div class="row rearrange-content">
+ 		 		<div class="col-6">
+ 		 			<div class="card card-outline-primary mb-3">
+ 		 				<div class="card-header card-inverse card-primary">Actual {{contentType}}</div>
+ 		 				<div class="card-block scroll-list">
+ 		 					<ul class="list-group">
+ 		 						<li class="list-group-item learningData" *ngFor=" let list of originalList; let i=index; ">
+ 		 							<div class="row">
+ 		 								<div class="stepper-content">
+ 		 									{{i+1}}.&nbsp;{{list.title}}
+ 		 								</div>
+ 		 							</div>
+ 		 						</li>
+ 		 					</ul>
+ 		 				</div>
+ 		 			</div>
+ 		 		</div>
+ 		 		<div class="col-6">
+ 		 			<div class="card card-outline-primary mb-3">
+ 		 				<div class="card-header card-inverse card-primary">{{contentType}} for Rearrange</div>
+ 		 				<div class="card-block scroll-list" >
+ 		 					<ul class="list-group" [sortablejs]="rearrangeList">
+ 		 						<li class="list-group-item item learningData"*ngFor=" let list of rearrangeList ; let i=index; ">
+ 		 							<div class="row">
+ 		 								<div class="stepper-content">
+ 		 									{{i+1}}.&nbsp;{{list.title}}
+ 		 								</div>
+ 		 							</div>
+ 		 						</li>
+ 		 					</ul>
+ 		 				</div>
+ 		 				<div class="text-right mt-2 mb-2 mr-2" *ngIf="rearrangeList.length>1">
+ 		 					<button class="btn btn-success"  *ngIf="!topicId" (click)="rearrangeTopic()">Rearrange</button>
+ 		 					<button class="btn btn-success" *ngIf="topicId" (click)="rearrangeSubTopic()">Rearrange</button>
+ 		 				</div>
+ 		 			</div>
+ 		 		</div>
+ 		 	</div>
+ 		 </div>
+    </div>
+  </div>
+</div>

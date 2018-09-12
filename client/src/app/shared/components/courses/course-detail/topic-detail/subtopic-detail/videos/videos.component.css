@@ -1,0 +1,54 @@
+.tocDiv {
+  font-weight: normal;
+}
+
+tr {
+  line-height: 15px;
+  min-height: 15px;
+  height: 15px;
+}
+.videoContainer {
+	margin-bottom: 20px;
+	margin-top: 10px;
+}
+.videoTitle {
+display: block;
+max-height: 3rem;
+overflow: hidden;
+font-size: .82rem;
+font-weight: 500;
+line-height: 1.35rem;
+cursor: pointer;
+text-decoration: none;
+color: var(--yt-endpoint-color, hsl(0, 0%, 6.7%)) !important;
+}
+
+.videoStats {
+color:#A0A0A0;
+line-height: 1.3rem;
+font-size: .8rem;
+font-weight: 400;
+text-transform: none;
+}
+
+a {
+	text-decoration: none;
+}
+
+.view-count {
+	font-size: 12px;
+}
+
+.deleteVideo {
+	height: 10px;
+	size: 5px;
+}
+.btn {
+	cursor: pointer;
+}
+.videoDescription {
+  height: 45px;
+}
+.btn-sm {
+	width: 100%;
+}

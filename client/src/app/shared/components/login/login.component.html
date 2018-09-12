@@ -1,0 +1,144 @@
+<div class="container-section">
+	
+	<!-- Start for smartpathshala  -->
+
+	<div class="row login-left-section">
+		<div class="col-md-6 p0">
+			<img *ngIf="currentApp === apps[0]" [attr.src]="loginImgPath+'smartpathshala.png'" class="img-fluid loginImage">
+			<img *ngIf="currentApp === apps[1]" [attr.src]="loginImgPath+'codestrippers.png'" class="img-fluid loginImage">
+		</div>
+		<div class="col-md-6 text-center form-container">
+			<div *ngIf="notifyErrorMsg" class="alert alert-danger danger-alert" role="alert">
+				<strong>{{notifyErrorMsg}}</strong>
+			</div>
+			<div *ngIf="notifySuccessMsg" class="alert alert-success custom-success-alert text-center" role="alert">
+				<strong>{{notifySuccessMsg}}</strong>
+			</div>
+			<form class="formSection" [formGroup]="loginForm">
+				<div class="row headingSection">
+					<div class="col-12 text-center">
+						<p class="loginHeading"><strong>Start Learning</strong></p>
+					</div>
+				</div>
+				<fieldset>
+					<div *ngIf="errorMessage">
+						<div class="errorMessage">
+							{{errorMessage}}
+						</div>
+					</div>
+					<div *ngIf="loginForm.get('email').touched && loginForm.get('email').errors">
+						<div class="error">
+							Enter your valid Email-id
+						</div>
+					</div>
+					<div class="input-group">
+						<span class="input-group-addon"><i class="fa fa-envelope"></i></span>
+						<input type="email" class="form-control" placeholder="Enter Your Email Id" formControlName="email">
+					</div>
+					<div *ngIf="loginForm.get('password').touched && loginForm.get('password').errors">
+						<div class="error" *ngIf="loginForm.get('password').errors && !loginForm.get('password').errors.minlength">
+							Enter your valid password
+						</div>
+						<div class="error" *ngIf="loginForm.get('password').errors.minlength">
+							Your password must include at least 8 characters
+						</div>
+					</div>
+					<div class="input-group">
+						<span class="input-group-addon"><i class="fa fa-lock"></i></span>
+						<input type="password" class="form-control" placeholder="Enter Your Password" formControlName="password">
+					</div>
+					<div class="form-group">
+						<button type="submit" class="form-control btn btn-primary" [disabled]="!loginForm.valid" [ngStyle]="{'cursor':loginForm.valid ? 'pointer' : 'not-allowed' }" (click)="onLogin(loginForm)">Login</button>
+            <button *ngIf="!isVerified" type="button" class="form-control btn btn-success mt-2" routerLink="/resend-mail/account-verification">Resend Mail</button>
+          </div>
+          <div class="forgot-password">
+            <a href="http://smartpathshala.com/signup" class="register-link">Register</a> &nbsp; &nbsp;
+            <a href="javascript:void(0)" routerLink="/forgot-password">Forgot Password?</a>
+            <!--  &nbsp; &nbsp;
+            <a href="javascript:void(0)" routerLink="/resend-mail/account-verification">Resend Mail</a> -->
+          </div>
+        </fieldset>
+      </form>
+    </div>
+  </div>
+  <!-- End for smartpathshala  -->
+
+  <!-- Satrt for codestrippers  -->
+	<!-- <div class="row">
+		<div class="col-md-6">
+			<div class="card bg-light mb-3">
+        <div class="card-header bg-info text-center"><p class="loginHeading mt-3"><strong>Welcome</strong></p></div>
+  			<div class="card-body">
+    			<div class="list">
+            <ul>
+              <li class="mt-3">
+              	<p class="text-heading mb-0">Expect the invite from <strong>contact@codestrippers.com</strong>, for:</p>
+              	<ul>
+              		<li  class="text-muted">How to make best out of this website</li>
+                   <li  class="text-muted">Steps to join our communication platform</li>
+              	</ul>
+              </li>
+              <li class="mt-3 mb-3">
+              	<p class="text-heading mb-0">Feel free to Interact with our Mentors on the Platform to:</p>
+              	<ul>
+              		<li class="text-muted">Get your queries answered, Incase you have any</li>
+                   <li class="text-muted">They will help you identify the relevant courses to be done, that suffice your need.</li>
+              	</ul>
+              </li>
+              </ul>
+            </div>
+  			</div>
+			</div>
+		</div>
+		<div class="col-md-6">
+			<div class="card bg-light mb-3">
+  			<div class="card-body">
+    			<form class="formSection" [formGroup]="loginForm">
+				<div class="row headingSection">
+					<div class="col-12 text-center">
+						<p class="loginHeading"><strong>Happy Learning</strong></p>
+					</div>
+				</div>
+				<fieldset>
+					<div *ngIf="errorMessage">
+						<div class="errorMessage">
+							{{errorMessage}}
+						</div>
+					</div>
+					<div *ngIf="loginForm.get('email').touched && loginForm.get('email').errors">
+						<div class="error">
+							Enter your valid Email-id
+						</div>
+					</div>
+					<div class="input-group">
+						<span class="input-group-addon"><i class="fa fa-envelope"></i></span>
+						<input type="email" class="form-control" placeholder="Enter Your Email Id" formControlName="email">
+					</div>
+					<div *ngIf="loginForm.get('password').touched && loginForm.get('password').errors">
+						<div class="error" *ngIf="loginForm.get('password').errors && !loginForm.get('password').errors.minlength">
+							Enter your valid password
+						</div>
+						<div class="error" *ngIf="loginForm.get('password').errors.minlength">
+							Your password must include at least 8 characters
+						</div>
+					</div>
+					<div class="input-group">
+						<span class="input-group-addon"><i class="fa fa-lock"></i></span>
+						<input type="password" class="form-control" placeholder="Enter Your Password" formControlName="password">
+					</div>
+					<div class="form-group">
+						<button type="submit" class="form-control btn btn-primary" [disabled]="!loginForm.valid" [ngStyle]="{'cursor':loginForm.valid ? 'pointer' : 'not-allowed' }" (click)="onLogin(loginForm)">Login</button>
+					</div>
+        <div class="forgot-password">
+        	<a href="http://smartpathshala.com/signup" class="register-link">Register</a> &nbsp; &nbsp;
+        	<a href="javascript:void(0)" routerLink="/forgot-password">Forgot Password?</a>
+        </div>
+      </fieldset>
+    </form>
+  			</div>
+			</div>
+		</div>
+	</div> -->
+	<!-- End for codestrippers  -->
+
+</div>

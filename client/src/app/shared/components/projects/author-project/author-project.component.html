@@ -1,0 +1,340 @@
+<div class="container-section">
+  <div class="row">
+    <div class="col-md-1 pl-0 pr-0">
+    </div>
+    <div class="col-md-11">
+      <div class="container-fluid">
+        <div class="row breadcrumb">
+          <div class="col-8 text-left mt-2 mb-1 ">
+            <a class="page-heading" [routerLink]="['/', urlPrefix, 'projects']"><i class="fa fa-home" aria-hidden="true"></i> Projects</a> / <span *ngIf="!projectId" class="breadcrumb-active">Add Project</span>
+            <span *ngIf="projectId" class="breadcrumb-active">Update Project</span>
+          </div>
+          <div class="col-4 text-right">
+            <a class="btn btn-outline-info back" [routerLink]="['/', urlPrefix, 'projects']"><i class="fa fa-arrow-circle-o-left" aria-hidden="true"></i> Back
+      </a>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12 pt-4">
+            <div *ngIf="projectId; else elsblock; then thenblock;"></div>
+            <ng-template #elsblock>
+              <h2 class="legend">Add Project</h2>
+            </ng-template>
+            <ng-template #thenblock>
+              <h2 class="legend">Update Project</h2>
+            </ng-template>
+          </div>
+        </div>
+        <div class="row reg-form-container add-new-container">
+          <div class=" col-xl-10 col-lg-8 col-md-10 col-sm-12 reg-form">
+            <form [formGroup]="projectForm">
+              <div class="row">
+                <div class="col-md-1"></div>
+                <div class="form-group col-md-5">
+                  <label for="title" class="text-center form-label">
+                    <span class="form_required">*</span> Code
+                  </label>
+                  <input type="text" formControlName="code">
+                  <div *ngIf="projectForm.get('code').touched && projectForm.get('code').errors">
+                    <div class="error-msg ml-4">
+                      <div *ngIf="projectForm.get('code').errors.required">
+                        {{Config.code.required}}
+                      </div>
+                      <div *ngIf="projectForm.get('code').errors.minlength">
+                        {{Config.code.minlength[1]}}
+                      </div>
+                      <div *ngIf="projectForm.get('code').errors.maxlength">
+                        {{Config.code.maxlength[1]}}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group col-md-5">
+                  <label for="title" class="text-center form-label">
+                    <span class="form_required">*</span> Version
+                  </label>
+                  <input type="text" formControlName="version">
+                  <div *ngIf="projectForm.get('version').touched && projectForm.get('version').errors">
+                    <div class="error-msg ml-4" *ngIf="projectForm.get('version').errors.required">
+                      {{Config.version.required}}
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-1"></div>
+              </div>
+              <div class="row">
+                <div class="col-md-1"></div>
+                <div class="form-group col-md-5">
+                  <label for="title" class="text-center form-label">
+                    <span class="form_required">*</span> Title
+                  </label>
+                  <input type="text" formControlName="title">
+                  <div *ngIf="projectForm.get('title').touched && projectForm.get('title').errors">
+                    <div class="error-msg ml-4">
+                      <div *ngIf="projectForm.get('title').errors.required">
+                        {{Config.title.required}}
+                      </div>
+                      <div *ngIf="projectForm.get('title').errors.minlength">
+                        {{Config.title.minlength[1]}}
+                      </div>
+                      <div *ngIf="projectForm.get('title').errors.maxlength">
+                        {{Config.title.maxlength[1]}}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group col-md-5">
+                  <label for="title" class="text-center form-label">
+                    <span class="form_required">*</span> Level
+                  </label>
+                  <select class="form-control" formControlName="level">
+                    <option value="" disabled selected hidden>Select Level </option>
+                    <option value="{{level}}" *ngFor="let level of levels">{{ level }}</option>
+                  </select>
+                  <div *ngIf="projectForm.get('level').touched && projectForm.get('level').errors">
+                    <div class="error-msg ml-4" *ngIf="projectForm.get('level').errors.required">
+                      {{Config.level.required}}
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-1"></div>
+              </div>
+              <div class="row">
+                <div class="col-md-1"></div>
+                <div class="form-group col-md-5">
+                  <label for="title" class="text-center form-label">
+                    <span class="form_required">*</span> Tenure (In weeks)
+                  </label>
+                  <select class="form-control" formControlName="tenure">
+                    <option value="" disabled selected hidden>Select Tenure </option>
+                    <option value="{{tenure}}" *ngFor="let tenure of tenures">{{ tenure }}</option>
+                  </select>
+                  <div *ngIf="projectForm.get('tenure').touched && projectForm.get('tenure').errors">
+                    <div class="error-msg ml-4" *ngIf="projectForm.get('tenure').errors.required">
+                      {{Config.tenure.required}}
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-1"></div>
+              </div>
+              <div class="row">
+                <div class="col-md-1"></div>
+                <div class="form-group col-md-10">
+                  <div class="row">
+                    <label for="title" class="text-center form-label">
+                      <span class="form_required">*</span> Description
+                    </label>
+                  </div>
+                  <div class="row">
+                    <ckeditor class="form-control" [(ngModel)]="description" debounce="500" [ngModelOptions]="{standalone: true}">
+                    </ckeditor>
+                  </div>
+                </div>
+                <div class="col-md-1"></div>
+              </div>
+              <div class="row">
+                <div class="col-md-1"></div>
+                <div class="form-group col-md-10">
+                  <div class="row">
+                    <label for="title" class="text-center form-label">
+                      <span class="form_required">*</span> Prerequisites
+                    </label>
+                  </div>
+                  <div class="row">
+                    <ckeditor class="form-control" [(ngModel)]="prerequisites" debounce="500" [ngModelOptions]="{standalone: true}">
+                    </ckeditor>
+                  </div>
+                </div>
+                <div class="col-md-1"></div>
+              </div>
+              <div class="row">
+                <div class="col-md-1"></div>
+                <div class="form-group col-md-5">
+                  <label for="title" class="text-center form-label">
+                    <span class="form_required">*</span> Activation Method
+                  </label>
+                  <select class="form-control" formControlName="activationMethod">
+                    <option value="Promotion">Promotion</option>
+                    <option value="Paid">Paid</option>
+                  </select>
+                  <div *ngIf="projectForm.get('activationMethod').touched && projectForm.get('activationMethod').errors">
+                    <div class="error-msg ml-4" *ngIf="projectForm.get('activationMethod').errors.required">
+                      {{Config.activationMethod.required}}
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group col-md-5">
+                  <label for="title" class="text-center form-label">
+                    <span class="form_required">*</span> Currency
+                  </label>
+                  <select class="form-control" formControlName="currency">
+                    <option value="INR">INR</option>
+                    <option value="USD">USD</option>
+                  </select>
+                  <div *ngIf="projectForm.get('currency').touched && projectForm.get('currency').errors">
+                    <div class="error-msg ml-4" *ngIf="projectForm.get('currency').errors.required">
+                      {{Config.currency.required}}
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-1"></div>
+              </div>
+              <div class="row">
+                <div class="col-md-1"></div>
+                <div class="form-group col-md-5">
+                  <label for="title" class="text-center form-label">
+                    <span class="form_required">*</span> Actual Price
+                  </label>
+                  <input type="text" formControlName="actualPrice">
+                  <div *ngIf="projectForm.get('actualPrice').touched && projectForm.get('actualPrice').errors">
+                    <div class="error-msg ml-4" *ngIf="projectForm.get('actualPrice').errors.required">
+                      {{Config.actualPrice.required}}
+                    </div>
+                    <div class="error-msg ml-4" *ngIf="projectForm.get('actualPrice').errors.pattern">
+                      {{Config.actualPrice.pattern}}
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group col-md-5">
+                  <label for="title" class="text-center form-label">
+                    Discount (%)
+                  </label>
+                  <input type="text" formControlName="discount">
+                  <div *ngIf="projectForm.get('discount').touched && projectForm.get('discount').errors">
+                    <div class="error-msg ml-4" *ngIf="projectForm.get('discount').errors.pattern">
+                      {{Config.discount.pattern}}
+                    </div>
+                    <div class="error-msg ml-4" *ngIf="projectForm.get('discount').errors.max">
+                      {{Config.discount.max}}
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-1"></div>
+              </div>
+              <div class="row">
+                <div class="col-md-1"></div>
+                <div class="form-group col-md-5">
+                  <label for="title" class="text-center form-label">
+                    <span class="form_required">*</span> Offered Price
+                  </label>
+                  <input type="text" readonly="true" formControlName="offeredPrice">
+                </div>
+                <div class="form-group col-md-5">
+                  <label for="title" class="text-center form-label">
+                    <span class="form_required">*</span> Is Paid
+                  </label>
+                  <select class="form-control" formControlName="isPaid">
+                    <option value="true">true</option>
+                    <option value="false">false</option>
+                  </select>
+                  <div *ngIf="projectForm.get('isPaid').touched && projectForm.get('isPaid').errors">
+                    <div class="error-msg ml-4" *ngIf="projectForm.get('isPaid').errors.required">
+                      {{Config.isPaid.required}}
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-1"></div>
+              </div>
+              <div class="row">
+                <div class="col-md-1"></div>
+                <div class="form-group col-md-10">
+                  <div class="row">
+                    <label for="title" class="text-center form-label">
+                      <span class="form_required">*</span> Tags
+                    </label>
+                  </div>
+                  <div class="row">
+                    <!--  <input type="text" formControlName="tags"> -->
+                    <rl-tag-input class="col-md-10" placeholder="Enter Comma Separated keywords" [(ngModel)]="tags" [ngModelOptions]="{standalone: true}"></rl-tag-input>
+                  </div>
+                  <!-- <div *ngIf="courseForm.get('tags').touched && courseForm.get('tags').errors">
+    <div class="error-msg ml-4" *ngIf="courseForm.get('tags').errors.required">
+      Tag is required
+    </div>
+  </div> -->
+                </div>
+                <div class="col-md-1"></div>
+              </div>
+              <div class="row">
+                <div class="col-md-1"></div>
+                <div class="form-group col-md-10">
+                  <div class="row">
+                    <label for="title" class="text-center form-label">
+                      <span class="form_required">*</span> Project Icon <small>(Size less than 256 kb)</small>
+                    </label>
+                  </div>
+                  <!--                   <div class="row" *ngIf="!projectId">
+                    <input type="file" id="icon" (change)="onFileChange($event)" #fileInput>
+                  </div>
+                  <div class="row" *ngIf="projectId">
+                    <img class="img-fluid img-size w-20" [src]="imgPath">
+                    <input class="w-75 pl-2" type="file" id="icon" (change)="onFileChange($event)" #fileInput>
+                  </div> -->
+                  <div class="row">
+                    <div class="col-md-5 col-lg-5 col-sm-12">
+                      <button data-toggle="modal" class="btn btn-secondary btn-sm" value="upload new image" data-target="#profileModal">Upload Project Icon</button>
+                    </div>
+                    <div class="col-md-4 col-lg-5 col-sm-12" *ngIf="!this.imageStatus">
+                      <img class="img-fluid" [src]="imgPath">
+                    </div>
+                    <div class="col-md-4 col-lg-5 col-sm-12" *ngIf="this.imageStatus">
+                      <img class="img-fluid" [src]="croppedImage">
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-1"></div>
+              </div>
+              <!-- <div class="col-md-4 col-sm-12 text-center img-section">
+  <div class="project-image">
+
+  </div>
+</div> -->
+              <div class="row">
+                <div *ngIf="!projectId" class="col-12 form-actions">
+                  <button type="button" class="btn btn-cancel" title="Cancel" [routerLink]="['/', urlPrefix, 'projects']">Cancel</button>
+                  <button type="button" class="btn btn-save" title="Save" (click)="saveProject(projectForm)" [disabled]="projectForm.invalid" [ngStyle]="{'cursor':projectForm.valid ? 'pointer' : 'not-allowed' }">Save</button>
+                </div>
+                <div *ngIf="projectId" class="col-12  form-actions">
+                  <button type="button" class="btn btn-cancel" title="Cancel" [routerLink]="['/', urlPrefix, 'projects']">Cancel</button>
+                  <button type="button" class="btn btn-update" title="Update" [disabled]="projectForm.invalid" (click)="updateProject(projectForm)" [ngStyle]="{'cursor':projectForm.valid ? 'pointer' : 'not-allowed' }">Update</button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Image Crop modal-->
+  <div class="modal fade" id="profileModal" tabindex="-1" role="dialog" aria-labelledby="projectModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header modalColor">
+          <h6 class="modal-title" id="projectModalLabel">Change Project Icon</h6>
+          <button type="button" class="close" data-dismiss="modal" #closeModal aria-label="Close" (click)="close()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="error text-center pt-2" *ngIf="imgError">{{imgError}}</div>
+        <div class="modal-body text-center">
+          <div class="row">
+            <div class="col-6">
+              <image-cropper [imageChangedEvent]="imageChangedEvent" [maintainAspectRatio]="true" [aspectRatio]="269 / 150" [resizeToWidth]="128" format="png, jpg, jpeg" (imageCropped)="imageCropped($event)" (loadImageFailed)="loadImageFailed()"></image-cropper>
+              <input type="file" [(ngModel)]="coursePicture" (change)="fileChangeEvent($event)" />
+            </div>
+            <div class="col-6">
+              <img *ngIf="croppedImage" [src]="croppedImage" />
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <div class="col-sm-3">
+            <div data-dismiss="modal" #setOnClose type="hidden"></div>
+            <button type="button" class="btn btn-secondary upload" (click)="setImage()">Upload</button>
+          </div>
+          <!--  -->
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--end modal-->

@@ -1,0 +1,81 @@
+<div class="container-section">
+  <div class="row">
+    <div class="col-md-1"></div>
+    <div class="col-md-11">
+      <div class="body">
+        <div class="col-12 back-button text-right" *ngIf="!nestedComp">
+          <a class="btn btn-outline-info back" [routerLink]="['/', urlPrefix, 'courses',courseId, 'topics',topicId,'subtopics',subTopicId]" [queryParams]="{'tab':'questions'}"><i class="fa fa-arrow-circle-o-left" aria-hidden="true"></i> Back</a>
+        </div>
+        <div class="row p-0">
+          <div class=" col-xl-12 col-lg-12 col-md-12 col-sm-12 qus-form p-0">
+            <div *ngIf="!nestedComp">
+              <h1 *ngIf="formType=='add'" class="flow-h1">Add Question</h1>
+              <h1 *ngIf="formType=='edit'" class="flow-h1">Update Question</h1>
+            </div>
+            <div class="row">
+              <div class="card col-lg-12 col-md-12 card-section">
+                <div class="row qs-typ">
+                  <div *ngIf="formType=='add'" class="card col-md-12">
+                    <span>
+                      <i class="fa fa-list-ul fa-2x badge-success" (click)="setQuestionType(questionTypes[0])" title="Single choice"></i>
+                      <i class="fa fa-list fa-2x badge-warning" (click)="setQuestionType(questionTypes[1])" title="Multiple choice"></i>
+                      <i class="fa fa-gears fa-2x badge-danger" (click)="setQuestionType(questionTypes[2])" title="True/False"></i>
+                    </span>
+                  </div>
+                  <div class="row col-md-12 pt-3">
+                    <div class="col-md-4 pr-0">
+                     <div class="col-lg-12 col-md-4 filter">
+                       <h4>Question Category<span class="mendatoryField">*</span></h4>
+                       <angular2-multiselect [ngModelOptions]="{standalone: true}" [data]="qusCategoriesList" [(ngModel)]="qusCategories" [settings]="qusCategoriesConfig"></angular2-multiselect>
+                     </div>
+                   </div>
+                   <div class="col-lg-2 col-md-4 filter">
+                     <h4>Difficulty Level<span class="mendatoryField">*</span></h4>
+                     <select class="form-control pl-2" (change)="selectedLevel($event.target.value)">
+                      <option [selected]="!level" disabled hidden>Select Level </option>
+                      <option [selected]="level==data" value="{{data}}" *ngFor="let data of levels">{{data}}</option>
+                    </select>
+                  </div>
+
+                  <div class="col-md-3 filter">
+                    <h4>Credit To </h4>
+                    <input type="text"  [(ngModel)]="creditTo" class="form-control">
+                  </div>
+
+                  <div class="col-md-2  pr-0 filter">
+                    <h4>Visibility<span class="mendatoryField">*</span></h4>
+                    <div class="row col-md-12 radio-btn rd px-1">
+                      <label class="form-check-label pl-3">
+                        <input type="radio" class="form-check-input" name="visibility"  [(ngModel)]="visibility" [value]="questionStatus.PUBLIC">
+                        Public
+                      </label>
+                      <label class="form-check-label ml-3">
+                        <input type="radio" class="form-check-input"
+                        name="visibility" [(ngModel)]="visibility" [value]="questionStatus.PRIVATE"> 
+                        Private
+                      </label>
+                    </div>
+                  </div>
+
+                  <div class="col-md-12">
+                    <app-question-form [qusType]="questionType" [qusDetails]="qusInfo" (addNewQuestion)= "newQuestionDetails($event)"></app-question-form>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- <i class="fa fa-ellipsis-h fa-2x badge-info" (click)="setQuestionType(questionTypes[3])"title="Fill in the blanks"></i> -->
+            <!-- <i class="fa fa-file-image-o fa-2x badge-info" (click)="setQuestionType(questionTypes[2])"title="Image"></i>
+            <i class="fa fa-arrows-h fa-2x badge-danger" (click)="setQuestionType(questionTypes[3])"title="Matching"></i> -->
+
+       <!--  <div class="row col-12" [ngSwitch]="questionType">
+          <app-multiple-choice-question *ngSwitchCase="questionTypes[1]"></app-multiple-choice-question>
+          <app-true-false-question *ngSwitchCase="questionTypes[2]"></app-true-false-question>
+          <app-fill-in-the-blanks-question *ngSwitchCase="questionTypes[3]"></app-fill-in-the-blanks-question>
+          <app-single-choice-question *ngSwitchDefault></app-single-choice-question>
+        </div> -->

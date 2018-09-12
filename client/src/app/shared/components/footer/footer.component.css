@@ -1,0 +1,37 @@
+/*.footer-module {
+	margin-top: 55px;
+	position: fixed;
+}
+.footerSection {
+	padding-top: 20px;
+	padding-bottom: 20px;
+	background-color: #292c2f;
+	color: #ccc;
+	bottom: 0px;
+	width: 100%;
+	margin-top: 40px;
+}
+.footerSection p {
+	margin-bottom: 0px;
+}
+*/
+.footer {
+	text-align: center;
+	/*color: #212121 !important;*/
+	/*font-weight: 500;*/
+	/*background: #292c2f;*/
+	font-family: RobotoDraft, 'Helvetica Neue', Helvetica, Arial;
+	color: #888 !important;
+	background: #fff;
+	min-height: 45px;
+	height: auto;
+	line-height: 45px;
+	display: block;
+	position: fixed;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	z-index: 2;
+	margin: 0;
+	font-size: 12px;
+}

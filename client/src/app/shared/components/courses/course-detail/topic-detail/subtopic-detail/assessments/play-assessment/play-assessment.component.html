@@ -1,0 +1,293 @@
+<div class="row body" *ngIf="!isAssessmentStart">
+  <div *ngIf="!isAttamptLimitExceed">
+    <h4 class="col-12 text-center mt-3">You are about to start the test</h4>
+    <div class="col-md-1"></div>
+    <div class="col-md-10 mb-4" class="inst">
+      <p class="ml-5 mt-4" [innerHTML]="insAtStart"></p>
+      <div class="pt-3 text-center">
+        <button class="mb-4 btn btn-primary btn-start" (click)="startAssessment()">Start</button>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="isAttamptLimitExceed" class="col-md-12 p-3 mt-3 text-center">
+    <div class="col-md-10 mb-4" class="inst" >
+      <h4 class="ml-5 mt-4"> You have exceeded the number of allowed attempts for this Test</h4>
+      <div class="pt-3 text-center">
+        <button class="mb-4 btn btn-primary btn-start" (click)="navigate()">Try others</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row body" *ngIf="!isAssessmentFinished && isAssessmentStart">
+  <div class="col-md-9 col-sm-12 scroll pr-0 pl-0">
+    <div class="row col-md-12 assessment-head-section pl-0">
+
+      <div class="col-md-2 course-assessment-ques-section" >
+        <div class="course-assessment-icon-header">
+          <span><i class="fa fa-question"></i></span>
+        </div>
+        <div class="course-assessment-ques-header">
+          <h4>Questions</h4>
+          <label>{{assessmentQuestions.length}}</label>
+        </div>
+      </div>
+
+      <div class="col-md-2 course-assessment-score-section">
+        <div class="course-assessment-icon-header">
+          <span><i class="fa fa-diamond"></i></span>
+        </div>
+        <div class="course-assessment-score-header">
+          <h4>Score</h4>
+          <label>{{maxMarks}} pt</label>
+        </div>
+      </div>
+
+      <div class="col-8 assessment-buttons text-right">
+        <button class="btn" (click)="finishAssessment()">Finish</button>
+        <button class="btn btn-primary ml-1" (click)="exit()">Exit</button>
+      </div>
+    </div>
+
+    <div class="buttons-container">
+      <div class="row col-md-12 assessment-buttons pl-2">
+        <div class="col-md-8">
+          <button class="btn btn-primary" data-toggle="collapse" data-target="#hint">
+            <i class="fa fa-lightbulb-o"></i>&nbsp;Hint
+          </button>
+          <button class="btn btn-success" (click)="markForReview()" >
+            <i class="fa fa-flag"></i>&nbsp;Mark review
+          </button>
+          <button class="btn btn-primary" href="javascript:void(0)" data-toggle="modal" data-target="#reportIssue">
+            <i class="fa fa-weixin"></i>&nbsp;Report issue
+          </button>
+        </div>
+        <div class="col-md-4 pr-0 text-right">
+          <button *ngIf="!isQusReview" class="btn btn-info" [disabled]="questionNumber==1" (click)="previousQuestion(questionNumber-1)" >
+            <i class="fa fa-chevron-left fa-fw"></i>&nbsp;Previous
+          </button> 
+
+          <button *ngIf="isQusReview" class="btn btn-info" [disabled]="currentReviewQusIndex<=0" (click)="previousQuestion(questionNumber-1)" >
+            <i class="fa fa-chevron-left fa-fw"></i>&nbsp;Previous
+          </button>
+
+          <button class="btn btn-success" (click)="getNextQuestion(questionNumber+1,true)" *ngIf="!isQusReview && questionNumber!==assessmentQuestions.length">
+            &nbsp;Next <i class="fa fa-chevron-right fa-fw"></i></button>
+
+            <button class="btn btn-success" (click)="getNextQuestion(questionNumber+1,true)" *ngIf="isQusReview && questionsForReview[currentReviewQusIndex]">
+              &nbsp;Next <i class="fa fa-chevron-right fa-fw"></i></button>
+
+              <button class="btn btn-primary" (click)="submitAssessment(questionNumber)" *ngIf="!isQusReview && questionNumber==assessmentQuestions.length ">Finish assessment</button>
+
+              <button class="btn btn-primary" (click)="submitAssessment(questionNumber)" *ngIf="isQusReview && !questionsForReview[currentReviewQusIndex]">Finish assessment</button>
+            </div>
+
+            <div id="hint" class="collapse mt-2">
+             <div *ngIf="assessment?.hint?.text || assessment?.hint?.icon; else nohint">
+               <span *ngIf="assessment?.hint?.text" class="msg-info">{{assessment?.hint?.text}}</span>
+               
+               <p *ngIf="assessment?.hint?.icon" class="pl-4"><img class="card-img-top img-fluid" title="Click to view image" [attr.src]="basePath+assessment?.hint?.icon" (click)="viewImage(basePath+assessment?.hint?.icon)"></p>
+
+             </div>
+             <ng-template class="mt-3" #nohint>
+               <div class="mt-3 no-data-msg">
+                 <span>No hint provided for this question</span>      
+               </div>
+             </ng-template>
+           </div>
+         </div>
+       </div>
+
+       <div class="course-assessment-container" >
+        <div class="assessment-questions-container">
+          <div class="assessment-question">
+            <h3>Question {{questionNumber}} of {{assessmentQuestions.length}}</h3>
+            <p class="qus mb-0" *ngIf="assessment?.question" [innerHtml]="assessment?.question"></p>
+
+            <p class="pl-4" *ngIf="assessment?.qusIcon"><img class="card-img-top img-fluid" title="Click to view image" [attr.src]="basePath+assessment?.qusIcon" (click)="viewImage(basePath+assessment?.qusIcon)"></p>
+
+          </div>
+        </div>
+
+        <div class="assessment-options-container">
+          <h3 class="pl-3">Your Answer</h3>
+          <div class="row col-md-12 assessment-options opt ">
+            <div class="checkbox checkbox-primary col-md-6 mt-3" *ngFor="let option of assessment.options">
+              <label>
+                <div *ngIf="assessment.qusType!==questionType[1]; else singleChoice">
+                 <input type="radio" name="{{questionNumber}}" value="{{option.id}}" (change)="setSingleChoiceAnswers(option.id)" [checked]="isTrue(option?.id)" >
+               </div>
+               <ng-template #singleChoice>
+                <input type="checkbox" value="{{option.id}}" (change)="setMultipleChoiceAnswers(option?.id,$event.target.checked)" [checked]="isTrue(option?.id)">
+              </ng-template>
+              <p class="pl-1 m-0 op-text" *ngIf="option.text" [innerHtml]="option.text"></p>
+              <p class="pl-2" *ngIf="option?.icon && !option.text"><img  title="Click to view image" class="card-img-top img-fluid" (click)="viewImage(basePath+option?.icon)" [attr.src]="basePath+option?.icon"></p>
+            </label>
+            <p class="pl-4" *ngIf="option?.icon && option.text"><img  title="Click to view image" class="card-img-top img-fluid" [attr.src]="basePath+option?.icon" (click)="viewImage(basePath+option?.icon)"></p>
+
+     <!--    <div *ngIf="!assessment.userAnswers.includes(option.id)">
+          <label>
+            <div *ngIf="assessment.qusType!==questionType[1]; else singleChoice">
+              <input type="radio" name="{{questionNumber}}" value="{{option.id}}"  (change)="setSingleChoiceAnswers(option.id)" >
+            </div>
+            <ng-template #singleChoice>
+              <input type="checkbox" value="{{option.id}}" (change)="setMultipleChoiceAnswers(option.id,$event.target.checked)">
+            </ng-template>
+            <p *ngIf="option.text" [innerHtml]="option.text"></p>
+            <p *ngIf="option.icon"><img [attr.src]="basePath+option.icon"></p>
+          </label>
+        </div> -->
+
+      </div>
+    </div>
+    
+   <!--  <div class="assessment-buttons-container">
+      <div class="assessment-buttons">
+        <button class="btn btn-success" (click)="saveAnswer(questionNumber)" >
+          <i class="fa fa-save fa-fw"></i>&nbsp;Save answer
+        </button>
+
+        <button class="btn btn-primary" (click)="getNextQuestion(questionNumber+1)" *ngIf="questionNumber!==assessmentQuestions.length">
+          <i class="fa fa-chevron-right fa-fw"></i>&nbsp;Next question
+        </button>
+        <button class="btn btn-primary" (click)="submitAssessment(questionNumber)" *ngIf="questionNumber===assessmentQuestions.length">
+         Finish
+       </button>
+     </div>
+   </div> -->
+
+ </div>
+</div>
+</div>
+<div class="col-md-3 col-sm-12 pl-0 pr-0">
+  <div *ngIf="assessmentDetails.type===assessmentTypes[1]" class="assessment-info-ttc">
+    <div class="assessment-info-time-container" >
+      <h3>Time to complete</h3>
+      <div class="assessment-info-time">
+        <label>
+          <span>{{hours<10 ? '0'+hours:hours}}</span>
+          <p>Hours</p>
+        </label>
+        <label>
+          <span>{{minutes<10 ? '0'+minutes:minutes}}</span>
+          <p>Minutes</p>
+        </label>
+        <label>
+          <span>{{seconds<10 ? '0'+seconds:seconds}}</span>
+          <p>Seconds</p>
+        </label>
+      </div>
+    </div>
+  </div>
+  <div class="assessment-info-container">
+    <div class="assessment-info-question-set-container">
+      <ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item">
+          <a class="nav-link active" data-toggle="tab" href="#quslist" [class.disabled]="isQusReview">Questions</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" data-toggle="tab" href="#review">Review <span class="badge badge-pill badge-success" #review>{{questionsForReview.length}}</span></a>
+        </li>
+      </ul>
+      <div class="tab-content mt-2 qus-list-scroll">
+        <div id="quslist" class="container tab-pane active pl-1">
+         <div *ngFor="let question of assessmentQuestions let i=index ">
+          <div class="assessment-info-ques-container">
+           <div *ngIf="(question.status == questionStatus[0] || question.status == questionStatus[2]) && questionNumber-1!==i">
+             <div style="background-color: #bdbdbd;" class="square">{{i+1}}</div>
+           </div>
+           <div *ngIf="question.status == questionStatus[1] && questionNumber-1!==i">
+             <div style="background-color: #5cb85c;" class="square">{{i+1}}</div>
+           </div> 
+           <div *ngIf="questionNumber-1===i" >
+             <div style="background-color: #42a5f5;" class="square">{{i+1}}</div>
+           </div> 
+           <div class="assessment-info-ques">
+             <!-- {{question?.question | words:7}} -->
+             <a (click)="getNextQuestion(i+1,false,true)" href="javascript:void(0)"><span [innerHtml]="question?.question"></span>
+             </a>
+           </div>
+         </div>
+         <hr>
+       </div>
+     </div>
+
+     <div id="review" class="tab-pane fade in active pl-1">
+      <div *ngFor="let qusNo of questionsForReview">
+        <div class="assessment-info-ques-container">
+         <div *ngIf="(assessmentQuestions[qusNo].status == questionStatus[0] || assessmentQuestions[qusNo].status == questionStatus[2]) && questionNumber-1!==qusNo">
+           <div style="background-color: #bdbdbd;" class="square">{{qusNo+1}}</div>
+         </div>
+         <div *ngIf="assessmentQuestions[qusNo].status == questionStatus[1] && questionNumber-1!==qusNo">
+           <div style="background-color: #5cb85c;" class="square">{{qusNo+1}}</div>
+         </div> 
+         <div *ngIf="questionNumber-1===qusNo" >
+           <div style="background-color: #42a5f5;" class="square">{{qusNo+1}}</div>
+         </div> 
+         <!--  (click)="getNextQuestion(qusNo+1)" -->
+         <!-- {{assessmentQuestions[qusNo].question | words:7}} -->
+         <div class="assessment-info-ques">
+          <a (click)="getNextQuestion(qusNo+1,false,true)" href="javascript:void(0)">
+            <span [innerHtml]="assessmentQuestions[qusNo]?.question"></span>
+          </a>
+        </div>
+      </div>
+      <hr>
+    </div>
+
+    <div *ngIf="questionsForReview.length===0" class="mt-3 no-data-msg">
+      <span>No question mark for review</span>      
+    </div>
+
+  </div>
+</div>
+</div>
+
+</div>
+<div class="assessment-info-footer">
+  <h3>Legend</h3>
+  <ul>
+    <li><a href="#"><i class="fa fa-fw fa-circle green-icon"></i>Answered question</a></li>
+    <li><a href="#"><i class="fa fa-fw fa-circle blue-icon"></i>Selected question</a></li>
+  </ul>
+</div>
+</div>
+</div>
+
+<!-- assessment result div starts here -->
+<div *ngIf="isAssessmentFinished">
+ <div class="row add-new-container pt-2 py-1">
+  <div class="col-8 text-left"></div>
+  <div class="col-4 text-right">
+    <a class="btn btn-outline-info back" (click)="navigate()"><i class="fa fa-arrow-circle-o-left" aria-hidden="true"></i> Back
+    </a>
+  </div>
+</div>
+<app-assessment-result-charts [assessmentType]="CONFIG.ASSESSMENT.TYPES[0]" [result]="assessmentResult"></app-assessment-result-charts>
+</div>
+
+
+
+<!-- question details modal start fron here  -->
+<div class="modal fade text-center" id="reportIssue" tabindex="-1" role="dialog"  
+aria-labelledby="title" aria-hidden="true"> <!-- data-backdrop="static" -->
+<div class="modal-dialog modal-lg">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h5 class="modal-title" id="title">Report an issue</h5>
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close" #close>
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="row modal-body">
+      <label class="col-md-2">Description</label>
+      <textarea rows="5" [(ngModel)]="qusIssueDescription" class="col-md-8"></textarea>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      <button type="button" [disabled]="!qusIssueDescription" class="btn btn-primary" (click)="saveReportIssue()" >Submit</button>
+    </div>
+  </div>
+</div>
+</div>
+<!-- question details modal end here  -->

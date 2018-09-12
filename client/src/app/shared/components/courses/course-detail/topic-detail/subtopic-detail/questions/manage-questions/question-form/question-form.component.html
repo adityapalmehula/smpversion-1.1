@@ -1,0 +1,109 @@
+<div class="row m-0 pt-3">
+  <div class="col-md-12">
+    <h4>Question<span class="mendatoryField">*</span></h4>
+    <ckeditor [(ngModel)]="newQuestion" [config]="config" [readonly]="false" debounce="500"></ckeditor>
+  </div>
+
+  <div class="col-md-12">
+    <button type="button" class="btn btn-info btn-sm mt-3" data-toggle="modal" (click)= "uploadImage('question')" data-target="#imgUpload">Add image to question</button>
+    <img class="card-img-top mt-3 pl-3" *ngIf="qusCroppedIcon" [src]="qusCroppedIcon" (click)="viewImage(qusCroppedIcon)"/>
+  </div>
+  
+  <div class="col-md-12 p-0 m-0 pl-3 pt-3">
+    <h4>Options (Please mark the right option as well)<span class="mendatoryField">*</span></h4>
+    <div class="row col-md-12 p-0 m-0" *ngIf="questionType != QUESTION_TYPE[2]">
+      <div class="col-md-6 p-0 pt-3" *ngFor="let opt of options; let i = index; ">
+        <div class="row col-md-12 p-0 m-0 pr-4">
+          <div class="col-md-1 pr-0">
+           <div *ngIf="questionType == QUESTION_TYPE[1]; else addRadio; then addChkbox;"></div>
+           <ng-template #addRadio>
+            <input type="radio" name="answer" [value]="i" [checked]="isTrue(i)">
+          </ng-template>
+
+          <ng-template #addChkbox>
+            <input type="checkbox" name="answer" [value]="i" [checked]="isTrue(i)">
+          </ng-template>
+        </div>
+
+        <div class="col-md-11 p-0 pl-2">
+          <ckeditor [(ngModel)]="opt.value" [config]="optionsConfig" [readonly]="false" debounce="500"></ckeditor>
+        </div>
+        <div class="col-md-12 ml-5">
+          <button type="button" class="btn btn-info btn-sm mt-3" data-toggle="modal" (click)= "uploadImage(i)" data-target="#imgUpload">Add image to option {{i+1}}</button>
+          <img class="card-img-top mt-3 pl-3" (click)="viewImage(opt?.img)" *ngIf="opt?.img" [src]="opt?.img"/>
+        </div>
+      </div> 
+    </div>
+
+    <div class="col-md-12 text-center mt-4">
+      <button class="btn btn-primary btn-sm" (click)="addNewOptions()"><i class="fa fa-plus-circle"></i> Add New Option</button>
+      <button class="btn btn-danger btn-sm ml-1"  (click)="removeOptions()"><i class="fa fa-times-circle"></i> Remove Last Option</button>
+    </div>
+  </div>
+
+  <div *ngIf="questionType === QUESTION_TYPE[2]" >
+   <div class="col-md-12 pt-2 pl-5 rd">
+    <label><input type="radio" name="answer" value="0" [checked]="isTrue(0)" > True</label><br>
+    <label><input type="radio" name="answer" value="1" [checked]="isTrue(1)"> False</label>
+  </div>
+</div> 
+</div>
+
+<div class="col-md-12 pt-3">
+  <h4>Solution</h4>
+  <ckeditor [(ngModel)]="newSolution" [config]="config" [readonly]="false" debounce="500"></ckeditor>
+  <div class="col-md-12">
+    <button type="button" class="btn btn-info btn-sm mt-3" data-toggle="modal" (click)= "uploadImage('solution')" data-target="#imgUpload">Add image to solution</button>
+    <img class="card-img-top mt-3 pl-3" *ngIf="solCroppedIcon" (click)="viewImage(solCroppedIcon)" [src]="solCroppedIcon" />
+  </div>
+</div>
+
+<div class="col-md-12 pt-3">
+  <h4>Hint</h4>
+  <ckeditor [(ngModel)]="hint.text" [config]="config" [readonly]="false" debounce="500"></ckeditor>
+  <div class="col-md-12">
+    <button type="button" class="btn btn-info btn-sm mt-3" data-toggle="modal" (click)= "uploadImage('hint')" data-target="#imgUpload">Add image to hint</button>
+    <img class="card-img-top mt-3 pl-3" *ngIf="hint?.icon" [src]="hint?.icon" (click)="viewImage(hint?.icon)" />
+  </div>
+</div>
+
+<div class="col-md-12 text-center pt-3">
+  <button type="button" class="btn btn-secondary" (click)="initializeForm()" >Reset</button>
+  <button type="button" class="btn btn-info" (click)="addQuestion()">{{ formType=='update' ? 'Update' : 'Add'}}</button>
+</div> 
+</div>
+
+
+<!-- Image Crop modal-->
+<div class="modal fade" id="imgUpload" tabindex="-1" role="dialog" aria-labelledby="imgUploadLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header modalColor">
+        <h6 class="modal-title" id="imgUploadLabel">Change</h6>
+        <button type="button" class="close" data-dismiss="modal" #closeModal aria-label="Close" (click)="intializeImageCropConfig()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="error text-center pt-2" *ngIf="imgError">{{imgError}}</div>
+      <div class="modal-body text-center">
+        <div class="row">
+          <div class="col-6">
+            <image-cropper [imageChangedEvent]="imageChangedEvent" [maintainAspectRatio]="true" [aspectRatio]="269 / 150" [resizeToWidth]="128" format="png, jpg, jpeg" (imageCropped)="imageCropped($event)" (loadImageFailed)="loadImageFailed()"></image-cropper>
+            <input type="file" [(ngModel)]="picture" (change)="fileChangeEvent($event)" />
+          </div>
+          <div class="col-6">
+            <img *ngIf="croppedImage" [src]="croppedImage" />
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <div class="col-sm-3">
+          <div data-dismiss="modal" #setOnClose type="hidden"></div>
+          <button type="button" class="btn btn-secondary upload" (click)="setImage()">Upload</button>
+        </div>
+        <!--  -->
+      </div>
+    </div>
+  </div>
+</div>
+  <!--end modal-->

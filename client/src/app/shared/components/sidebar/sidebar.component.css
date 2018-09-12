@@ -1,0 +1,131 @@
+.card {
+  border-radius: 0px !important;
+
+}
+.sidebar-li {
+  font-size: 14px !important;
+  vertical-align: -webkit-baseline-middle;
+  padding-top: 10px !important;
+  font-weight: 500;
+  /*background-color: #212121 !important;/*141414*/*/
+  color: #757575;
+  font-family: RobotoDraft, 'Helvetica Neue', Helvetica, Arial;
+  padding-bottom: 10px !important;
+}
+/*.card:hover {
+  color: #ffffff;
+  background-color: #141414 !important;
+  }*/
+  .sidebar-li:hover {
+    color: #ffffff;
+    background-color: #141414 !important;
+  }
+  .menu {
+    /*background: #00bfa5 !important;*/
+    background-color: #212121 !important;
+    color: #757575;
+  }
+  .menu:hover {
+    /*background: #00bfa5 !important;*/
+    color: #fff !important;
+    cursor: pointer;
+    text-decoration: none;
+  }
+  .submenu {
+    /*background: #304ffe !important;*/
+    /*background: #00b8d4 !important;*/
+    background-color: #212121 !important;
+    color: #757575;
+  }
+  .lpath{
+    /*background: #00b8d4 !important;*/
+    /*background: #fff !important;*/
+    /*color: black!important;*/
+    background-color: #212121 !important;
+    color: #757575;
+  }
+  .f-t{
+  /*font-size: 17px !important;
+  color: #fff;
+  font-family: Arial, Helvetica, sans-serif;*/
+}
+.f-st{
+  /*font-size: 15px !important;
+  font-family: "Times New Roman", Times, serif;*/
+  /*color: #fff;*/
+}
+.f-lp{
+  /*font-size: 13px !important;
+  font-family: Arial, Helvetica, sans-serif;*/
+}
+.fa {
+  /*font-size: 1.4em;*/
+} 
+
+/* Rounded sliders */
+.slider.round {
+  border-radius: 34px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}
+/*.menuName {
+  color: #757575;
+  text-decoration: none;
+  cursor: pointer;
+}
+.menuName:hover {
+  color: #fff !important;
+  cursor: pointer;
+  text-decoration: none;
+}*/
+a {
+ color: #757575;
+ text-decoration: none;
+}
+a:hover {
+  color: #fff !important;
+  text-decoration: none;
+}
+/*.fa-minus {
+  color: #757575;
+}
+.fa-minus:hover {
+ color: #fff;
+ }*/
+/*.fa-graduation-cap  {
+ color: #757575;
+}
+.fa-graduation-cap:hover {
+ color: #fff;
+ }*/
+ /* End Auto Play CSS*/
+
+ .side-bar {
+  width: 15.9%;
+  height: 84vh;
+  overflow-y: auto;
+  /*background-color: #ffffff !important;*/
+  overflow-x: hidden;
+  /*min-height: 500px;*/
+  background-color: #212121 !important;
+  position: fixed;
+}
+/*custom scroll bar css start here*/
+::-webkit-scrollbar {
+  width: 12px;
+}
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 5px grey; 
+  border-radius: 12px;
+}
+::-webkit-scrollbar-thumb {
+  background:  #708090;
+  border-radius: 12px;
+}
+::-webkit-scrollbar-thumb:hover {
+  /*background: #15aabf; */
+  background: #708090; 
+}
+/*custom scroll bar css end here*/

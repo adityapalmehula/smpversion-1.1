@@ -1,0 +1,107 @@
+<div class="container-section">
+  <div class="row">
+    <div class="col-md-1 pl-0 pr-0">
+    </div>
+    <div class="col-md-11">
+      <div class="container-fluid">
+        <div class="row breadcrumb">
+          <div class="col-8 text-left mt-2 mb-1 ">
+            <a class="page-heading" [routerLink]="['/', urlPrefix, 'projects']"><i class="fa fa-home" aria-hidden="true"></i> Projects</a> / <span class="breadcrumb-active">Epics</span>
+          </div>
+          <div class="col-4 text-right">
+            <a class="btn btn-outline-info back" [routerLink]="['/', urlPrefix, 'projects']"><i class="fa fa-arrow-circle-o-left" aria-hidden="true"></i> Back
+            </a>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12 mt-4 mb-1 ">
+            <h3 class="title">{{ projectData.title }}</h3>
+            <p class="description text-left mt-2" [innerHtml]="projectData.description"></p>
+          </div>
+        </div>
+        <hr>
+      </div>
+      <div class="container-section">
+        <div class="col-12 add-new-container">
+          <nav class="nav nav-pills flex-column flex-sm-row  pl-3" role="tablist">
+            <a class="flex-sm-fill text-sm-center nav-link" [ngClass]="{'active': isDefaultTab ==='epics'  || isDefaultTab ==='' }" (click)="setDefaultTab('epics')" data-toggle="tab" href="#epics" role="tab">Epics</a>
+            <a class="flex-sm-fill text-sm-center nav-link" [ngClass]="{'active': isDefaultTab ==='stories'}" (click)="setDefaultTab('stories')" data-toggle="tab" href="#stories" role="tab">Stories</a>
+          </nav>
+        </div>
+        <div class="col-12">
+          <div class="tab-content">
+            <!-- epics tab start from here -->
+            <div class="tab-pane" [ngClass]="{'active': isDefaultTab ==='epics' || isDefaultTab ==='' }" id="epics" role="tabpanel">
+              <div class="row">
+                <div class="col-8 text-left ">
+                </div>
+                <div *ngxPermissionsOnly="permissions; else elseBlock; then thenBlock"></div>
+                <ng-template #elseBlock>
+                </ng-template>
+                <ng-template #thenBlock>
+                  <div class="col-4 text-right" *ngIf="CONFIG.ADMIN.indexOf(role) > -1 || projectOwnerUserId == userId">
+                    <a class="btn btn-outline-info add-new" [routerLink]="['/', urlPrefix, 'projects', projectId, 'epics', 'add']"><i class="fa fa-plus-circle"> </i> Add</a>
+                  </div>
+                </ng-template>
+              </div>
+              <div class="row">
+                <div class="col-12 text-center" *ngIf="projectData?.epics?.length==0">
+                  There is no epics available
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-12 middle-section">
+                  <ul class="list-group">
+                    <li class="list-group-item d-flex justify-content-between" *ngFor="let epic of projectData.epics; let i=index; ">
+                      <div class="row w-100">
+                        <div class="col-9 text-left p-0">
+                          <div class="row">
+                            <a data-toggle="collapse" data-parent="#epicAccordion" href="{{'#epicAccordion'+i}}" [attr.aria-expanded]="true" [attr.aria-controls]="'epicAccordion'+i" class="anchor-link">
+                              <h5 class="mb-1 pt-1 subtitle"> {{epic.title | titlecase}}
+                            </h5>
+                            </a>
+                          </div>
+                        </div>
+                        <!--Righ side botton-->
+                        <div class="col-3 text-right p-0" *ngIf="CONFIG.ADMIN.indexOf(role) > -1 || projectOwnerUserId == userId">
+                          <div *ngIf="projectData.status===CONFIG.CONTENT_STATUS[3] || projectData.status=== CONFIG.CONTENT_STATUS[5]">
+                            <button type="button" class="btn btn-light btn-sm mr-2" title="Edit Epic" [routerLink]="['/', urlPrefix, 'projects', projectId, 'epics','edit',epic._id]"><span class="fa fa-pencil"></span></button>
+                            <button type="button" class="btn btn-light btn-sm mr-2" (click)="deleteEpic(epic._id)" title="Delete Epic"><span class="fa fa-trash"></span></button>
+                          </div>
+                        </div>
+                        <!--end-->
+                        <div id="{{'epicAccordion'+i}}" class="collapse" role="tabpanel" [attr.aria-labelledby]="'epic'+i">
+                          <div class="p-0">
+                            <div class="row">
+                              <div class="col-12 mt-3 description-text" [innerHtml]="epic.description"></div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <!-- epics tab ends here -->
+            <!--  topic tab start here -->
+            <div class="tab-pane" [ngClass]="{'active': isDefaultTab ==='stories' }" id="stories" role="tabpanel">
+              <div *ngxPermissionsOnly="permissions; else storiesElse; then storiesThen"></div>
+              <ng-template #storiesElse>
+                <div></div>
+              </ng-template>
+              <ng-template #storiesThen>
+                <div class="col-12 text-right">
+                  <a class="btn btn-outline-info add-new" [routerLink]="['/', urlPrefix, 'projects',projectId, 'stories','add' ]"><i class="fa fa-plus-circle">
+                </i> Add</a>
+                </div>
+              </ng-template>
+              <app-stories [stories]="stories" [projectId]="projectId" [url]="urlPrefix"></app-stories>
+            </div>
+            <!--  topic tab ends here  -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,12 @@
+html
+  head
+    title= title
+    each style in styles 
+      link(rel="stylesheet" type="text/css" href=style)
+    each script in scripts 
+      script(type='text/javascript', src= script)
+  body( style="margin:0px;")
+    h1= message
+    
+      
+          

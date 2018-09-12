@@ -1,0 +1,17 @@
+html
+  head
+    title= title
+    each style in styles 
+      link(rel="stylesheet" type="text/css" href=style)
+    each script in scripts 
+      script(type='text/javascript', src= script)
+  body( style="margin:0px;")
+    h1= message
+    div(id='player', class='embed-container')
+    script
+      | videoId="#{videoId}"
+      | message="#{message}"
+      | if(message === '') 
+      |    new Vimeo.Player(document.getElementById('player'), {id:videoId, autoplay: 1, quality: 360p})
+      
+          

@@ -1,0 +1,150 @@
+.bg-blue-300 {
+	background-color: #64b5f6;
+}
+.page-section {
+	padding: 30px 0;
+}
+.icon-block.half {
+	width: 50px;
+	height: 50px;
+	line-height: 50px;
+	font-size: 25px;
+}
+.bg-blue-500 {
+	background-color: #2196f3;
+}
+
+.text-white {
+	color: #ffffff;
+}
+.icon-block {
+	text-align: center;
+	display: inline-block;
+}
+.text-display-2 {
+	font-size: 2rem;
+	font-weight: 400;
+	/*line-height: 3.69rem;*/
+}
+.media.v-middle .media-left {
+	vertical-align: middle;
+}
+
+.media-grid > .media-left {
+	padding-right: 20px;
+}
+.page-section {
+	padding: 40px 0;
+}
+
+.overflow-hidden {
+	overflow: hidden;
+}
+.relative {
+	position: relative !important;
+}
+.absolute.left {
+	left: 0;
+}
+.absolute.top {
+	top: 0;
+}
+.absolute {
+	position: absolute;
+}
+img {
+	vertical-align: middle;
+}
+img {
+	border: 0;
+}
+.paper-shadow.panel {
+	position: relative;
+}
+
+.paper-shadow:not(.navbar) {
+	z-index: 1;
+}
+.max-width-400 {
+	max-width: 400px !important;
+}
+
+.margin-none {
+	margin: 0 !important;
+}
+.panel {
+	box-shadow: none;
+}
+.panel-default {
+	border-color: #e2e9e6;
+}
+.panel {
+	background-color: #ffffff;
+	border: 1px solid transparent;
+	border-radius: 0;
+}
+.h-center {
+	margin-left: auto !important;
+	margin-right: auto !important;
+}
+.panel-heading > *:last-child {
+	margin-bottom: 0;
+}
+
+.panel-heading > *:first-child {
+	margin-top: 0;
+}
+.text-headline {
+	font-size: 1.84rem;
+	font-weight: 400;
+	line-height: 2.46rem;
+}
+.form-control-material {
+	border: none;
+	border-radius: 0;
+	border-bottom: 1px solid #efefef;
+	position: relative;
+	box-shadow: none;
+	padding: 16px 0 0;
+	height: 48px;
+}
+
+.form-group {
+	margin-bottom: 15px;
+}
+.panel-body {
+	padding: 16px;
+}
+.panel-heading {
+	padding: 10px px;
+	border-bottom: 1px solid transparent;
+}
+.text-right {
+	text-align: right;
+}
+.btn {
+	display: inline-block;
+	margin-bottom: 0;
+	font-weight: 500;
+	text-align: center;
+	vertical-align: middle;
+	-ms-touch-action: manipulation;
+	touch-action: manipulation;
+	cursor: pointer;
+	background-image: none;
+	border: 1px solid transparent;
+	white-space: nowrap;
+	padding: 8px 12px;
+	font-size: 13px;
+	line-height: 1.42857143;
+	border-radius: 2px;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+}
+.btn-primary {
+	color: #ffffff;
+	background-color: #42a5f5;
+	border-color: #42a5f5;
+}

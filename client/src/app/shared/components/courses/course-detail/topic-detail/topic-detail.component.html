@@ -1,0 +1,193 @@
+<div class="container-section">
+	<div class="row">
+		<div class="col-md-1 pl-0 pr-0">
+		</div>
+		<div class="col-md-11">
+			<div class="container-fluid">
+				<div class="row breadcrumb">
+					<div class="col-8 text-left mt-2 mb-1 ">
+						<a class="page-heading" [routerLink]="['/', urlPrefix, 'courses']"><i class="fa fa-home" aria-hidden="true"></i> Courses</a> / <a class="page-heading" [routerLink]="['/', urlPrefix, 'courses', courseId]" [queryParams]="{'tab':'topics'}"><i class="fa fa-home" aria-hidden="true" ></i> Topics</a> / <span class="breadcrumb-active">Subtopics</span>
+					</div>
+					<div class="col-4 text-right">
+						<a class="btn btn-outline-info back" [routerLink]="['/', urlPrefix, 'courses', courseId]" [queryParams]="{'tab':'topics'}"><i class="fa fa-arrow-circle-o-left" aria-hidden="true"></i> Back
+						</a>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-12 mt-4 mb-1 ">
+						<h3 class="title">{{ topicData.title | titlecase}}</h3>
+						<p class="description text-left mt-2" [innerHtml]="topicData.description"></p>
+					</div>
+				</div>
+				<hr>
+ 		 <!-- 	<div class="row add-new-container">
+ 		 		<div class="col-8 text-left ">
+ 		 			<h3 class="page-heading">{{ topicData.title}}</h3>
+ 		 		</div>
+ 		 		<div class="col-4 text-right">
+ 		 			<a class="btn btn-outline-info back" [routerLink]="['/', urlPrefix, 'courses', courseId]" [queryParams]="{'tab':'topics'}" ><i class="fa fa-arrow-circle-o-left" aria-hidden="true"></i> Back
+ 		 			</a>
+ 		 		</div>
+ 		 	</div>
+ 		 	<div class="row">
+ 		 		<div class="col-12">
+ 		 			<p class="description text-left">{{ topicData.description}}</p>
+ 		 		</div>
+ 		 	</div>
+ 		 	<hr> -->
+ 		 	<div class="row">
+ 		 		<div class="col-12 ">
+ 		 			<nav class="nav nav-pills flex-column flex-sm-row pl-4" role="tablist">
+ 		 				<a class="flex-sm-fill text-sm-center nav-link mt-3" [ngClass]="{'active': isDefaultTab ==='subtopics' || isDefaultTab ===''}" (click)="setDefaultTab('subtopics')" data-toggle="tab" href="#subtopics" role="tab">SubTopics</a>
+
+ 		 				<a *ngIf="currentApp === apps[0] || currentApp === apps[2]" class="flex-sm-fill text-sm-center nav-link mt-3" [ngClass]="{'active': isDefaultTab ==='textBookSolution'}" (click)="setDefaultTab('textBookSolution')" data-toggle="tab" href="#playlists" role="tab">Text Book Solution</a>
+
+ 		 				<!--<a class="flex-sm-fill text-sm-center nav-link"  [ngClass]="{'active': isDefaultTab ==='assignments'}" (click)="setDefaultTab('assignments')"  data-toggle="tab" href="#assignments" role="tab">Assignments</a> -->
+
+ 		 			</nav>
+ 		 		</div>
+ 		 		<div class="col-12 subtopic-detail">
+ 		 			<!-- Tab panes -->
+ 		 			<div class="tab-content">
+ 		 				<div class="tab-pane" [ngClass]="{'active': isDefaultTab ==='subtopics' || isDefaultTab ===''}" id="subtopics" role="tabpanel">
+ 		 					<div *ngxPermissionsOnly="permissions; else elseBlock; then thenBlock"></div>
+ 		 					<ng-template #elseBlock>
+ 		 						<div></div>
+ 		 					</ng-template>
+ 		 					<ng-template #thenBlock>
+ 		 						<div class="row" *ngIf="CONFIG.ADMIN.indexOf(role) > -1 || topicOwnerUserId == userId">
+ 		 							<div class="col-12 text-right" *ngIf="topicData.courseStatus===CONFIG.CONTENT_STATUS[3] || topicData.courseStatus=== CONFIG.CONTENT_STATUS[5]">
+ 		 								<a class="btn btn-outline-info add-new" [routerLink]="['/', urlPrefix, 'courses',courseId,'topics',topicId,'subtopics','add']"><i class="fa fa-plus-circle" > </i> Add</a>
+ 		 								<a class="btn btn-outline-info add-new" [routerLink]="['/', urlPrefix, 'courses', courseId,'topics', topicId,'rearrange']"><i class="fa fa-reorder"> </i> Rearrange</a>
+ 		 							</div>
+ 		 						</div>
+ 		 					</ng-template>
+ 		 					<div class="row">
+
+ 		 						<div class="col-12 text-center errMessage" *ngIf="errMessage">
+ 		 							<h6>{{errMessage}}</h6>
+ 		 						</div>
+ 		 						<div class="col-12 middle-section container-section">
+ 		 							<ul class="list-group">
+ 		 								<li class="list-group-item d-flex justify-content-between"  *ngFor="let subTopic of subTopicDetails; let i=index; ">
+ 		 									<a href="javascript:void(0)" class="anchor-link text-capitalize" [routerLink]="['/', urlPrefix, 'courses', courseId, 'topics', topicId, 'subtopics', subTopic._id]" [queryParams]="{tab : 'videos'}">
+ 		 										{{subTopic.title | titlecase}}
+ 		 									</a>
+ 		 									<div class="row" *ngIf="CONFIG.ADMIN.indexOf(role) > -1 || topicOwnerUserId == userId">
+ 		 										<div  *ngIf="topicData.courseStatus===CONFIG.CONTENT_STATUS[3] || topicData.courseStatus=== CONFIG.CONTENT_STATUS[5]">
+ 		 											<!--  <button type="button" class="btn btn-light btn-sm mr-2" title="Submit for review">Submit</button> -->
+ 		 											<!-- <button type="button" class="btn btn-light btn-sm mr-2" title="Add Topic">+ Topic</button> -->
+ 		 											<button type="button" class="btn btn-light btn-sm mr-2" title="Edit Subtopic" [routerLink]="['/', urlPrefix, 'courses',courseId,'topics',topicId,'subtopics','edit',subTopic._id]"><span class="fa fa-pencil"></span></button>
+ 		 											<button type="button" class="btn btn-light btn-sm mr-2" (click)="deleteSubTopic(subTopic._id)" title="Delete Subtopic"><span class="fa fa-trash"></span></button>
+ 		 										</div>
+ 		 									</div>
+ 		 								</li>
+ 		 							</ul>
+ 		 							<div class="col-12 custom-pgn" *ngIf="totalItems>itemsPerPage">
+ 		 								<pagination class="pagination" [totalItems]="totalItems" [itemsPerPage]="itemsPerPage" [(ngModel)]="currentPage" (pageChanged)="pageChanged($event)"></pagination>
+ 		 							</div>
+ 		 						</div>
+ 		 					</div>
+ 		 				</div>
+ 		 				<div class="tab-pane" [ngClass]="{'active': isDefaultTab ==='textBookSolution'}" id="textBookSolution" role="tabpanel">
+ 		 					<app-text-book-solutions [textBookSolutions]="textBookSolutions" [topicId]="topicId" [topicOwnerUserId]="topicOwnerUserId" ></app-text-book-solutions>
+ 		 				</div>
+
+ 		 			</div>
+
+
+ 		 			<!-- 	<div class="tab-pane" [ngClass]="{'active': isDefaultTab ==='questions'}" id="questions" role="tabpanel">
+ 		 					<div *ngxPermissionsOnly="permissions; else queselse; then questhen"></div>
+ 		 					<ng-template #queselse>
+ 		 						<div></div>
+ 		 					</ng-template>
+ 		 					<ng-template #questhen>
+ 		 						<div class="col-12 text-right">
+ 		 							<a class="btn btn-outline-info add-new" [routerLink]="['/', urlPrefix, 'courses','topics','questions','add']"><i class="fa fa-plus-circle">
+ 		 							</i> Add</a>
+ 		 						</div>
+ 		 					</ng-template>
+ 		 					<app-questions [topicId]="topicId"></app-questions>
+ 		 				</div> -->
+
+ 		 			</div>
+ 		 		</div>
+ 		 	</div>
+
+ 		 	<!-- Subtopic Modal -->
+
+ 		 <!-- 	<div class="modal fade addSubTopicModal" tabindex="-1" role="dialog" aria-labelledby="subTopicModal" aria-hidden="true" data-backdrop="static" data-keyboard="false" id="subTopicModal">
+ 		 		<div class="modal-dialog modal-lg">
+ 		 			<div class="modal-content">
+
+ 		 				<div class="modal-header text-center">
+ 		 					<h4 aria-hidden="true" class="modal-heading">Subtopic</h4>
+ 		 					<span class="sr-only">Subtopic</span>
+ 		 					<button type="button" class="close" data-dismiss="modal" title="Close" (click)="closeModal()" aria-label="Close">
+ 		 						<span aria-hidden="true">&times;</span>
+ 		 					</button>
+ 		 				</div>
+
+ 		 				<div *ngIf="errorMessage">
+ 		 					<div class="errorMessage">
+ 		 						{{errorMessage}}
+ 		 					</div>
+ 		 				</div>
+ 		 				<form class="form-horizontal" role="form" [formGroup]="formSubTopic">
+ 		 					<div class="modal-body">
+ 		 						<div class="row form-group">
+ 		 							<label class="col-sm-2 control-label" for="Topic Title">Title : </label>
+ 		 							<div class="col-sm-10">
+ 		 								<input type="text" class="form-control" formControlName="subTopicTitle" />
+ 		 								<div *ngIf="formSubTopic.get('subTopicTitle').touched && formSubTopic.get('subTopicTitle').errors">
+ 		 									<div class="error">
+ 		 										Title is required.
+ 		 									</div>
+ 		 								</div>
+ 		 							</div>
+ 		 						</div>
+ 		 						<div class="row form-group">
+ 		 							<label class="col-sm-2 control-label" for="Topic Description">Description : </label>
+ 		 							<div class="col-sm-10">
+ 		 								<textarea class="form-control" formControlName="subTopicDescription"></textarea>
+ 		 								<div>
+ 		 									<div class="error" *ngIf="formSubTopic.get('subTopicDescription').touched && formSubTopic.get('subTopicDescription').errors">
+ 		 										Description is required.
+ 		 									</div>
+ 		 								</div>
+ 		 							</div>
+ 		 						</div>
+ 		 						<div class="row form-group ">
+ 		 							<label class="col-sm-2 control-label" for="Topic status">Status : </label>
+ 		 							<div class="col-sm-3 col-md-12 col-lg-3">
+ 		 								<div class="form-check form-check-inline">
+ 		 									<label class="form-check-label">
+ 		 										<input class="form-check-input" type="radio" name="statusCheck" [value]="status.ACTIVE" checked formControlName="statusCheck"> Active
+ 		 									</label>
+ 		 								</div>
+ 		 								<div class="form-check form-check-inline">
+ 		 									<label class="form-check-label">
+ 		 										<input class="form-check-input" type="radio" name="statusCheck" [value]="status.INACTIVE" formControlName="statusCheck"> Inactive
+ 		 									</label>
+ 		 								</div>
+ 		 							</div>
+ 		 						</div>
+ 		 					</div>
+ 		 					<div class="modal-footer">
+ 		 						<button type="button" class="btn btn-save" *ngIf="!subTopicId" title="Save" data-dismiss="modal" [disabled]="!formSubTopic.valid" (click)="saveSubTopic(formSubTopic)" [ngStyle]="{'cursor':formSubTopic.valid ? 'pointer' : 'not-allowed' }">
+ 		 							Save
+ 		 						</button>
+ 		 						<button type="button" class="btn btn-save" *ngIf="subTopicId" title="Update" data-dismiss="modal" [disabled]="!formSubTopic.valid" (click)="updateSubTopic(formSubTopic)" [ngStyle]="{'cursor':formSubTopic.valid ? 'pointer' : 'not-allowed' }">
+ 		 							Update
+ 		 						</button>
+ 		 						<button type="button" class="btn btn-cancel" title="Cancel" data-dismiss="modal" (click)="closeModal()" #catModalClose>
+ 		 							Cancel
+ 		 						</button>
+ 		 					</div>
+ 		 				</form>
+ 		 			</div>
+ 		 		</div>
+ 		 	</div> -->
+ 		 </div>
+ 		</div>
+ 	</div>

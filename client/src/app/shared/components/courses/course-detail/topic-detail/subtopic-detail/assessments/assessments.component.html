@@ -1,0 +1,428 @@
+<div class="container-section">
+  <div class="row add-new-container pt-2 py-1" *ngIf="role==CONFIG.USER_STUDENT">
+    <div class="col-8 text-left">
+      <p class="heading m-0">Assessments</p>
+    </div>
+    <div class="col-4 text-right">
+      <a class="btn btn-outline-info back" [routerLink]="['/', urlPrefix, 'course-details',courseId]"><i class="fa fa-arrow-circle-o-left" aria-hidden="true"></i> Back
+      </a>
+    </div>
+  </div>
+
+  <div class="row" *ngIf="nestedComp">
+    <div class="row col-md-7">
+
+     <div class="col-lg-3 col-md-3 pr-0 filter">
+      <h4>Class</h4>
+      <select class="form-control  pl-2" (change)="selectedStandard($event.target.value)">
+        <option [selected]="!subCatId" disabled hidden>Select Class </option>
+        <option [selected]="subCatId==stnd?._id" value="{{stnd?._id}}" *ngFor="let stnd of standards">{{stnd?.name}}</option>
+      </select>
+    </div>
+
+    <div class="col-lg-3 col-md-3 pr-0 filter">
+      <h4>Course</h4>
+      <select class="form-control pl-2" (change)="getTopics($event.target.value)" >
+        <option [selected]="!courseId" disabled hidden>Select course </option>
+        <option [selected]="courseId==course?.courseId" value="{{course?.courseId}}" *ngFor="let course of courseList">{{course.title}}</option>
+      </select>
+    </div>
+
+    <div class="col-md-6 pr-0">
+     <div class="col-lg-12 col-md-3 p-0 filter ">
+      <h4>Topics</h4>
+      <angular2-multiselect [data]="topicsList" [(ngModel)]="selectedTopicsList" 
+      [settings]="topicsConfig"></angular2-multiselect>
+    </div>
+  </div>
+</div>
+<div class="row col-md-5">
+  <div class="col-lg-4 col-md-3 pr-0 filter">
+    <h4>Difficulty Level</h4>
+    <select class="form-control pl-2" (change)="selectedLevel($event.target.value)">
+      <option [selected]="!level" value="">All Level </option>
+      <option [selected]="level==data" value="{{data}}" *ngFor="let data of levels">{{data}}</option>
+    </select>
+  </div>
+
+  <div class="col-lg-4 col-md-3 pr-0 filter">
+    <h4>Status</h4>
+    <select class="form-control pl-2" (change)="selectedAssessmentStatus($event.target.value)" >
+      <option value="" [selected]="!amntStaus">All type </option>
+      <option [selected]="amntStaus==status" value="{{status}}" *ngFor="let status of assementStatus">{{status}}</option>
+    </select>
+  </div>
+
+  <div class="col-lg-4 col-md-3 fliter-btn text-center">
+    <button class="btn btn-sm btn-success cs-sm" (click)="applyFilter()">Apply</button>
+    <button class="btn btn-sm btn-info ml-1 cs-sm" (click)="resetFilter()">Reset</button>
+  </div>
+</div>
+
+</div>
+
+<div class="row" *ngIf="!nestedComp">
+ <div class="col-md-4 pr-0">
+   <div class="col-lg-12 col-md-3 p-0 filter ">
+    <h4>Topics</h4>
+    <angular2-multiselect [data]="topicsList" [(ngModel)]="selectedTopicsList" 
+    [settings]="topicsConfig"></angular2-multiselect>
+  </div>
+</div>
+
+<div class="col-lg-2 col-md-3 pr-0 filter">
+  <h4>Difficulty Level</h4>
+  <select class="form-control pl-2" (change)="selectedLevel($event.target.value)">
+    <option [selected]="!level" value="">All Level </option>
+    <option [selected]="level==data" value="{{data}}" *ngFor="let data of levels">{{data}}</option>
+  </select>
+</div>
+
+<div class="col-lg-2 col-md-3 pr-0 filter">
+  <h4>Status</h4>
+  <select class="form-control pl-2" (change)="selectedAssessmentStatus($event.target.value)" >
+    <option value="" [selected]="!amntStaus">All type </option>
+    <option [selected]="amntStaus==status" value="{{status}}" *ngFor="let status of assementStatus">{{status}}</option>
+  </select>
+</div>
+
+<div class="col-lg-3 col-md-3 fliter-btn text-center">
+  <button class="btn btn-md btn-success" (click)="applyFilter()">Apply</button>
+  <button class="btn btn-md btn-info ml-1" (click)="resetFilter()">Reset</button>
+</div>
+</div>
+
+<div class="row col-md-12 as-tabs" [class.container-section]="role==CONFIG.USER_STUDENT">
+  <div class="col-md-7 p-0 pl-2">
+    <ul class="nav nav-tabs" id="myTab" role="tablist">
+      <li class="nav-item">
+        <a class="nav-link active" [class.active]="type==assessmentTypes[0]" id="test-tab" data-toggle="tab" href="javascript:void(0)" role="tab" (click)="setAssessmentType(assessmentTypes[0])" aria-controls="test" aria-selected="true">Test</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" [class.active]="type==assessmentTypes[1]"  id="practice-tab" data-toggle="tab" href="javascript:void(0)" role="tab" (click)="setAssessmentType(assessmentTypes[1])" aria-controls="practice" aria-selected="false">Practice</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" [class.active]="type==assessmentTypes[2]" id="random-tab" data-toggle="tab" href="javascript:void(0)" role="tab" (click)="setAssessmentType(assessmentTypes[2])"  aria-controls="random" aria-selected="false">Exam</a>
+      </li>
+    </ul>
+  </div> 
+
+  <div class="col-md-5 p-0 pr-1 filtr">
+    <div class="col-md-3 float-right pt-4 random-assessmnet-btn">
+     <button *ngIf="type==assessmentTypes[1]" class="btn btn-sm btn-info" data-toggle="modal" data-target="#practiceModal">Take Practice</button>
+   </div>
+ </div>
+</div>
+
+ <!--  <div class="cstm-container" [class.cstm-container-full]="role==CONFIG.USER_STUDENT" >
+   <div class="table-responsive">
+   </div>
+ </div> -->
+ <div class="row cust-table">
+   <div class="col-md-12 cust-table px-2">
+     <div class="table-panel">
+      <div class="table-responsive bg-white">
+        <table class="table v-middle">
+         <thead class="">
+          <tr class="col-md-12">
+            <th>Assessment</th>
+            <th>Level</th>
+            <th class="text-center">Total Attempts</th>
+            <th class="text-center">Max Marks</th>
+            <th class="text-center">Min Marks</th>
+            <th class="text-center">Average</th>
+            <th class="text-center" *ngIf="role!=CONFIG.USER_STUDENT">Opreation</th>
+            <th class="text-center">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let data of assessments; let i=index; ">
+            <td title="Click for details">
+              <a href="javascript:void(0)" data-toggle="modal" data-target="#assessment-details" (click)="setAssessmentDetails(data._id)" class="qus cursor-pointer">{{data.assessment}}
+              </a>
+            </td>
+            <td>{{data.level}}</td>
+            <td class="text-center">{{data.totalAttampts ? data.totalAttampts : 0}}</td>
+            <td class="text-center text-success">{{data.totalAttampts ? data.max : '-'}}</td>
+            <td class="text-center text-danger">{{data.totalAttampts ? data.min : '-'}}</td>
+            <td class="text-center text-primary">{{data.totalAttampts ? data.avg : '-'}}</td>
+            <td class="text-center" *ngIf="role!=CONFIG.USER_STUDENT">
+              <div *ngIf="CONFIG.ADMIN.indexOf(role) > -1 || data?.createdBy?.id == userId || userId === data?.schoolId">
+                <button type="button" class="btn edt-btn btn-sm" (click)="editAssessment(data._id)" title="Edit Assessment"><span class="fa fa-pencil"></span></button>
+                <button type="button" class="btn del-btn btn-sm mr-1" (click)=deleteAssessment(data._id) title="Delete Assessment"><span class="fa fa-trash"></span>
+                </button>
+              </div>
+            </td>
+            <td class="text-center">
+              <div class="btn-group btn-group-sm" role="group" aria-label="Basic example">
+                <button type="button" class="btn btn-info mr-2" (click)="takeAssessment(data._id)">Take</button>
+                <button *ngIf="data?.totalAttampts" type="button" [class.disabled]="!data?.totalAttampts" class="btn btn-success" (click)="viewResults(data._id,data?.totalAttampts)" >Result</button>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="col-12 text-center no-data" *ngIf="assessments?.length===0">No data avaliable</div>
+    </div>
+  </div>
+
+  <div class="row col-md-12 view-container">
+    <div class="col-12 custom-pgn" *ngIf="totalItems>itemsPerPage">
+      <pagination class="pagination" [totalItems]="totalItems" [itemsPerPage]="itemsPerPage" [(ngModel)]="currentPage" (pageChanged)="pageChanged($event)"></pagination>
+    </div>
+  </div>
+
+</div>
+</div>
+
+<!-- random assessment modal starts here -->
+<div class="modal fade" id="practiceModal" tabindex="-1" role="dialog"
+aria-labelledby="title" aria-hidden="true" data-backdrop="static"> 
+<div class="modal-dialog modal-lg" role="document">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h4>Random Practice Set</h4>
+      <!-- <h5 class="modal-title" id="title"></h5> -->
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close" #clsRandomAssment>
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body pratice-form p-2">
+      <div *ngIf="errorMessage" style="font-size: 17px;" class="error-msg col-md-11 text-center">{{errorMessage}}</div>
+      <div class="row col-md-12 pt-3">
+       <div class="form-group col-md-4">
+        <label for="level">Assessment level<span class="mendatoryField">*</span></label>
+        <select class="form-control" [(ngModel)]="qusLevel">
+          <option [selected]="qusLevel==lvl" *ngFor="let lvl of levels; let i=index; "> {{lvl}}</option>
+        </select>
+      </div>
+
+      <div class="form-group col-md-4">
+        <label for="type">Topics</label>
+        <angular2-multiselect [ngModelOptions]="{standalone: true}" [data]="topicsList" [(ngModel)]="selectedTopics" [settings]="topicsConfig" (onSelect)="onTopicFilterChange($event)" (onDeSelect)="onTopicsDeSelect($event)" (onSelectAll)="onTopicFilterChange($event)" (onDeSelectAll)="onTopicsDeSelectAll($event)"></angular2-multiselect>
+      </div>
+
+      <div class="form-group col-md-4">
+        <label for="type">Sub-topics</label>
+        <angular2-multiselect [ngModelOptions]="{standalone: true}" [data]="subTopicsList" [(ngModel)]="selectedSubTopics" [settings]="subTopicsConfig"></angular2-multiselect>
+      </div>
+
+     <!--  <div *ngIf="qusLevel ==levels[3]; else elseBlock" class="row col-md-12">
+        <fieldset class=" row col-md-12 scheduler-border">
+          <legend class="scheduler-border">
+            <div class="form-group">
+              <label for="type">Total question<span class="mendatoryField">*</span></label>
+              <input type="number" [ngModelOptions]="{standalone: true}" [(ngModel)]="totalQuestion.value" (input)="validate(totalQuestion)">
+              <div *ngIf="totalQuestion.required">
+                <div class="error-msg ml-3">Total question required</div>
+              </div>
+              <div *ngIf="totalQuestion.notNumber">
+                <div class="error-msg ml-3">Please enter valid number</div>
+              </div>
+              <div *ngIf="totalQuestion.notMatch || totalBasicLevelQus.notMatch || totalItmLevelQus.notMatch || totalAdvLevelQus.notMatch " class="col-md-11 text-center error-msg ml-5" style="font-size: 18px;">
+                Sum of all the question levels not match to total question
+              </div>
+            </div>
+          </legend>
+          <div class="row control-group">
+            <div class="form-group col-md-4 px-0">
+              <label for="type">No. of basic level questions</label>
+              <input type="number" [ngModelOptions]="{standalone: true}" [(ngModel)]="totalBasicLevelQus.value" (input)="validate(totalBasicLevelQus)">
+              <div *ngIf="totalBasicLevelQus.required">
+                <div class="error-msg ml-3">No. of basic level question required</div>
+              </div>
+              <div *ngIf="totalBasicLevelQus.notNumber">
+                <div class="error-msg ml-3">Please enter valid number</div>
+              </div>
+            </div>
+            <div class="form-group col-md-4 px-0">
+              <label for="type">No. of intermediate level questions</label>
+              <input type="number" [ngModelOptions]="{standalone: true}" [(ngModel)]="totalItmLevelQus.value" (input)="validate(totalItmLevelQus)">
+              <div *ngIf="totalItmLevelQus.required">
+                <div class="error-msg ml-3">No. of intermediate level question required</div>
+              </div>
+              <div *ngIf="totalItmLevelQus.notNumber">
+                <div class="error-msg ml-3">Please enter valid number</div>
+              </div>
+            </div>
+            <div class="form-group col-md-4 px-0">
+              <label for="type">No of advance level questions</label>
+              <input type="number" [ngModelOptions]="{standalone: true}" [(ngModel)]="totalAdvLevelQus.value" (input)="validate(totalAdvLevelQus)">
+              <div *ngIf="totalAdvLevelQus.required">
+                <div class="error-msg ml-3">No. of advance level question required</div>
+              </div>
+              <div *ngIf="totalAdvLevelQus.notNumber">
+                <div class="error-msg ml-3">Please enter valid number</div>
+              </div>
+            </div>
+          </div>
+        </fieldset>
+      </div>
+      <ng-template #elseBlock></ng-template>
+    -->
+    <div class="form-group col-md-2">
+      <label for="type">Total question<span class="mendatoryField">*</span></label>
+      <input type="number" class="mt-3" [ngModelOptions]="{standalone: true}" [(ngModel)]="totalQuestion.value" (input)="validateTotalQuestionCount(totalQuestion)" readonly="readonly">
+      <div *ngIf="totalQuestion.required">
+        <div class="error-msg ml-2">Total question required</div>
+      </div>
+      <div *ngIf="totalQuestion.notNumber">
+        <div class="error-msg ml-2">Please enter valid number</div>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+</div>
+<div class="modal-footer modal-cust">
+  <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+  <button type="button" class="btn btn-info" (click)="generateRandomPracticeSet()" >Generate</button>
+</div>
+</div>
+</div>
+</div>
+<!-- random assessment modal starts here -->
+
+<!-- assessment details  -->
+<div class="modal fade" id="assessment-details" tabindex="-1" role="dialog"
+aria-labelledby="title" aria-hidden="true"> 
+<div class="modal-dialog modal-lg" [class.full-modal]="role!=CONFIG.USER_STUDENT" role="document">
+  <div class="modal-content">
+    <div class="modal-header">
+     <h4>Assessment Details</h4>
+     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+
+  </div>
+  <div class="modal-body p-0">
+    <div id="accordion" role="tablist" aria-multiselectable="true">
+      <div class="card-blocks row">
+        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+          <table class="table" *ngIf="assessmentDetails">
+            <tbody *ngIf="role==CONFIG.USER_STUDENT">
+              <tr>
+                <td><strong>Title: </strong></td>
+                <td>{{assessmentDetails?.assessment}}</td>
+              </tr>
+              <tr>
+                <td><strong>Type: </strong></td>
+                <td>{{assessmentDetails?.type}}</td>
+              </tr>  
+              <tr>
+                <td><strong>Level: </strong></td>
+                <td>{{assessmentDetails?.level}}</td>
+              </tr>
+              <tr>
+                <td><strong>Total Question: </strong></td>
+                <td>{{assessmentDetails?.totalQuestion}}</td>
+              </tr>
+              <tr>
+                <td><strong>Total Marks: </strong></td>
+                <td>{{assessmentDetails?.totalMarks}}</td>
+              </tr>
+              <tr>
+                <td><strong>Pass Percentage: </strong></td>
+                <td>{{assessmentDetails?.passPercentage}}</td>
+              </tr>
+              <tr>
+                <td><strong>Total Attempts: </strong></td>
+                <td>{{assessmentDetails.totalAttampts ? assessmentDetails.totalAttampts : 0}}</td>
+              </tr>
+              <tr>
+                <td><strong>Max Marks: </strong></td>
+                <td>{{assessmentDetails.totalAttampts ? assessmentDetails.max : '-'}}</td>
+              </tr> 
+              <tr>
+                <td><strong>Min Marks: </strong></td>
+                <td>{{assessmentDetails.totalAttampts ? assessmentDetails.min : '-'}}</td>
+              </tr> 
+              <tr>
+                <td><strong>Average: </strong></td>
+                <td>{{assessmentDetails.totalAttampts ? assessmentDetails.avg : '-'}}</td>
+              </tr>  
+            </tbody>
+            <tbody *ngIf="role!=CONFIG.USER_STUDENT">
+              <tr>
+                <td><strong>Title: </strong></td>
+                <td>{{assessmentDetails?.assessment}}</td>
+                <td><strong>Type: </strong></td>
+                <td>{{assessmentDetails?.type}}</td>
+                <td><strong>Level: </strong></td>
+                <td>{{assessmentDetails?.level}}</td>
+              </tr>
+              <tr>
+                <td><strong>Total Question: </strong></td>
+                <td>{{assessmentDetails?.totalQuestion}}</td>
+                <td><strong>Total Marks: </strong></td>
+                <td>{{assessmentDetails?.totalMarks}}</td>
+                <td><strong>Pass Percentage: </strong></td>
+                <td>{{assessmentDetails?.passPercentage}}</td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="row modal-header" *ngIf="role!=CONFIG.USER_STUDENT">
+            <h4>Questions</h4>
+            <div class="col-md-12 qus-info pt-3" *ngFor="let data of assessmentDetails?.questions; let i= index; ">
+              <div>
+                <h4>Q {{i+1}}. </h4>
+                <div *ngIf="data.question" class="qus" [innerHTML]="data.question"></div>
+                <img class="card-img-top img-fluid" *ngIf="data?.qusIcon" [attr.src]="basePath+data?.qusIcon" title="Click to view image" (click)="viewImage(basePath+data?.qusIcon)">
+              </div>
+
+              <div class="mgt-10 ml-2">
+                <span class="ht-tm-element badge badge-success">Level: {{data?.level}} </span> |
+                <span class="ht-tm-element badge badge-danger">Type: {{data?.qusType}}</span> |
+                <span class="ht-tm-element badge badge-primary">Categories: {{data?.qusCategories}} </span> |
+                <span class="ht-tm-element badge badge-info">Marks: {{data?.marks}} </span>
+              </div>
+
+              <div class="mt-2">
+                <h4>Options</h4>
+                <ul class="row col-md-12 pl-4">
+                  <li class="col-md-6 p-0 mt-2" *ngFor="let opt of data?.options; let i=index; ">
+                    <div *ngIf="opt?.text" class="op-text" [innerHTML]="opt?.text"></div>
+                    <img  *ngIf="opt?.icon" title="Click to view image" class="card-img-top img-fluid" [attr.src]="basePath+opt?.icon" (click)="viewImage(basePath+opt?.icon)">
+                  </li>
+                </ul>
+              </div>
+
+              <div class="mt-2">
+                <h4>Answers</h4>
+                <ul class="row col-md-12 pl-4">
+                  <li class="col-md-12 p-0 mt-2" *ngFor="let ans of data?.answers; let i=index; " >
+                    <div *ngIf="data?.options[ans?.id]?.text" class="op-text" [innerHTML]="data?.options[ans?.id]?.text"></div>
+                    <img *ngIf="data?.options[ans?.id]?.icon" title="Click to view image" class="card-img-top img-fluid" [attr.src]="basePath+data?.options[ans?.id]?.icon" (click)="viewImage(basePath+data?.options[ans?.id]?.icon)">
+                  </li>
+                </ul>
+              </div>
+
+              <div class="mt-2" *ngIf="data?.solution">
+                <h4>Solution</h4>
+                <div class="row col-md-12 pl-4">
+                  <div  *ngIf="data.solution" class="qus" [innerHTML]="data.solution"></div>
+                  <img  *ngIf="data?.solutionIcon" class="card-img-top img-fluid" [attr.src]="basePath+data?.solutionIcon" title="Click to view image" (click)="viewImage(basePath+data?.solutionIcon)">
+                </div>
+              </div>
+
+              <div class="mt-2" *ngIf="data?.hint?.text || data?.hint?.icon">
+                <h4>Hint</h4>
+                <div class="row col-md-12 pl-4">
+                  <div *ngIf="data.hint?.text" class="qus" [innerHTML]="data.hint?.text"></div>
+                  <img *ngIf="data.hint?.icon" class="card-img-top img-fluid" [attr.src]="basePath+data.hint?.icon" title="Click to view image" (click)="viewImage(basePath+data.hint?.icon)">
+                </div>
+              </div>
+
+              <div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+</div>

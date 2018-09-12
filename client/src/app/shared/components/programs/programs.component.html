@@ -1,0 +1,151 @@
+<div class="container-section">
+  <div class="row">
+    <div class="col-md-1 pl-0 pr-0">
+    </div>
+    <div class="col-md-11">
+      <div class="container-fluid">
+        <div class="row breadcrumb">
+          <div class="col-8 text-left mt-2 mb-1 ">
+            <h3 class="page-heading">Programs</h3>
+            <a class="btn btn-outline-info add-new" [routerLink]="['/', urlPrefix, 'programs', 'add']"><i class="fa fa-plus-circle"> </i> Add</a>
+          </div>
+          <div class="col-4 text-right">
+            <a class="btn btn-outline-info back" [routerLink]="['/', urlPrefix, 'dashboard']"><i class="fa fa-arrow-circle-o-left" aria-hidden="true"></i> Back
+            </a>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12 middle-section">
+            <ul class="list-group">
+              <li class="list-group-item d-flex justify-content-between" *ngFor="let program of programs; let i= index; ">
+                <div class="row w-100">
+                  <!-- image area start -->
+                  <div class="col-md-1">
+                    <img class="card-img-top img-fluid" src="/assets/images/progrma-default.png">
+                    <!-- <img *ngIf="project.icon" class="card-img-top img-fluid" [attr.src]="projectImgPath+project.icon" [attr.alt]="project.name">
+              <div *ngIf="!project.icon">
+                <div *ngIf="i%2===0; else oddImg; then evenImg"></div>
+                <ng-template #evenImg>
+                  <img class="card-img-top img-fluid" src="{{imgPath}}/project-default.jpg" [attr.alt]="project.title">
+                </ng-template>
+                <ng-template #oddImg>
+                  <img class="card-img-top img-fluid" src="{{imgPath}}/project-default2.jpeg" [attr.alt]="project.title">
+                </ng-template>
+              </div> -->
+                  </div>
+                  <div class="col-md-7 text-left">
+                    <!--start link-->
+                    <div class="row" *ngIf="(program.status=='Drafted' || program.status=='Rejected'); then disabledLink else enableLink">
+                    </div>
+                    <ng-template #disabledLink>
+                      <a href="javascript:void(0)" class="anchor-link" [routerLink]="['/', urlPrefix, 'programs', program._id]">
+                        <h5 class="mb-1 pt-1 subtitle"> {{program.title | titlecase}}
+                        </h5>
+                      </a>
+                    </ng-template>
+                    <ng-template #enableLink>
+                      <h5 class="mb-1 pt-1 subtitle"> {{program.title | titlecase}}
+                      </h5>
+                    </ng-template>
+                    <!--end link-->
+                    <div class="row">
+                      <div class="col-md-6">
+                        <span class="stats">Code : {{program.code}}</span>
+                        <span class="stats">Version : {{program.version}}</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-4 text-right">
+                    <!-- right side elements data start -->
+                    <!-- implement  at downline *ngIf="CONFIG.ADMIN.indexOf(role) > -1  || program.createdBy?.id == userId"-->
+                    <div class="px-0">
+                      <div *ngIf="CONFIG.USER_ADMIN === role; else otherUserAct; then adminAct">
+                      </div>
+                      <ng-template #adminAct>
+                        <button type="submit" data-toggle="modal" data-target="#programAction" class="btn btn-light btn-sm mr-1" (click)="setActionType(program)" title="Action">Action</button>
+                        <span *ngIf="program.status===CONFIG.CONTENT_STATUS[3] || program.status=== CONFIG.CONTENT_STATUS[5]">
+                          <button type="button" class="btn btn-light btn-sm mr-2" title="Edit Program"  [routerLink]="['/', urlPrefix, 'programs', 'edit', program._id]"><span class="fa fa-pencil"></span></button>
+                        <button type="button" class="btn btn-light btn-sm mr-2" (click)="deleteProgram(program._id)" title="Delete propram"><span class="fa fa-trash"></span></button>
+                        </span>
+                        <span *ngIf="program.status===CONFIG.CONTENT_STATUS[4]">
+                          <button type="button" disabled="true" class="btn btn-light btn-sm mr-1" title="Pending for review">Pending for review</button>
+                        </span>
+                      </ng-template>
+                      <ng-template #otherUserAct>
+                        <span *ngIf="program.status===CONFIG.CONTENT_STATUS[3] || program.status===CONFIG.CONTENT_STATUS[5]">
+
+                          <button type="button"  data-toggle="modal" data-target="#programAction" class="btn btn-light btn-sm mr-2" (click)="setActionType(program)"  *ngIf="CONFIG.USER_INSTRUCTOR==role" title="Submit for review">Submit</button>
+
+                          <button type="button" class="btn btn-light btn-sm mr-2" title="Edit Program"  [routerLink]="['/', urlPrefix, 'programs', 'edit', program._id]"><span class="fa fa-pencil"></span></button>
+                        <button type="button" class="btn btn-light btn-sm mr-2" (click)="deleteProgram(program._id)" title="Delete propram"><span class="fa fa-trash"></span></button>
+                        </span>
+                        <span *ngIf="program.status===CONFIG.CONTENT_STATUS[4]">
+                          <button type="button" disabled="true" class="btn btn-light btn-sm mr-1" title="Pending for review">Pending for review</button>
+                        </span>
+                      </ng-template>
+                      <button type="button" class="btn btn-light btn-sm mr-2" title="Program View" [routerLink]="['/', urlPrefix, 'programs','program-preview', program._id]"><span class="fa fa-eye"></span>
+                      </button>
+                    </div>
+        
+                  </div>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <!-- modal start  -->
+        <div class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static" data-keyboard="false" id="programAction">
+          <div class="modal-dialog modal-md">
+            <div class="modal-content">
+              <!-- Modal Header -->
+              <div class="modal-header text-center">
+                <h4 aria-hidden="true">Action</h4>
+                <button type="button" class="close" data-dismiss="modal" title="Close" aria-label="Close" #closeModal>
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <form class="form-group" [formGroup]="programStatusFrom">
+                  <div class="row form-group">
+                    <label class="col-sm-2 control-label p-0" for="Skill Title"><span class="form_required">*</span>Status:</label>
+                    <div class="col-sm-10">
+                      <select formControlName="status" class="form-control">
+                        <option value="" selected disabled>Select status</option>
+                        <option *ngFor="let status of programActionStatus" value="{{status.val}}">{{status.key}}</option>
+                      </select>
+                      <!-- <div class="err" *ngIf="projectStatusFrom.get('status').touched && projectStatusFrom.get('status').errors">
+                      <div class="error ml-2" *ngIf="projectStatusFrom.get('status').errors.required">
+                        Status is required
+                      </div>
+                    </div> -->
+                    </div>
+                    <label class="col-sm-2 control-label mt-2 mb-2 p-0"><span class="form_required">*</span>Message: </label>
+                    <div class="col-sm-10">
+                      <textarea rows="4" formControlName="message" class="form-control mt-2 mb-2"></textarea>
+                      <!-- <div class="err" *ngIf="projectStatusFrom.get('message').touched && projectStatusFrom.get('message').errors">
+                      <div class="error ml-2" *ngIf="projectStatusFrom.get('message').errors.required">
+                        Message is required
+                      </div>
+                    </div> -->
+                    </div>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-cancel" data-dismiss="modal" title="Cancel">
+                      Cancel
+                    </button>
+                    <button type="button" class="btn btn-save" (click)="submitProgramStatus()">
+                      Submit
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- modal close here -->
+        <!-- close main row -->
+      </div>
+    </div>
+  </div>
+  <!-- close container -->
+</div>

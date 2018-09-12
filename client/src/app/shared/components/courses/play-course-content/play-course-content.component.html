@@ -1,0 +1,180 @@
+<div class="container-section">
+
+  <div class="row pt-0">
+    <div class="pl-0 pr-0 col-md-3">
+      <div class="col-md-12 card p-0 c-title" title="{{courseDetails?.title | titlecase}}">
+        <a href="javascript:void(0)" (click)="navigateCourseDetails()" class="text-center">{{courseDetails?.title | slice:0:38}}<span *ngIf="courseDetails?.title?.length>38">..</span></a>
+      </div>
+      <div class="side-bar"  id="cntSidebar">
+        <div class="row col-12 card p-0 topic" *ngFor=" let topic of courseDetails?.topics; let i=index">
+          <div class="col-12 sidebar-li text-left p-0 pl-2 f-t" title="{{topic.title | titlecase}}" (click)="rotateExpendIcon('t'+i)" data-toggle="collapse" [attr.data-target]='"#topic"+i' aria-expanded="false" [class.show]="topic.show">
+           <span *ngIf="topic.status==learningProgressStatus[2]; else tcapIcon; then tmarkOk"></span>
+           <ng-template #tmarkOk><i class="fa fa-check-circle-o check" aria-hidden="true"></i></ng-template>
+           <ng-template #tcapIcon><i class="fa fa-graduation-cap" aria-hidden="true"></i></ng-template>
+           <span class="pl-2"> {{topic.title | slice:0:28}}<span *ngIf="topic.title?.length>28">..</span></span>
+           <span class="float-right pr-4">
+             <span *ngIf="topic.show; else tMns; then tPlus" ></span>
+             <ng-template #tMns><i id="t{{i}}" class="fa fa-plus" aria-hidden="true"></i></ng-template>
+             <ng-template #tPlus><i id="t{{i}}" class="fa fa-minus" aria-hidden="true"></i></ng-template>
+           </span>
+         </div>
+
+         <div id="topic{{i}}" class="collapse" [class.show]="topic.show"> 
+          <div class="col-12 card p-0 pl-0 border-none subtopic my-0" *ngFor="let subtopic of topic?.subtopics; let j=index">
+            <div class="col-12 sidebar-li text-left p-0 pl-2 f-st" title="{{subtopic.title | titlecase}}" (click)="rotateExpendIcon('t'+i+'_s'+j)" (click)="rotateExpendAndCompress('exp'+i+'_s'+j)" data-toggle="collapse" [attr.data-target]='"#subtopic"+i+"_"+j' aria-expanded="false">
+              <span *ngIf="subtopic.status==learningProgressStatus[2]; else scapIcon; then smarkOk"></span>
+              <ng-template #smarkOk><i class="pl-2 fa fa-check-square-o check-md" aria-hidden="true"></i></ng-template>
+              <ng-template #scapIcon><i id="exp{{i}}_s{{j}}" class="pl-2 fa fa-expand" aria-hidden="true"></i></ng-template>
+              <span class="pl-2"> {{subtopic.title | slice:0:24}}<span *ngIf="subtopic.title?.length>24">..</span></span>
+              <span class="float-right pr-4">
+                <span *ngIf="subtopic.show; else stMns; then stPlus" ></span>
+                <ng-template #stMns> <i id="t{{i}}_s{{j}}" class="fa fa-plus" aria-hidden="true"></i></ng-template>
+                <ng-template #stPlus> <i id="t{{i}}_s{{j}}" class="fa fa-minus" aria-hidden="true"></i></ng-template>
+              </span>
+            </div>
+            <div id="subtopic{{i}}_{{j}}" class="collapse" [class.show]="subtopic.show" > 
+              <div class="col-12 card px-0 lpath my-0" *ngFor="let learningPath of subtopic.learningPaths; let k=index">
+                <div id="mc{{i}}_{{j}}_{{k}}" class="col-12 sidebar-li text-left p-0 pl-2 f-lp" title="{{learningPath.title | titlecase}}" (click)="setCurrContentType(learningPath.mainContent,$event,{ topicId: topic._id, subtopicId: subtopic._id, lp_id: learningPath._id})" (click)="rotateExpendIcon('t'+i+'_s'+j+'_c'+k)" [class.selected]="learningPath.show">
+
+                  <p class="mb-0 pl-2 sts-mark"><i *ngIf="learningPath.status==learningProgressStatus[2]" class="fa fa-check check-sm" aria-hidden="true"></i></p>
+
+                  <i [ngClass]="learningPath.mainContent.icon" aria-hidden="true"></i> <span class="">{{learningPath.title | slice:0:24}}<span *ngIf="learningPath.title?.length>24">..</span></span>
+                  <span *ngIf="learningPath.otherContents.length>0" class="float-right pr-4" (mouseenter) ="mouseEnterOnRefContent($event,learningPath.otherContents)" (mouseleave) ="mouseLeaveOnRefContent()">
+                    <i id="t{{i}}_s{{j}}_c{{k}}" title="Recommended Resources" class="fa fa-hand-o-right" aria-hidden="true"></i>
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <div (mouseenter) ="mouseEnterOnRefContent()" (mouseleave) ="mouseLeaveOnRefContent()" id="oc-side-bar" class="oc-side-bar">
+    <div class="col-12 card pl-3 lpath my-0 py-2 text-left hdr">Recommended Resources</div>
+    <div class="col-12 card px-0 lpath my-0" *ngFor="let otherContent of otherContents;">
+      <div (click)="setCurrContentType(otherContent,$event,null,'other')" title="{{otherContent.title | titlecase}}" class="col-12 sidebar-li text-left p-0 f-lp">
+        <i [ngClass]="otherContent.icon" style="padding-left:12px;" aria-hidden="true"></i> <span class="pl-2">{{otherContent.title | slice:0:24}}<span *ngIf="otherContent.title?.length>24">..</span></span>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-9 px-0 content">
+    <div class="row pb-0">
+    <!--  <div class="col-md-6">
+      <h3 class="heading"> Topic : {{topicData.title}}</h3>
+      <div class="progress">
+        <div class="progress-bar progress-bar-striped bg-success" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">25%</div>
+      </div>
+    </div> -->
+    <div class="row col-12 h-line">
+      <div class="col-md-9">
+        <h5 class="heading pl-3 mb-1">{{currContent?.title  | slice:0:85}}<span *ngIf="currContent?.title?.length>85">..</span></h5>
+      </div>
+      <div class="col-md-3 text-right pt-2">
+        <div class="buttons">
+          <!-- <button class="btn btn-success" (click)="playPrevContent()" >
+            <i class="fa fa-chevron-left"></i>&nbsp;Previous
+          </button> -->
+          <button *ngIf="!isCourseCompleted" class="btn btn-primary" (click)="setContentForPlay()" >
+            <i class="fa fa-chevron-right"></i>&nbsp;Next
+          </button>
+          <button *ngIf="isCourseCompleted && role == CONFIG.USER_STUDENT" [routerLink]="['/', urlPrefix, 'course-details',courseId]" class="btn btn-primary">
+            &nbsp;Complete Course
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- other content div start here -->
+  <div class="p-2 doc-view" *ngIf="currContentType === contentType[0]">
+    <div class="row">
+      <div class="col-md-12 pl-3 pr-0">
+        <div id="player" class="players"></div>
+        <div class="v-toc text-right" *ngIf="currContent?.chapters?.length>0">
+         <a for="toclist" data-toggle="collapse" href="#toclist" aria-expanded="true" aria-controls="toclist">
+           <i (click)="toggleList()" title="Video Contents" class="fa fa-bars px-2 py-1"></i>
+         </a>
+         <div id="toclist" class="toc-list-side-bar p-0 collapse">
+           <ul class="list-group">
+             <li class="list-group-item pl-2 hdr">Video Contents</li>
+             <li id="toc_{{i}}" title="{{toc.title | titlecase}}" class="list-group-item toc-list pl-2" *ngFor="let toc of currContent?.chapters; let i=index;" (click)="setCurrentTOC(i, $event)">
+              <span class="toc-ttl text-left">{{i+1}}. {{toc.title | slice:0:20}}<span *ngIf="toc.title?.length>20">..</span></span>
+              <span class="toc-tm text-right" ><i class="fa fa-clock-o" aria-hidden="true"></i> {{toc?.totalTime}}</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="currContentType === contentType[1] || currContentType === contentType[2]" class="p-2 ml-4 doc-view">
+  <p [innerHtml]="currContent.description"></p>
+</div>
+
+<div class="p-2" *ngIf="currContentType === contentType[3]">
+  <div class="col-12 mt-1 p-0 description-text pl-3 dont-break-out">
+    <a class="ml-4 doc-view referrence-url" [href]="currContent?.url" rel="nofollow" target="_blank">
+      {{currContent?.url}}
+    </a>
+    <div *ngIf="currContent?.other" class="pl-4 pt-2">
+      <div class="pl-2" style="border-left: 3px solid green;">
+        <div class="url-img">
+          <img [attr.src]="currContent.other?.icon">
+          <span class="pl-1">
+            {{currContent.other?.baseUrl}}
+          </span>
+        </div>
+        <div class="url-title pt-2">{{currContent.other.title}}</div>
+        <span *ngIf="currContent.other?.description">{{currContent.other?.description}}</span>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- For content type Media -->
+<div class="p-2 ml-4 doc-view" *ngIf="currContent.type === contentType[4]" >
+  <div *ngIf="pdf.indexOf(currContent?.extension) > -1" class="sub-heading pT10" class="">
+  <div  class="iframe-div">
+  <iframe (load)="onLoad()" class="iframe-size" src="https://drive.google.com/file/d/1nwo0vylaJZmYROexbiwFlcHdykw7NYJO/preview"></iframe>
+  <div class="after-iframe"></div>
+  </div>
+   <!--  <pdf-viewer src="https://drive.google.com/file/d/1nwo0vylaJZmYROexbiwFlcHdykw7NYJO/preview"
+    [original-size]="true" [render-text]="true" [fit-to-page]="true" [zoom]="0.5" ></pdf-viewer> -->
+  </div>
+  <p class="text-center" *ngIf="image.indexOf(currContent?.extension) > -1">
+    <img width="70%" [attr.src]="mediaPath+currContent?.path" [attr.alt]="currContent?.title">
+  </p>
+  <p class="text-center">
+    <!-- {{mediaPath+currContent?.path}} -->
+      <!-- <iframe src='https://view.officeapps.live.com/op/embed.aspx?src=http%3A%2F%2Fieee802%2Eorg%3A80%2Fsecmail%2FdocIZSEwEqHFr%2Edoc' width='100%' height='100%' frameborder='0'>
+      This is an embedded <a target='_blank' href='http://office.com'>Microsoft Office</a> document, powered by <a target='_blank' href='http://office.com/webapps'>Office Online</a>.
+    </iframe> -->
+
+    <!-- <iframe src="http://docs.google.com/gview?url=http://localhost:8080/{{mediaPath+currContent?.path}}&embedded=true" style="width:600px; height:500px;" frameborder="0"></iframe>-->
+
+    <!-- <iframe src="https://docs.google.com/gview?url=http://codestrippers.com/media/scrum%20glossary%20(pdf.io)-1525584106968.pdf&embedded=true" style="width:900px; height:495px;" frameborder="0"></iframe> --> 
+  </p>
+
+</div>
+<!-- [original-size]="false" [autoresize]="true" -->
+
+<div class="ml-4 p-2 doc-view" *ngIf="currContentType === contentType[5]">
+  <div class="sub-heading pT10">
+    <div class="col-12 mb-4" style="border: 1px solid rgba(0,0,0,.125); background: #fff; font-size: 15px;">
+      <p class="ml-5 mt-4 text-center">Your next step is assessment</p>
+      <div class="pt-3 text-center">
+        <button class="mb-4 btn btn-primary btn-start" [routerLink]= "['/', urlPrefix,'courses', courseId, 'assessments', this.currContent?.contentId, 'play-assessment']"  [queryParams]="{'from':'play-content'}" 
+        >Take Assessment</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- <div *ngIf="!currContentType === null">
+  <span class="other-content-item">No content found.</span>
+</div> -->
+</div>
+</div>
+</div>
+<!-- other content div ends here -->

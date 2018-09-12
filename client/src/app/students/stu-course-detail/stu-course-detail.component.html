@@ -1,0 +1,355 @@
+<div class="container-section">
+  <div class="row">
+    <div class="col-md-1 pl-0 pr-0">
+      <!-- <div class="sidebar-container">
+        <app-sidebar></app-sidebar>
+      </div> -->
+    </div>
+    <div class="col-md-11">
+      <!-- <div class="row add-new-container header"> -->
+ <!--    <div class="col-9 text-left pL20">
+    
+       <div class="progress">
+            <div class="progress-bar progress-bar-striped bg-success" role="progressbar" [style.width.%]="courseData?.progress"  aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+          </div>
+        <span class="rating">
+        </span>
+      <div class="row pB10">
+        <div class="col-md-4 col-sm-12 pB10">
+          <span class="row ins-title">
+            <star-rating-comp  [starType]="'svg'" [rating]="courseData?.rating || 0"></star-rating-comp>
+            <span class="m-1">{{courseData?.rating}}</span> <span *ngIf="courseData?.userRatings" class="m-1">({{courseData?.userRatings?.length}} Ratings)</span>
+          </span>
+        </div>
+        <div class="col-md-4 col-sm-12">
+          <div class="progress">
+            <div class="progress-bar progress-bar-striped bg-success" role="progressbar" [style.width.%]="courseData?.progress"  aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+          </div>
+        </div>
+        <div class="col-md-4 col-sm-12">
+          <span class="m-1" *ngIf="courseData?.createdByName">Created by: {{courseData?.createdByName}}</span>
+        </div>
+      </div>
+    </div> -->
+   <!--  <div class="col-3 text-right">
+      <a class="btn btn-outline-info back-button" (click)="back()"><i class="fa fa-arrow-circle-o-left" aria-hidden="true"></i> Back
+      </a>
+    </div> -->
+    <!-- </div> -->
+    <div *ngIf="courseData" class="row add-new-container">
+      <div class="col-md-9 col-sm-12">
+        <div class="col-12" class="err-bg px-2 pt-1" *ngIf="showValidationError">
+          Topic, Subtopics and Learning Paths can't be empty, so either
+          <ul class="pl-3" style="list-style-type: square">
+            <li>Add Content</li>
+            <li>Or Remove Empty Learning Paths, Subtopics and Topics</li>
+          </ul>
+        </div>
+        <h3 class="heading">{{courseData?.title}}</h3>
+        <p class="list-heading">Description</p>
+        <p class="short-description text-left" [innerHtml]="courseData?.shortDescription"></p>
+        <p class="long-description text-left" [innerHtml]="courseData?.longDescription"></p>
+        <div *ngIf="courseData?.prerequisites">
+          <p class="list-heading">Prerequisites:-</p>
+          <p class="long-description text-left" [innerHtml]="courseData?.prerequisites"></p>
+        </div>
+        <ol class="list-group">
+          <p class="list-heading">Curriculum</p>
+          <div class="pb-50" *ngIf="courseData && courseData?.topicData?.length !== 0">
+            <li class="list-group-item list-data justify-content-between topic-list" [class.error-border]="topic.isInvalid" *ngFor=" let topic of courseData?.topics; let i=index ">
+              <div class="d-flex w-100 justify-content-between" data-toggle="collapse" [attr.data-target]='"#topic-"+i' aria-expanded="false">
+                <div class="row topic-title" (click)="rotate('topic'+i)">
+                  <div class="col-1 topic-icon">
+                    <span>
+                      <!-- <i class="fa fa-graduation-cap"></i> -->
+                      <i class="fa fa-check-circle fa-3x grey" title="{{topic?.status}}" *ngIf="role!==CONFIG.USER_STUDENT"></i>
+                      <i class="fa fa-check-circle fa-3x grey" title="{{topic?.status}}" *ngIf="topic?.status==learningProgressStatus[0]"></i>
+                      <i class="fa fa-check-circle fa-3x orange"title="{{topic?.status}}" *ngIf="topic?.status==learningProgressStatus[1]"></i>
+                      <i class="fa fa-check-circle fa-3x green" title="{{topic?.status}}" *ngIf="topic?.status==learningProgressStatus[2]"></i>
+                    </span>
+                  </div>
+                <!-- <div class="col-md-1 topic-icon" *ngIf="i>=colors?.length">
+                  <span class="icon-block img-circle half text-white text-center" [ngStyle]="{'background-color': colors[i%colors?.length]}">
+                    <i class="fa fa-graduation-cap"></i>
+                  </span>
+                </div> -->
+                <div class="col-9 text-left pl-0">
+                  <span class="topicHeading" [class.error-warning]="topic.isInvalid">{{topic.title | titleCase}} <br>
+                  </span>
+                  <span class="subtopic-length pL10">{{topic.subtopics?.length}} Subtopics</span>
+                </div>
+                <div class="col-2 text-right">
+                  <span class="btn btn-secondary btn-down" title="Details">
+                    <i id="topic{{i}}"  class="fa fa-chevron-down rotate-down"></i>
+                  </span>
+                <!--   <span>
+                    <a class="btn btn-secondary" href="javascript:void(0)" routerLink="/student/course-details/{{courseData?._id}}/topics/{{topic?._id}}/play-contents">Start</a>
+                  </span> -->
+                </div>
+              </div>
+            </div>
+            <div class="w-100 collapse pL20 subTopic-details" [attr.id]='"topic-"+i'>
+              <ol class="list-group">
+                <div *ngIf="topic.subtopics.length === 0">
+                  <li class="list-group-item justify-content-between">
+                    There is no subtopic available.
+                  </li>
+                </div>
+                <div>
+                  <div *ngFor=" let subTopic of topic.subtopics; let j=index; ">
+                    <app-contents [subTopic]="subTopic" [index]="i+''+j" [flow]="flow"></app-contents>
+                  </div>
+                </div>
+              </ol>
+            </div>
+          </li>
+        </div>
+        <div *ngIf="topicData?.length === 0">
+          <li class="list-group-item justify-content-between topic-list">
+            There is no topic available.
+          </li>
+        </div>
+      </ol>
+    </div>
+    <div class="col-md-3">
+      <ul class="list-group">
+        <li class="list-group-item section-heading">Course</li>
+        <li class="list-group-item list-item"><a [routerLink]="['/', urlPrefix, 'course-details', courseId,'assessments']" href="javascript:void(0)">Test</a></li>
+
+        <li class="list-group-item list-item"><a [routerLink]="['/', urlPrefix, 'course-details', courseId,'assessments','practice']"  href="javascript:void(0)">Practice</a></li>
+
+        
+        <!-- <li class="list-group-item list-item"><a (click)="loadPracticeSetFilterData()" data-toggle="modal" data-target="#practiceModal" href="javascript:void(0)">Random Practice Set</a></li> -->
+      <!--   <span>
+        <i class="fa fa-check-circle fa-2x grey" title="{{courseStatus}}" *ngIf="courseStatus==learningProgressStatus[0]"></i>
+        <i class="fa fa-check-circle fa-2x orange"title="{{courseStatus}}" *ngIf="courseStatus==learningProgressStatus[1]"></i>
+        <i class="fa fa-check-circle fa-2x green" title="{{courseStatus}}" *ngIf="courseStatus==learningProgressStatus[2]"></i>
+      </span> -->
+      
+      <li class="list-group-item list-item text-center">
+       <button class="btn btn-success btn-md c-btn" (click)="startCourse()">{{coursAction}}</button>
+     </li> 
+
+     <li class="list-group-item list-item text-center" *ngIf="isUpdateAvailable || isHistoryAvailable">
+       <button *ngIf="isUpdateAvailable" class="btn btn-warning btn-sm c-btn" (click)="confirmUpdateCourseVerion(true)">Upgrade</button>&nbsp;
+       <button *ngIf="isHistoryAvailable" class="btn btn-info btn-sm c-btn" (click)="confirmUpdateCourseVerion()">Downgrade</button>
+     </li> 
+
+     <li class="list-group-item list-item text-center">
+     </li>
+     <!--   <li class="list-group-item list-item"><a [routerLink]="['/', urlPrefix, 'forums']" href="javascript:void(0)">Course Forums</a></li> -->
+     <!-- <li class="list-group-item list-item"><a href="javascript:void(0)">Assessment Result</a></li> -->
+       <!--  <li class="list-group-item list-item"><a href="javascript:void(0)" data-toggle="modal" data-target="#feedbackModal">
+       Feedback</a></li> -->
+     </ul>
+   </div>
+  <!--     <div class="col-md-9">
+        <ol class="list-group">
+          <p class="list-heading">Feedback ({{courseData?.userRatings?.length}})</p>
+          <div *ngIf="courseData?.userRatings?.length !== 0">
+            <li class="list-group-item justify-content-between topic-list" *ngFor=" let userRating of courseData?.userRatings; let i=index ">
+              <div class="row feedback-container">
+                <div class="col-md-12">
+                  <span class="feedback-title">{{userRating?.title}} 
+                    <star-rating-comp class="rating" [starType]="'svg'" [rating]="userRating?.rating"></star-rating-comp>
+                  </span>
+                  <p class="long-description">{{userRating?.description}}</p>
+                </div>
+                <div class="col-md-4 col-sm-12 f-s-14 justify-content-between"><i class="fa fa-user"></i> &nbsp; {{userRating?.name}}</div>
+                <div class="col-md-4 col-sm-12 f-s-14 justify-content-between"><i class="fa fa-calendar"></i> &nbsp; {{userRating?.ratedOn | date:'mediumDate'}}</div>
+                <div class="col-md-4 col-sm-12 f-s-14 justify-content-between"><i class="fa fa-thumbs-up"></i> &nbsp; {{userRating?.totalLikes}} &nbsp; <i class="fa fa-thumbs-down"></i> &nbsp; {{userRating?.totalDislikes}}</div>
+              </div>
+            </li>
+            <div *ngIf="feedbackLength==1">
+              <p class="text-center showSection" (click)="showMoreFeedback()">show more</p>
+            </div>
+            <div *ngIf="feedbackLength!=1">
+              <p class="text-center showSection" (click)="showLessFeedback()">show less</p>
+            </div>
+          </div>
+          <div *ngIf="courseData?.userRatings?.length === 0">
+            <li class="list-group-item justify-content-between topic-list">
+              There is no feedback.
+            </li>
+          </div>
+        </ol>
+      </div> -->
+    </div>
+  </div>
+  <!-- Modal -->
+  <div class="modal fade" id="feedbackModal" tabindex="-1" role="dialog" aria-labelledby="feedbackModal" aria-hidden="true" data-backdrop="static" data-keyboard="false" id="feedbackModal">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h4 aria-hidden="true" class="modal-heading">Feedback</h4>
+          <span class="sr-only">Feedback</span>
+          <button type="button" class="close" data-dismiss="modal" title="Close" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <!-- Modal Body -->
+        <div *ngIf="errorMessage">
+          <div class="errorMessage">
+            {{errorMessage}}
+          </div>
+        </div>
+        <form class="form-horizontal" role="form" [formGroup]="ratingForm">
+          <div class="modal-body">
+            <div class="row form-group">
+              <label class="col-sm-2 control-label" for="title">Title : </label>
+              <div class="col-sm-10">
+                <input type="text" class="form-control" formControlName="title" />
+                <div *ngIf="ratingForm.get('title').touched && ratingForm.get('title').errors">
+                  <div class="error" *ngIf="ratingForm.get('title').errors.required">
+                    Title is required.
+                  </div>
+                  <div class="error" *ngIf="ratingForm.get('title').errors.maxlength">
+                    Title should not be greater than 100 charaters.
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row form-group">
+              <label class="col-sm-2 control-label" for="description">Description : </label>
+              <div class="col-sm-10">
+                <textarea class="form-control" formControlName="description"></textarea>
+                <div *ngIf="ratingForm.get('description').errors && ratingForm.get('description').touched">
+                  <div class="error" *ngIf="ratingForm.get('description').errors.required">
+                    description is required.
+                  </div>
+                  <div class="error" *ngIf="ratingForm.get('description').errors.maxlength">
+                    Description should not be greater than 100 charaters.
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row form-group">
+              <label class="col-sm-2 control-label" for="Topic Description">Rating : </label>
+              <div class="col-sm-10">
+                <star-rating-comp [starType]="'svg'" [rating]="rating" [hoverEnabled]="true" (onClick)="onClick($event)">
+                </star-rating-comp>
+                <div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-save" title="Save" data-dismiss="modal" [disabled]="!ratingForm.valid" (click)="rateCourse(ratingForm)" [ngStyle]="{'cursor':ratingForm.valid ? 'pointer' : 'not-allowed' }">
+              Save
+            </button>
+            <button type="button" class="btn btn-cancel" data-dismiss="modal" title="Cancel" #rateModal>
+              Cancel
+            </button>
+          </div>
+        </form>
+        <!-- Modal Footer -->
+      </div>
+    </div>
+  </div>
+
+
+  <!-- random assessment modal starts here -->
+  <div class="modal fade" id="practiceModal" tabindex="-1" role="dialog"
+  aria-labelledby="title" aria-hidden="true" data-backdrop="static"> 
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="title">Random Practics Set</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" #clsRandomAssment>
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body pratice-form">
+        <div class="row col-md-12">
+         <div class="form-group col-md-4">
+          <label for="level">Assessment level<span class="mendatoryField">*</span></label>
+          <select class="form-control" [(ngModel)]="qusLevel">
+            <option [selected]="qusLevel==level" *ngFor="let level of levels; let i=index;" [attr.value]="type"> {{level}}</option>
+          </select>
+        </div>
+
+        <div class="form-group col-md-4">
+          <label for="type">Topics</label>
+          <angular2-multiselect [ngModelOptions]="{standalone: true}" [data]="topicsList" [(ngModel)]="selectedTopics" [settings]="topicsConfig" (onSelect)="onTopicsChange($event)" (onDeSelect)="onTopicsDeSelect($event)" (onSelectAll)="onTopicsChange($event)" (onDeSelectAll)="onTopicsDeSelectAll($event)"></angular2-multiselect>
+        </div>
+
+        <div class="form-group col-md-4">
+          <label for="type">Sub-topics</label>
+          <angular2-multiselect [ngModelOptions]="{standalone: true}" [data]="subTopicsList" [(ngModel)]="selectedSubTopics" [settings]="subTopicsConfig"></angular2-multiselect>
+        </div>
+        <div *ngIf="qusLevel ==levels[3]; else elseBlock" class="row col-md-12">
+          <fieldset class=" row col-md-12 scheduler-border">
+            <legend class="scheduler-border">
+              <div class="form-group">
+                <label for="type">Total question<span class="mendatoryField">*</span></label>
+                <input type="number" [ngModelOptions]="{standalone: true}" [(ngModel)]="totalQuestion.value" (input)="validate(totalQuestion)">
+                <div *ngIf="totalQuestion.required">
+                  <div class="error-msg ml-3">Total question required</div>
+                </div>
+                <div *ngIf="totalQuestion.notNumber">
+                  <div class="error-msg ml-3">Please enter valid number</div>
+                </div>
+                <div *ngIf="totalQuestion.notMatch || totalBasicLevelQus.notMatch || totalItmLevelQus.notMatch || totalAdvLevelQus.notMatch " class="col-md-11 text-center error-msg ml-5" style="font-size: 18px;">
+                  Sum of all the question levels not match to total question
+                </div>
+              </div>
+            </legend>
+            <div class="row control-group">
+              <div class="form-group col-md-4 px-0">
+                <label for="type">No. of basic level questions</label>
+                <input type="number" [ngModelOptions]="{standalone: true}" [(ngModel)]="totalBasicLevelQus.value" (input)="validate(totalBasicLevelQus)">
+                <div *ngIf="totalBasicLevelQus.required">
+                  <div class="error-msg ml-3">No. of basic level question required</div>
+                </div>
+                <div *ngIf="totalBasicLevelQus.notNumber">
+                  <div class="error-msg ml-3">Please enter valid number</div>
+                </div>
+              </div>
+              <div class="form-group col-md-4 px-0">
+                <label for="type">No. of intermediate level questions</label>
+                <input type="number" [ngModelOptions]="{standalone: true}" [(ngModel)]="totalItmLevelQus.value" (input)="validate(totalItmLevelQus)">
+                <div *ngIf="totalItmLevelQus.required">
+                  <div class="error-msg ml-3">No. of intermediate level question required</div>
+                </div>
+                <div *ngIf="totalItmLevelQus.notNumber">
+                  <div class="error-msg ml-3">Please enter valid number</div>
+                </div>
+              </div>
+              <div class="form-group col-md-4 px-0">
+                <label for="type">No of advance level questions</label>
+                <input type="number" [ngModelOptions]="{standalone: true}" [(ngModel)]="totalAdvLevelQus.value" (input)="validate(totalAdvLevelQus)">
+                <div *ngIf="totalAdvLevelQus.required">
+                  <div class="error-msg ml-3">No. of advance level question required</div>
+                </div>
+                <div *ngIf="totalAdvLevelQus.notNumber">
+                  <div class="error-msg ml-3">Please enter valid number</div>
+                </div>
+              </div>
+            </div>
+          </fieldset>
+        </div>
+        <ng-template #elseBlock>
+          <div class="form-group col-md-2">
+            <label for="type">Total question<span class="mendatoryField">*</span></label>
+            <input type="number" class="mt-3" [ngModelOptions]="{standalone: true}" [(ngModel)]="totalQuestion.value" (input)="validateTotalQuestionCount(totalQuestion)">
+            <div *ngIf="totalQuestion.required">
+              <div class="error-msg ml-2">Total question required</div>
+            </div>
+            <div *ngIf="totalQuestion.notNumber">
+              <div class="error-msg ml-2">Please enter valid number</div>
+            </div>
+          </div>
+        </ng-template>
+      </div>
+
+    </div>
+  </div>
+  <div class="modal-footer modal-cust">
+    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+    <button type="button" class="btn btn-info" (click)="generateRandomPracticeSet()" >Generate</button>
+  </div>
+</div>
+</div>
+</div>
+<!-- random assessment modal starts here -->

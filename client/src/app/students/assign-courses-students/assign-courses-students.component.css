@@ -1,0 +1,115 @@
+  .btn span.fa {         
+    opacity: 0;       
+  }
+  .btn.active span.fa {        
+    opacity: 1;       
+  }
+  .csp-title {
+    width: 80%;
+  }
+  @media(max-width: 768px){
+    .csp-title{
+      font-size: 16px;
+      padding-top: 3px;
+    }
+  }
+  .card-section {
+    padding-left: 0px;
+    padding-right: 0px;
+    margin-top: 25px;
+  }
+  .card-title {
+    background-color: rgb(52, 113, 127);
+    height: 45px;
+    color: #fff;
+    padding-top: 10px;
+    padding-left: 12px;
+  }
+
+  .form-container{
+    padding: 17px;
+  }
+  .form-style {
+    height: 210px;
+    height: 100%;
+    background: #fff;
+    position: relative;
+    padding: 5px;
+    border-radius: 10px;
+  }
+  .body{
+   background-color: #81c784;
+ }
+ .flow-h1 {
+  margin-top: 45px;
+  margin-bottom: 30px;
+  font-size: 36px;
+  line-height: 40px;
+  text-align: center;
+  font-weight: lighter;
+}
+.form-container select {
+  font-weight: 500;
+}
+.mendatoryField {
+  color:red;
+}
+.form-container select {
+  font-weight: 500;
+}
+.form-grid {
+  padding-left: 12%;
+  padding-right: 12%;
+}
+.form-actions {
+  margin-top: 30px;
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+@media(max-width: 578px){
+ .form-grid {
+  padding-left: 0%;
+  padding-right: 0%;
+}
+}
+
+/*class for alert message start here*/
+.danger-alert {
+ background-color: #dd2e1f;
+ color: #fff;
+ font: bold;
+ font-size: 15px;
+}
+.custom-success-alert {
+  background-color: #4CAF50;
+  color: #fff;
+  font: bold;
+  font-size: 15px;
+}
+.input-danger {
+  border-bottom-color: red !important;
+}
+/*class for alert message end here*/
+a {
+  cursor: pointer;
+}
+
+input[type="checkbox"]{
+  width: 22px; 
+  height: 22px;
+}
+.content {
+  padding: 8px 0px 0px 18px;
+}
+
+
+
+
+
+
+
+
+
+
+

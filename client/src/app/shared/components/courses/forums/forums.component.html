@@ -1,0 +1,171 @@
+<div class="container-section">
+  <div class="row">
+    <div class="col-md-1 pl-0 pr-0">
+    </div>
+    <div class="col-md-11">
+      <div class="container-section mb-3" >
+        <!-- header section start here -->
+        <div class="row add-new-container">
+          <div class="col-8 text-left ">
+            <h3 class="page-heading">Forum</h3><br/>
+          </div>
+          <!-- <div class="col-4 text-right">
+            <a class="btn btn-outline-info back" [routerLink]="['/', urlPrefix, 'course-details',courseId]"><i class="fa fa-arrow-circle-o-left" aria-hidden="true"></i> Back
+            </a>
+          </div> -->
+        </div>
+        <!-- header section ends here -->
+        <div class="row col-md-12">
+
+          <div class="col-md-9 mb-3">
+            <!-- general forum div starts here -->
+            <div class="list-group">
+              <div class="list-group-item flex-column align-items-start">
+                <div class="d-flex w-100 justify-content-between">
+                  <h5 class="text-headline m-0">General</h5>
+                  <small>
+                    <a href="javascript:void(0)" class="btn ctm-btn btn-white btn-flat"><i class="fa fa-fw fa-plus"></i>NEW TOPIC</a>
+                  </small>
+                </div>
+                <small class="text-subhead text-light m-0">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolores, illo.</small>
+              </div>
+            </div>
+            <ul class="list-group" *ngFor="let item of lists">
+              <li class="list-group-item media v-middle">
+                <div class="media-left">
+                  <div class="icon-block half img-circle bg-grey-300">
+                    <i class="fa fa-file-text text-white"></i>
+                  </div>
+                </div>
+                <div class="media-body">
+                  <h4 class="text-subhead margin-none">
+                    <a href="javascript:void(0)" class="link-text-color">Am I learning the right way?</a>
+                  </h4>
+                  <div class="text-light text-caption">
+                    posted by
+                    <a href="javascript:void(0)">
+                      <img src="./../../../../../../assets/images/user/guy-5.jpg" alt="person" class="img-circle width-20"> Adrian Demian</a> &nbsp; | <i class="fa fa-clock-o fa-fw"></i> 5 mins
+                    </div>
+                  </div>
+                  <div class="media-right">
+                    <a href="app-forum-thread.html" class="btn btn-white text-light"><i class="fa fa-comments fa-fw"></i> 9</a>
+                  </div>
+                </li>
+              </ul>
+              <!-- general forum div ends here -->
+
+              <!-- Lessons forum div starts here -->
+              <div class="list-group mt-3">
+                <div class="list-group-item flex-column align-items-start">
+                  <div class="d-flex w-100 justify-content-between">
+                    <h5 class="text-headline m-0">Lessons</h5>
+                    <small>
+                      <a href="javascript:void(0)" class="btn ctm-btn btn-white btn-flat"><i class="fa fa-fw fa-plus"></i>NEW TOPIC</a>
+                    </small>
+                  </div>
+                  <small class="text-subhead text-light m-0">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolores, illo.</small>
+                </div>
+              </div>
+              <ul class="list-group" *ngFor="let item of lists">
+                <li class="list-group-item media v-middle">
+                  <div class="media-left">
+                    <div class="icon-block half img-circle bg-grey-300">
+                      <i class="fa fa-file-text text-white"></i>
+                    </div>
+                  </div>
+                  <div class="media-body">
+                    <h4 class="text-subhead margin-none">
+                      <a href="javascript:void(0)" class="link-text-color">Am I learning the right way?</a>
+                    </h4>
+                    <div class="text-light text-caption">
+                      posted by
+                      <a href="javascript:void(0)">
+                        <img src="./../../../../../../assets/images/user/guy-5.jpg" alt="person" class="img-circle width-20"> Adrian Demian</a> &nbsp; | <i class="fa fa-clock-o fa-fw"></i> 5 mins
+                      </div>
+                    </div>
+                    <div class="media-right">
+                      <a href="app-forum-thread.html" class="btn btn-white text-light"><i class="fa fa-comments fa-fw"></i> 9</a>
+                    </div>
+                  </li>
+                </ul>
+                <!-- Lessons forum div ends here -->
+
+                <!-- Support forum div starts here -->
+                <div class="list-group mt-3">
+                  <div class="list-group-item flex-column align-items-start">
+                    <div class="d-flex w-100 justify-content-between">
+                      <h5 class="text-headline m-0">Support</h5>
+                      <small>
+                        <a href="javascript:void(0)" class="btn ctm-btn btn-white btn-flat"><i class="fa fa-fw fa-plus"></i>NEW TOPIC</a>
+                      </small>
+                    </div>
+                    <small class="text-subhead text-light m-0">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolores, illo.</small>
+                  </div>
+                </div>
+                <ul class="list-group" *ngFor="let item of lists">
+                  <li class="list-group-item media v-middle">
+                    <div class="media-left">
+                      <div class="icon-block half img-circle bg-grey-300">
+                        <i class="fa fa-file-text text-white"></i>
+                      </div>
+                    </div>
+                    <div class="media-body">
+                      <h4 class="text-subhead margin-none">
+                        <a href="javascript:void(0)" class="link-text-color">Am I learning the right way?</a>
+                      </h4>
+                      <div class="text-light text-caption">
+                        posted by
+                        <a href="javascript:void(0)">
+                          <img src="./../../../../../../assets/images/user/guy-5.jpg" alt="person" class="img-circle width-20"> Adrian Demian</a> &nbsp; | <i class="fa fa-clock-o fa-fw"></i> 5 mins
+                        </div>
+                      </div>
+                      <div class="media-right">
+                        <a href="javascript:void(0)" class="btn btn-white text-light"><i class="fa fa-comments fa-fw"></i> 9</a>
+                      </div>
+                    </li>
+                  </ul>
+                  <!-- Support forum div ends here -->
+                </div>
+
+                <div class="col-md-3 mt-sm-18">
+                  <!-- search section start herre -->
+                  <div class="panel panel-default">
+                    <div class="panel-body">
+                      <div class="form-group form-control-material">
+                        <label for="forumSearch" class="mb-0">Search ...</label>
+                        <input id="forumSearch" type="text" class="form-control" placeholder="Type to search"><span class="ma-form-highlight"></span><span class="ma-form-bar"></span>
+                      </div>
+                      <a href="javascript:void(0)" class="btn btn-inverse paper-shadow relative" data-z="0.5" data-hover-z="1">Search</a>
+                    </div>
+                  </div>
+                  <!-- search section end herre -->
+
+                  <!-- categories section start herre -->
+                  <div class="panel panel-default">
+                    <div class="panel-heading">
+                      <h4 class="panel-title">Categories</h4>
+                    </div>
+                    <ul class="list-group list-group-menu">
+                      <li class="list-group-item active p-2">
+                        <a href="javascript:void(0)"><i class="fa fa-chevron-right fa-fw"></i> All</a>
+                      </li>
+                      <li class="list-group-item p-2">
+                        <a href="javascript:void(0)"><i class="fa fa-chevron-right fa-fw"></i> General</a>
+                      </li>
+                      <li class="list-group-item p-2">
+                        <a href="javascript:void(0)"><i class="fa fa-chevron-right fa-fw"></i> Lessons</a>
+                      </li>
+                      <li class="list-group-item p-2">
+                        <a href="javascript:void(0)"><i class="fa fa-chevron-right fa-fw"></i> Support</a>
+                      </li>
+                    </ul>
+                  </div>
+                  <!-- categories section end herre -->
+
+                </div>
+
+
+              </div>
+    </div>
+  </div>
+</div>

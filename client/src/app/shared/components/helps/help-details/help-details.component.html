@@ -1,0 +1,88 @@
+<div class="container-section">
+  <div class="row">
+    <div class="col-md-1 pl-0 pr-0">
+    </div>
+    <div class="col-md-11 pr-0">
+      <div class="row">
+        <div class="col-md-9 col-sm-12 pb-1">
+          <div class="row add-new-container">
+            <div class="col-md-12 pb-4">
+              <h3 class="page-heading">Problem Description</h3>
+            </div>
+            <div class="row content" data-z="0.5">
+              <div class="col-md-12 pT10">
+                <div class="row mB10">
+                  <div class="col-12 pl-0 text-subhead">
+                    {{helpData?.createdBy.name}}
+                    <span class="text-caption">
+                      - {{helpData?.createdBy.date | amDateFormat:'LL'}}
+                    </span>
+                    <span class="text-caption">
+                       &nbsp; | &nbsp; <i class="fa fa-flag"></i>&nbsp;{{helpData?.status}}
+                    </span>
+                    <span *ngIf="helpData?.attachment" class="text-caption">
+                       &nbsp; | &nbsp; <i class="fa fa-paperclip"></i>&nbsp;
+                       <a target="_blank" [attr.href]="path+helpData?.attachment?.path">Attachment</a>
+                    </span>
+                  </div>
+                  <div class="mB10 description">
+                    <span class="ins-title" [innerHtml]="helpData?.description">
+          		</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row" data-z="0.5">
+              <div class="col-md-12 pb-4">
+                <h3 class="page-heading">Replies</h3>
+              </div>
+              </div>
+            <div *ngFor=" let reply of helpData?.replies; let i= index; " class="row content" data-z="0.5">
+              <div  class="col-md-12 pT10">
+                <div class="row mB10">
+                  <div class="col-12 pl-0 text-subhead">
+                    {{reply?.repliedBy.name}}
+                    <span class="text-caption">
+                      - {{helpData?.createdBy.date | amDateFormat:'LL'}}
+                    </span>
+                  </div>
+                  <div class="mB10 description">
+                    <span class="ins-title" [innerHtml]="reply?.message">
+          		</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row content" data-z="0.5">
+              <div class="col-md-12 pT10 pLR0">
+                <form [formGroup]="replyForm">
+                  <div class="row mB10">
+                    <div class="col-12 pl-0 pLR0">
+                      <div class="panel-heading">
+                        <h4 class="text-headline">Post a reply</h4>
+                      </div>
+                    </div>
+                    <div class="col-12 pl-0 pLR0">
+                      <textarea type="text" formControlName="description" id="description" name="description" class="form-control" rows="2" cols="25" placeholder="Please Enter your Message Here"></textarea>
+                      <div *ngIf="replyForm.get('description').touched && replyForm.get('description').errors">
+                        <div class="error-msg ml-4" *ngIf="replyForm.get('description').errors.required">
+                          Description is required
+                        </div>
+                        <div class="error-msg ml-4" *ngIf="replyForm.get('description').errors.maxlength">
+                        Description can be of 900 characters only.
+                      </div>
+                      </div>
+                    </div>
+                    <div class="col-12 text-right pTB10">
+                      <button class="btn btn-primary ripple" type="button" [disabled]="replyForm.invalid" (click)="saveReply(replyForm)" [ngStyle]="{'cursor':replyForm.valid ? 'pointer' : 'not-allowed' }">Post reply</button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

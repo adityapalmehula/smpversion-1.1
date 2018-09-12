@@ -1,0 +1,36 @@
+<div class="container-section">
+  <div class="row">
+    <div class="col-md-1 pl-0 pr-0">
+    </div>
+    <div class="col-md-11">
+      <div class="container-fluid">
+        <div class="row breadcrumb">
+          <div class="col-8 text-left mt-2 mb-1 ">
+            <a class="page-heading" [routerLink]="['/', urlPrefix, 'projects']"><i class="fa fa-home" aria-hidden="true"></i> Projects</a> / <a class="page-heading" [routerLink]="['/', urlPrefix, 'projects',projectId]" [queryParams]="{tab: 'stories'}" ><i class="fa fa-home" aria-hidden="true"></i> Story</a>
+          </div>
+          <div class="col-4 text-right">
+            <a class="btn btn-outline-info back" [routerLink]="['/', urlPrefix, 'projects',projectId]"><i class="fa fa-arrow-circle-o-left" aria-hidden="true"></i> Back
+            </a>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12 mt-4 mb-1 ">
+            <h3 class="title">{{ storyDetail?.title }}</h3>
+            <p class="description text-left mt-2" [innerHtml]="storyDetail?.description"></p>
+          </div>
+        </div>
+        <hr>
+        <div class="row">
+         <div class="col-12 text-right">
+          <a class="btn btn-outline-info add-new" [routerLink]="['/', urlPrefix, 'projects',projectId, 'stories', storyId ,'tasks','add' ]"><i class="fa fa-plus-circle">
+          </i> Add</a>
+        </div>
+        <div class="col-12 container-section">
+        <h4>Tasks</h4>
+          <app-tasks [tasks]="tasks" [pId]="projectId" [sId]="storyId"></app-tasks>
+        </div>
+      </div>
+      </div>
+    </div>
+  </div>
+</div>

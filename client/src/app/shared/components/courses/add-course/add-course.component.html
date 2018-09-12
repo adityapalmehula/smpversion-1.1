@@ -1,0 +1,386 @@
+<div class="container-section">
+	<div class="row">
+		<div class="col-md-1 pl-0 pr-0">
+		</div>
+		<div class="col-md-11">
+			<div class="container-fluid">
+				<div class="row breadcrumb">
+					<div class="col-8 text-left mt-2 mb-1 ">
+						<a class="page-heading" [routerLink]="['/', urlPrefix, 'courses']"><i class="fa fa-home" aria-hidden="true"></i> Courses</a> / <span *ngIf="!courseId" class="breadcrumb-active">Add a new Course</span>
+						<span *ngIf="courseId" class="breadcrumb-active">Update Course</span>
+					</div>
+					<div class="col-4 text-right">
+						<a class="btn btn-outline-info back" [routerLink]="['/', urlPrefix, 'courses']"><i class="fa fa-arrow-circle-o-left" aria-hidden="true"></i> Back
+						</a>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-12 pt-4">
+						<div *ngIf="courseId; else elsblock; then thenblock;"></div>
+						<ng-template #elsblock>
+							<h2 class="legend">Add A New Course</h2>
+						</ng-template>
+						<ng-template #thenblock>
+							<h2 class="legend">Update Course</h2>
+						</ng-template>
+					</div>
+				</div>
+				<div class="row reg-form-container add-new-container">
+					<div *ngIf="backendErrorMsg">
+						<ul>
+							<li class="backend-errors" *ngFor="let msg of backendErrorMsg.slice().reverse() ">{{msg}}</li>
+						</ul>
+					</div>
+					<div class=" col-xl-10 col-lg-8 col-md-10 col-sm-12 reg-form">
+						<form [formGroup]="courseForm">
+							<div class="row">
+								<div class="col-md-1"></div>
+								<div class="form-group col-md-5">
+									<label for="title" class="text-center form-label">
+										<span class="form_required">*</span> Category
+									</label>
+									<select class="form-control" formControlName="category" (change)="selectedCategory()">
+										<option value="" disabled selected hidden>Select Category </option>
+										<option value="{{category._id}}" *ngFor="let category of categories">{{ category.name }}</option>
+									</select>
+									<div *ngIf="courseForm.get('category').touched && courseForm.get('category').errors">
+										<div class="error-msg ml-4" *ngIf="courseForm.get('category').errors.required">
+											{{ Config.category.required }}
+										</div>
+									</div>
+								</div>
+								<div class="form-group col-md-5">
+									<label for="title" class="text-center form-label">
+										<span class="form_required">*</span> Subcategory
+									</label>
+									<select class="form-control" formControlName="subCategory">
+										<option value="" disabled selected hidden>Select subCategory </option>
+										<option value="{{subCategory._id}}" *ngFor="let subCategory of subCategories">{{ subCategory.name }}</option>
+									</select>
+									<div *ngIf="courseForm.get('subCategory').touched && courseForm.get('subCategory').errors">
+										<div class="error-msg ml-4" *ngIf="courseForm.get('subCategory').errors.required">
+											{{ Config.subcategory.required }}
+										</div>
+									</div>
+								</div>
+								<div class="col-md-1"></div>
+							</div>
+							<div class="row">
+								<div class="col-md-1"></div>
+								<div class="form-group col-md-10">
+									<div class="row">
+										<label for="title" class="text-center form-label">
+											<span class="form_required">*</span> Title
+										</label>
+									</div>
+									<div class="row">
+										<input type="text" formControlName="title">
+									</div>
+									<div *ngIf="courseForm.get('title').touched && courseForm.get('title').errors">
+										<div class="error-msg ml-4" >
+											<div *ngIf="courseForm.get('title').errors.minlength">
+												{{Config.title.minlength[1]}}
+											</div>
+											<div *ngIf="courseForm.get('title').errors.maxlength">
+												{{Config.title.maxlength[1]}}
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="col-md-1"></div>
+							</div>
+							<div class="row">
+								<div class="col-md-1"></div>
+								<div class="form-group col-md-10">
+									<div class="row">
+										<label for="title" class="text-center form-label">
+											<span class="form_required">*</span> Short Description
+										</label>
+									</div>
+									<div class="row">
+										<ckeditor class="form-control" [(ngModel)]="shortDescription" debounce="500" [ngModelOptions]="{standalone: true}">
+										</ckeditor>
+									</div>
+								</div>
+								<div class="col-md-1"></div>
+							</div>
+							<div class="row">
+								<div class="col-md-1"></div>
+								<div class="form-group col-md-10">
+									<div class="row">
+										<label for="title" class="text-center form-label">
+											<span class="form_required">*</span> Long Description
+										</label>
+									</div>
+									<div class="row">
+										<ckeditor class="form-control" [(ngModel)]="longDescription" debounce="500" [ngModelOptions]="{standalone: true}">
+										</ckeditor>
+									</div>
+								</div>
+								<div class="col-md-1"></div>
+							</div>
+							<div class="row">
+								<div class="col-md-1"></div>
+								<div class="form-group col-md-10">
+									<div class="row">
+										<label for="title" class="text-center form-label">
+											Prerequisites
+										</label>
+									</div>
+									<div class="row">
+										<ckeditor class="form-control" [(ngModel)]="prerequisites" debounce="500" [ngModelOptions]="{standalone: true}">
+										</ckeditor>
+									</div>
+								</div>
+								<div class="col-md-1"></div>
+							</div>
+							<div class="row">
+								<div class="col-md-1"></div>
+								<div class="form-group col-md-5">
+									<label for="title" class="text-center form-label">
+										<span class="form_required">*</span> Type
+									</label>
+									<select class="form-control" formControlName="type">
+										<option value="">Select course type</option>
+										<option *ngFor=" let type of courseType" [attr.value]="type">{{type}}</option>
+									</select>
+									<div *ngIf="courseForm.get('type').touched && courseForm.get('type').errors">
+										<div class="error-msg ml-4" *ngIf="courseForm.get('type').errors.required">
+											Type is required
+										</div>
+									</div>
+								</div>
+								<div class="form-group col-md-5">
+									<label for="title" class="text-center form-label">
+										<span class="form_required">*</span> Is it paid ?
+									</label>
+									<select class="form-control" formControlName="isPaid">
+										<option value="true">Yes</option>
+										<option value="false">No</option>
+									</select>
+									<div *ngIf="courseForm.get('isPaid').touched && courseForm.get('isPaid').errors">
+										<div class="error-msg ml-4" *ngIf="courseForm.get('isPaid').errors.required">
+											Is Paid is required
+										</div>
+									</div>
+								</div>
+								<div class="col-md-1"></div>
+							</div>
+							<div class="row">
+								<div class="col-md-1"></div>
+								<div class="form-group col-md-5">
+									<label for="title" class="text-center form-label">
+										<span class="form_required">*</span> Activation Method
+									</label>
+									<select class="form-control" formControlName="activationMethod">
+										<option value="">Select Activation Method</option>
+										<option *ngFor=" let activationMethod of activationMethodType" [attr.value]="activationMethod">{{activationMethod}}</option>
+									</select>
+									<div *ngIf="courseForm.get('activationMethod').touched && courseForm.get('activationMethod').errors">
+										<div class="error-msg ml-4" *ngIf="courseForm.get('activationMethod').errors.required">
+											Activation Method is required
+										</div>
+									</div>
+								</div>
+								<div class="form-group col-md-5">
+									<label for="title" class="text-center form-label">
+										<span class="form_required">*</span> Currency
+									</label>
+									<select class="form-control" formControlName="currency">
+										<option value="">Select Currency</option>
+										<option *ngFor=" let curr of currency" [attr.value]="curr">{{curr}}</option>
+									</select>
+									<div *ngIf="courseForm.get('currency').touched && courseForm.get('currency').errors">
+										<div class="error-msg ml-4" *ngIf="courseForm.get('currency').errors.required">
+											Currency is required
+										</div>
+									</div>
+								</div>
+								<div class="col-md-1"></div>
+							</div>
+							<div class="row">
+								<div class="col-md-1"></div>
+								<div class="form-group col-md-5">
+									<label for="title" class="text-center form-label">
+										<span class="form_required">*</span> Actual Price
+									</label>
+									<input type="text" formControlName="actualPrice">
+									<div *ngIf="courseForm.get('actualPrice').touched && courseForm.get('actualPrice').errors">
+										<div class="error-msg ml-4" *ngIf="courseForm.get('actualPrice').errors.required">
+											Actual Price is required
+										</div>
+										<div class="error-msg ml-4" *ngIf="courseForm.get('actualPrice').errors.pattern">
+											Please enter valid actual price
+										</div>
+									</div>
+								</div>
+								<div class="form-group col-md-5">
+									<label for="title" class="text-center form-label">
+										<!-- <span class="form_required">*</span> -->
+										Discount (%)
+									</label>
+									<input type="text" formControlName="discount">
+									<div *ngIf="courseForm.get('discount').touched && courseForm.get('discount').errors">
+                    <!-- <div class="error-msg ml-4" *ngIf="courseForm.get('discount').errors.required">
+        Discount offer is required
+      </div> -->
+      <div class="error-msg ml-4" *ngIf="courseForm.get('discount').errors.pattern">
+      	Please enter valid discount
+      </div>
+      <div class="error-msg ml-4" *ngIf="courseForm.get('discount').errors.max">
+      	Discount must not be more than 100%
+      </div>
+    </div>
+  </div>
+  <div class="col-md-1"></div>
+</div>
+<div class="row">
+	<div class="col-md-1"></div>
+	<div class="form-group col-md-5">
+		<label for="title" class="text-center form-label">
+			<span class="form_required">*</span> Offered Price
+		</label>
+		<input type="text" readonly="true" formControlName="offeredPrice">
+                  <!--  <div *ngIf="courseForm.get('offeredPrice').touched && courseForm.get('offeredPrice').errors">
+    <div class="error-msg ml-4" *ngIf="courseForm.get('offeredPrice').errors.required">
+      Offered Price is required
+    </div>
+    <div class="error-msg ml-4" *ngIf="courseForm.get('offeredPrice').errors.pattern">
+      Please enter valid offered price
+    </div>
+    <div class="error" *ngIf="courseForm.get('offeredPrice').errors.maxOfferPrice">Offer price can't be greater than actual price
+    </div>
+  </div> -->
+</div>
+<div class="form-group col-md-5">
+	<div class="row">
+		<label for="title" class="text-center form-label">
+			<span class="form_required">*</span> Course Duration (In days)
+		</label>
+	</div>
+	<div class="row">
+		<input type="text" formControlName="duration">
+	</div>
+	<div *ngIf="courseForm.get('duration').touched && courseForm.get('duration').errors">
+		<div class="error-msg ml-4" *ngIf="courseForm.get('duration').errors.pattern">
+			Please enter valid course duration.
+		</div>
+		<div *ngIf="courseForm.get('title').errors?.min">
+		{{Config.duration.minlength[1]}}
+		</div>
+		<div *ngIf="courseForm.get('title').errors?.max">
+			{{Config.duration.maxlength[1]}}
+		</div>
+	</div>
+</div>
+<div class="col-md-1"></div>
+</div>
+<div class="row">
+	<div class="col-md-1"></div>
+	<div class="form-group col-md-10">
+		<div class="row">
+			<label for="title" class="text-center form-label">
+				<span class="form_required">*</span> Tags
+			</label>
+		</div>
+		<div class="row">
+			<!--  <input type="text" formControlName="tags"> -->
+			<rl-tag-input class="col-md-10" placeholder="Add keywords" [(ngModel)]="tags" [ngModelOptions]="{standalone: true}"></rl-tag-input>
+		</div>
+                  <!-- <div *ngIf="courseForm.get('tags').touched && courseForm.get('tags').errors">
+    <div class="error-msg ml-4" *ngIf="courseForm.get('tags').errors.required">
+      Tag is required
+    </div>
+  </div> -->
+</div>
+<div class="col-md-1"></div>
+</div>
+<div class="row">
+	<div class="col-md-1"></div>
+	<div class="form-group col-md-10">
+		<div class="row">
+			<label for="title" class="text-center form-label">
+				<span class="form_required">*</span> Course Icon <small>(Size less than 256 kb)</small>
+			</label>
+		</div>
+                <!--   <div class="row" *ngIf="!courseId">
+                    <input type="file" id="icon" (change)="onFileChange($event)" #fileInput>
+                  </div>
+                  <div class="row" *ngIf="courseId">
+                    <img class="img-fluid img-size w-20" [src]="imgPath">
+                    <input class="w-75 pl-2" type="file" id="icon" (change)="onFileChange($event)" #fileInput>
+                  </div> -->
+                  <div class="row">
+                  	<div class="col-md-5 col-lg-5 col-sm-12">
+                  		<button data-toggle="modal" class="btn btn-secondary btn-sm" value="upload new image" data-target="#profileModal">Upload Course Image</button>
+                  	</div>
+                  	<div class="col-md-4 col-lg-5 col-sm-12" *ngIf="!this.imageStatus">
+                  		<img class="img-fluid" [src]="imgPath">
+                  	</div>
+                  	<div class="col-md-4 col-lg-5 col-sm-12" *ngIf="this.imageStatus">
+                  		<img class="img-fluid" [src]="croppedImage">
+                  	</div>
+                  </div>
+                </div>
+                <div class="col-md-1"></div>
+              </div>
+              <!-- <div class="col-md-4 col-sm-12 text-center img-section">
+  <div class="course-image">
+
+  </div>
+</div> -->
+<div class="row">
+	<div *ngIf="!courseId" class="col-12 form-actions">
+		<button type="button" class="btn btn-cancel" title="Cancel" [routerLink]="['/', urlPrefix, 'courses']">Cancel</button>
+		<button type="button" class="btn btn-save" title="Save" [disabled]="courseForm.invalid" (click)="saveCourse(courseForm)" [ngStyle]="{'cursor':courseForm.valid ? 'pointer' : 'not-allowed' }">Save</button>
+	</div>
+	<div *ngIf="courseId" class="col-12  form-actions">
+		<button type="button" class="btn btn-cancel" title="Cancel" [routerLink]="['/', urlPrefix, 'courses']">Cancel</button>
+		<button type="button" class="btn btn-update" title="Update" [disabled]="courseForm.invalid" (click)="updateCourse(courseForm)" [ngStyle]="{'cursor':courseForm.valid ? 'pointer' : 'not-allowed' }">Update</button>
+	</div>
+</div>
+</form>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="modal fade" id="profileModal" tabindex="-1" role="dialog" aria-labelledby="profileModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header modalColor">
+				<h6 class="modal-title" id="profileModalLabel">Change Profile Photo</h6>
+				<button type="button" class="close" data-dismiss="modal" #closeModal aria-label="Close" (click)="close()">
+					<span aria-hidden="true" >&times;</span>
+				</button>
+			</div>
+			<div class="error text-center pt-2" *ngIf="imgError">{{imgError}}</div>
+			<div class="modal-body text-center">
+				<div class="row">
+					<div class="col-6">
+						<image-cropper
+						[imageChangedEvent]="imageChangedEvent"
+						[maintainAspectRatio]="true"
+						[aspectRatio]="269 / 150"
+						[resizeToWidth]="128"
+						format="png, jpg, jpeg"
+						(imageCropped)="imageCropped($event)"
+						(loadImageFailed)="loadImageFailed()"
+						></image-cropper>
+						<input type="file" [(ngModel)]="coursePicture" (change)="fileChangeEvent($event)" />
+					</div>
+					<div class="col-6">
+						<img *ngIf="croppedImage" [src]="croppedImage" />
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<div class="col-sm-3">
+					<div data-dismiss="modal" #setOnClose type="hidden" ></div>
+					<button type="button" class="btn btn-secondary upload" (click)="setImage()">Upload</button>
+				</div>
+				<!--  -->
+			</div>
+		</div>
+	</div>
+</div>

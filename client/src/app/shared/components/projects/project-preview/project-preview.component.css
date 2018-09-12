@@ -1,0 +1,168 @@
+.label-modify {
+  font-weight: 600;
+  font-size: 22px;
+  color: #606060;
+}
+
+/* modify description tag*/
+.description-modify {
+  font-weight: 400 !important;
+  line-height: 1.84rem;
+  color: #212121;
+  font-size: .9rem;
+}
+
+/* modify side bar heading to show project*/
+.section-heading {
+  font-size: 1.10rem;
+  line-height: 2.46rem;
+  color: #565454;
+  font-weight: 500 !important
+}
+
+/* modify side bar internal text with*/
+.sidebar-text {
+  font-weight: 300;
+}
+
+/* modify items of side bar */
+.items-modify{
+  margin-bottom: 10px;
+    font-weight: 500 !important;
+    color: #565454;
+}
+
+/* modify the hr line */
+.modify-hr {
+  height: 1px;
+  border: none;
+  color: #333;
+  background-color: #333;
+}
+
+/* nav-tab back color modification */
+.nav-modify {
+  background-color: #E8E7E7;
+  -webkit-box-shadow: 4px 0 5px -2px grey;
+  box-shadow: 4px 0 5px -2px grey;
+}
+
+/* active link modification */
+.nav-link.active {
+  background-color: white !important;
+}
+
+
+/*media query */
+/*425 to 518 */
+@media (max-width: 576px) {
+  .tab-resize {
+    width: 365px !important;
+  }
+}
+
+/*320*/
+@media only screen and (max-width: 320px) {
+  .tab-resize {
+    width: 260px !important;
+  }
+  .hidden-sm {
+    display: none;
+  }
+}
+
+
+/*375*/
+
+@media (min-width: 321px) and (max-width: 400px) {
+  .tab-resize {
+    width: 315px !important;
+  }
+}
+
+
+/* apply css to header*/
+
+.header {
+  background-color: #fff;
+  border-bottom: 2px solid #ebebeb;
+}
+
+.mid-section {
+  margin-top: 12px;
+  margin-bottom: 12px;
+  padding-right: 60px;
+  padding-left: 60px;
+}
+
+.epics-list {
+  margin-bottom: 10px;
+  cursor: pointer;
+}
+
+.epics-title {
+  width: 100%;
+}
+
+.epics-icon {
+  padding-right: 0px;
+}
+
+.long-description {
+  font-weight: 400;
+  line-height: 1.5rem !important;
+  font-size: 14px;
+  color: #4e4e4e !important;
+  font-size: .9rem;
+}
+  
+.list-heading {
+  /*color: #757575;*/
+  color: #565454;
+  margin-bottom: 10px;
+  font-weight: 500 !important;
+}
+
+.icon-block.half {
+  width: 50px;
+  height: 50px;
+  line-height: 50px;
+  font-size: 27px;
+  padding: 10px;
+}
+
+.img-circle {
+  border-radius: 50%;
+}
+
+.topic-title {
+  width: 100%;
+}
+
+.epic-description {
+  font-size: 14px;
+  padding-top: 12px;
+}
+
+@media(max-width: 768px) {
+  .back-button {
+    color: #4f6f8f;
+    border: none;
+    font-size: 12px;
+    text-align: left;
+    padding-right: 5px;
+    padding-left: 5px;
+  }
+  .mid-section {
+    padding-right: 0px;
+    padding-left: 0px;
+  }
+  .epics-icon {
+    position: relative;
+    width: 120%;
+    min-height: 1px;
+    padding-right: 8px;
+    padding-left: 8px;
+  }
+}
+

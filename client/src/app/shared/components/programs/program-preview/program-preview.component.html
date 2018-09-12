@@ -1,0 +1,138 @@
+<div class="container-section">
+  <div class="row">
+    <div class="col-md-1 pl-0 pr-0">
+    </div>
+    <div class="col-md-11">
+      <div class="container-section">
+        <div class="row add-new-container header">
+          <div class="col-9 pl-5">
+            <h3 class="heading  label-modify ml-4">{{programData?.title}}
+              <span class="rating">
+              </span>
+            </h3>
+          </div>
+          <div class="col-3 text-right">
+            <a class="btn btn-outline-info back-button" [routerLink]="['/', urlPrefix, 'programs']"><i class="fa fa-arrow-circle-o-left" aria-hidden="true"></i> Back
+            </a>
+          </div>
+        </div>
+        <div class="row add-new-container mid-section">
+          <div class="col-md-9 col-sm-12">
+            <p class="list-heading pt-2">Description :-</p>
+            <p class="long-description text-left" [innerHtml]="programData?.description"></p>
+            <hr>
+            <p class="list-heading pt-4">Why This Program :-</p>
+            <p class="long-description text-left" [innerHtml]="programData?.programNeed"></p>
+            <hr>
+            <p class="list-heading pt-4">Tags :-</p>
+            <p class="long-description text-left">
+              <span *ngFor="let tag of programData.tags">
+              {{tag}} </span>
+            </p>
+            <hr>
+            <p class="list-heading pt-4">Prerequisites :-</p>
+            <ul class="nav nav-tabs nav-modify mt-4" id="nav-tab" role="tablist">
+              <!-- *ngFor=" let data of sidebar; let i=index; " -->
+              <li class="nav-item">
+                <a class="nav-link active" id="nav-profile-tab" href="#nav-profile" role="tab" data-toggle="tab"><span class="fontresize pl-2 list-heading">Prerequisites Courses</span></a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link " id="nav-home-tab" href="#nav-home" role="tab" data-toggle="tab"><span class="fontresize pl-2 list-heading">Project Implementation</span></a> </li>
+            </ul>
+            <!-- list group start from here  -->
+            <div class="tab-content tab-resize " id="nav-tabContent">
+              <!-- start tab contant -->
+              <div class="tab-pane fade  " id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+                <ol class="list-group">
+                  <div *ngIf="dataDetails.length!== 0">
+                    <li class="list-group-item justify-content-between epics-list" *ngFor="let project of dataDetails; let i=index ">
+                      <div (click)="rotate('project'+i)" class="d-flex w-100 justify-content-between" data-toggle="collapse" [attr.data-target]='"#project-"+i' aria-expanded="false">
+                        <div class="row epics-title">
+                          <div class="col-10 text-left padding-0">
+                            <span class="hidden-sm icon-block img-rounded text-white text-center mr-2 px-1 py-1" [ngStyle]="{'background-color': colors[i%colors.length]}">
+                                <i class="fa fa-graduation-cap"></i>
+                              </span>
+                            <span class="pL10 list-heading">{{project?.title | titleCase}}<br>
+                              </span>
+                            <div class="w-100 collapse pL20 mt4 long-description pt-2" [attr.id]='"project-"+i'>
+                              <div [innerHTML]="project?.contentId?.description"></div>
+                            </div>
+                          </div>
+                          <div class="col-1 text-right">
+                            <span>
+                                <i id="project{{i}}"  class="fa fa-chevron-down rotate-down"></i>
+                              </span>
+                          </div>
+                        </div>
+                      </div>
+                    </li>
+                  </div>
+                </ol>
+              </div>
+              <div class="tab-pane fade show active" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+                <ol class="list-group">
+                  <div *ngIf="coursesData?.length !== 0">
+                    <li class="list-group-item justify-content-between epics-list" *ngFor=" let course of coursesDetails; let i=index ">
+                      <div (click)="rotate('course'+i)" class="d-flex w-100 justify-content-between" data-toggle="collapse" [attr.data-target]='"#course-"+i' aria-expanded="false">
+                        <div class="row epics-title">
+                          <div class="col-11 text-left padding-0">
+                            <span class="hidden-sm icon-block img-rounded text-white text-center mr-2 px-1 py-1" [ngStyle]="{'background-color': colors[i%colors.length]}">
+                                <i class="fa fa-graduation-cap"></i>
+                              </span>
+                            <span class="pL10 list-heading">{{course?.title | titleCase}}<br>
+                              </span>
+                            <div class="w-100 collapse pL20 mt4 long-description pt-2" [attr.id]='"course-"+i'>
+                              <div [innerHTML]="course?.contentId?.shortDescription"></div>
+                            </div>
+                          </div>
+                          <span>
+                             <i id="course{{i}}"  class="fa fa-chevron-down rotate-down"></i>
+                           </span>
+                        </div>
+                      </div>
+                    </li>
+                  </div>
+                </ol>
+              </div>
+            </div>
+          </div>
+          <hr>
+          <div class="col-md-3 pt-3">
+            <ul class="list-group">
+              <li class="list-group-item section-heading py-1">Program</li>
+              <li class="list-group-item list-item ">
+                <div class="d-flex w-100 justify-content-between ">
+                  <small class="items-modify"> <strong>Code :- </strong>  {{programData?.code}}</small>
+                </div>
+                <div class="d-flex w-100 justify-content-between">
+                  <small class="items-modify"><strong> Version :- </strong> {{programData?.version}}</small>
+                </div>
+                <div class="d-flex w-100 justify-content-between">
+                  <small class="items-modify"> <strong>Effort :- </strong> {{programData?.effort}}</small>
+                </div>
+                <div class="d-flex w-100 justify-content-between">
+                  <small class="items-modify"> <strong>Duration :- </strong>{{programData?.duration}}</small>
+                </div>
+                <div class="d-flex w-100 justify-content-between">
+                  <small class="items-modify"> <strong>Actual Price :- </strong> <i class="fa fa-inr"></i> {{programData?.price?.actual}}</small>
+                </div>
+                <div class="d-flex w-100 justify-content-between">
+                  <small class="items-modify"> <strong>Discount :- </strong>{{programData?.price?.discount}} <i class="fa fa-percent"></i></small>
+                </div>
+                <div class="d-flex w-100 justify-content-between">
+                  <small class="items-modify"><strong> Offered Price :- </strong> <i class="fa fa-inr"></i> {{programData?.price?.offered}}</small>
+                </div>
+              </li>
+              <li class="list-group-item list-item text-center">
+                <button type="button" class="btn btn-success btn-sm c-btn" [routerLink]="['/', urlPrefix, 'programs' ,'cart']">Take Program</button>
+                <!-- <button *ngIf="!projectData?.isPaid" type="button" class="btn btn-success btn-sm c-btn">Take Course</button>
+                <button *ngIf="projectData?.isPaid && projectData?.activationMethod ==='Paid'" type="button" class="btn btn-success btn-sm c-btn">Buy Now</button>
+                <button *ngIf="projectData?.isPaid && projectData?.activationMethod=='Promotion'" type="button" class="btn btn-success btn-sm c-btn">Subscribe</button> -->
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

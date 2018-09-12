@@ -1,0 +1,206 @@
+.container-fluid {
+  background-color: #f6f6f6;
+  padding: 0px;
+}
+
+.toc {
+  padding-top: 10px;
+}
+
+
+
+/*.videoSection {
+  margin-top: 10px;
+}*/
+
+
+/*Start css for card*/
+
+.image img {
+  width: 100%;
+  height: 250px;
+  position: relative
+}
+
+.image img {
+  vertical-align: top;
+}
+
+.image:after,
+.image:before {
+  position: absolute;
+  opacity: 0;
+  transition: all 0.5s;
+  -webkit-transition: all 0.5s;
+}
+
+.image:after {
+  content: '\A';
+  width: 100%;
+  height: 74.5%;
+  top: 0;
+  left: 0;
+  background: rgba(0, 0, 0, 0.6);
+}
+
+.image:before {
+  content: attr(data-content);
+  width: 100%;
+  color: #fff;
+  z-index: 1;
+  bottom: 0;
+  margin-bottom: 30.2%;
+  padding: 40px 10px;
+  text-align: center;
+  background: rgba(255, 255, 255, .4);
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+}
+
+.image:hover:after,
+.image:hover:before {
+  opacity: 1;
+}
+
+.card-title {
+  font-size: 14px;
+  color: #1abc9c;
+}
+
+.imgContainer:hover .play {
+  display: block
+}
+
+.play {
+  position: absolute;
+  display: none;
+  top: 23%;
+  width: 40px;
+  margin: 0 auto;
+  left: 0px;
+  right: 0px;
+  z-index: 100
+}
+
+.imgContainer:hover .watch {
+  display: block
+}
+
+.watch {
+  position: absolute;
+  display: none;
+  top: 55%;
+  width: 60px;
+  margin-left: 80%;
+  z-index: 100
+}
+
+.imgContainer:hover .like {
+  display: block
+}
+
+.like {
+  position: absolute;
+  display: none;
+  top: 55%;
+  width: 100px;
+  margin-left: 10%;
+  z-index: 100
+}
+
+.addContent {
+  margin: 0px;
+}
+
+.add {
+  margin-top: 20px;
+}
+
+.card-deck {
+  margin-bottom: 20px;
+}
+
+
+
+
+/*End Here css for cards*/
+
+.upcomingVideos {
+  margin-top: 30px;
+}
+
+.videoDescription {
+  margin-top: 30px;
+}
+
+.t-play-video-header {
+  background-color: #9575cd;
+  height: 100px;
+  padding-left: 0px;
+  padding-right: 0px;
+  padding-bottom: 10px;
+}
+
+.t-play-video-header h2 {
+  color: #fff;
+  font-size: 24px;
+  font-weight: normal;
+  line-height: 30px;
+  padding-top: 30px;
+}
+
+@media(max-width:768px) {
+  .t-play-video-header h2 {
+    color: #fff;
+    font-size: 18px;
+    font-weight: normal;
+    line-height: 30px;
+    padding-top: 30px;
+  }
+}
+
+.actionSection {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  padding-left: 10px;
+}
+
+i {
+  padding-right: 10px;
+  padding-left: 10px;
+  opacity: 0.7;
+}
+
+i:hover {
+  opacity: 1;
+}
+
+a {
+  cursor: pointer;
+  text-decoration: none;
+  color: inherit;
+}
+
+.cardTitle {
+  height: 25px;
+}
+
+.backButton {
+  margin-left: 10px;
+  color: #4f6f8f;
+  border: none;
+  font-size: 19px;
+  text-align: right;
+  padding-bottom: 5px;
+  margin-top: 10px;
+}
+
+.backButton:hover {
+  color: #fff !important;
+  background-color: #4f6f8f;
+  border: #4f6f8f;
+}
+
+.backSection {
+	margin-top: 10px;
+}

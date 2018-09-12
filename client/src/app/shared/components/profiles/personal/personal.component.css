@@ -1,0 +1,26 @@
+.img-block{
+  padding: 5px;
+  background-color:#E8E7E7;
+  margin-right: 10px;
+}
+.img-size{
+  width:80px;
+  height:80px;
+}
+.emailModify{
+	/*font-weight: 600;*/
+    font-size: 15px;
+    color: #606060;
+}
+.emailBorder{
+	 border: 1px solid;
+	 border-radius: 4px;
+	 border-color: #ccc;
+}
+.btn-Img{
+	  color: #fff;
+    background-color: #5cb85c;
+    border-color: #5cb85c;
+}
+
+

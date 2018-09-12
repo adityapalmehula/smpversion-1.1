@@ -1,0 +1,164 @@
+<div class="container-section">
+  <div class="row">
+    <div class="col-md-1 pl-0 pr-0">
+    </div>
+    <div class="col-md-11">
+      <div class="container-fluid">
+        <div class="row breadcrumb">
+          <div class="col-8 text-left mt-2 mb-1 ">
+            <h3 *ngIf="CONFIG.USER_INSTRUCTOR!=role" class="page-heading">Projects</h3>
+            <select *ngIf="CONFIG.USER_INSTRUCTOR==role" [(ngModel)]="projectType" class="p-1" (change)="projectTypeChange()">
+              <option *ngFor="let projectType of projectTypes" value="{{projectType}}">{{projectType}}</option>
+            </select>
+            <div *ngxPermissionsOnly="permissions; else elseBlock; then thenBlock"></div>
+            <ng-template #elseBlock>
+              <div></div>
+            </ng-template>
+            <ng-template #thenBlock>
+              <a class="btn btn-outline-info add-new" [routerLink]="['/', urlPrefix, 'projects', 'add']"><i class="fa fa-plus-circle"> </i> Add</a>
+            </ng-template>
+          </div>
+          <div class="col-4 text-right">
+            <a class="btn btn-outline-info back" [routerLink]="['/', urlPrefix, 'dashboard']"><i class="fa fa-arrow-circle-o-left" aria-hidden="true"></i> Back
+            </a>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12 middle-section">
+            <ul class="list-group">
+              <li class="list-group-item d-flex justify-content-between" *ngFor="let project of projects; let i= index; ">
+                <div class="row w-100">
+                  <div class="col-md-1">
+                    <img *ngIf="project.icon" class="card-img-top img-fluid" [attr.src]="projectImgPath+project.icon" [attr.alt]="project.name">
+                    <div *ngIf="!project.icon">
+                      <div *ngIf="i%2===0; else oddImg; then evenImg"></div>
+                      <ng-template #evenImg>
+                        <img class="card-img-top img-fluid" src="{{imgPath}}/project-default.jpg" [attr.alt]="project.title">
+                      </ng-template>
+                      <ng-template #oddImg>
+                        <img class="card-img-top img-fluid" src="{{imgPath}}/project-default2.jpeg" [attr.alt]="project.title">
+                      </ng-template>
+                    </div>
+                  </div>
+                  <div class="col-md-7 text-left">
+                  <!--start link-->
+                    <div class="row" *ngIf="(project.status=='Drafted' || project.status=='Rejected'); then disabledLink else enableLink">
+                    </div>
+                    <ng-template #disabledLink>
+                      <a href="javascript:void(0)" class="anchor-link" [routerLink]="['/', urlPrefix, 'projects', project._id]">
+                        <h5 class="mb-1 pt-1 subtitle"> {{project.title | titlecase}}
+                      </h5>
+                      </a>
+                    </ng-template>
+                    <ng-template #enableLink>
+                      <h5 class="mb-1 pt-1 subtitle"> {{project.title | titlecase}}
+                      </h5>
+                    </ng-template>
+                    <!--end link-->
+                    <div class="row">
+                      <div class="col-md-6">
+                        <span class="stats">Total Epics : {{project.epics?.length}}</span>
+                        <span class="stats">Total Stories : {{project.stories?.length}}</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-4 text-right">
+                    <!--Sart right side buttons section-->
+                    <div class="px-0" *ngIf="CONFIG.ADMIN.indexOf(role) > -1  || project.createdBy?.id == userId">
+                      <div *ngIf="CONFIG.USER_ADMIN === role; else otherUserAct; then adminAct"></div>
+                      <ng-template #adminAct>
+                        <!-- <button type="button" data-toggle="modal" data-target="#projectAction" class="btn btn-light btn-sm mr-2" (click)="setActionType()" *ngIf="CONFIG.USER_INSTRUCTOR==role" title="Submit for review">Submit</button>
+ -->
+                        <button type="submit" data-toggle="modal" data-target="#projectAction" class="btn btn-light btn-sm mr-1" (click)="setActionType(project)" title="Action">Action</button>
+                        <span *ngIf="project.status===CONFIG.CONTENT_STATUS[3] || project.status===CONFIG.CONTENT_STATUS[5]">
+                          <button type="button" class="btn btn-light btn-sm mr-2" title="Edit Project"  [routerLink]="['/', urlPrefix, 'projects', 'edit', project._id]"><span class="fa fa-pencil"></span></button>
+                        <button type="button" class="btn btn-light btn-sm mr-2" (click)="deleteProject(project._id)" title="Delete project"><span class="fa fa-trash"></span></button>
+                        </span>
+                        <span *ngIf="project.status===CONFIG.CONTENT_STATUS[4]">
+                          <button type="button" disabled="true" class="btn btn-light btn-sm mr-1" title="Pending for review">Pending for review</button>
+                        </span>
+                      </ng-template>
+                      <ng-template #otherUserAct>
+                        <span *ngIf="project.status===CONFIG.CONTENT_STATUS[3] || project.status===CONFIG.CONTENT_STATUS[5]">
+                          <button type="button"  data-toggle="modal" data-target="#projectAction" class="btn btn-light btn-sm mr-2" (click)="setActionType(project)"  *ngIf="CONFIG.USER_INSTRUCTOR==role" title="Submit for review">Submit</button>
+                          <button type="button" class="btn btn-light btn-sm mr-2" title="Edit Project"  [routerLink]="['/', urlPrefix, 'projects', 'edit', project._id]"><span class="fa fa-pencil"></span></button>
+                        <button type="button" class="btn btn-light btn-sm mr-2" (click)="deleteProject(project._id)" title="Delete project"><span class="fa fa-trash"></span></button>
+                        </span>
+                        <span *ngIf="project.status===CONFIG.CONTENT_STATUS[4]">
+                          <button type="button" disabled="true" class="btn btn-light btn-sm mr-1" title="Pending for review">Pending for review</button>
+                        </span>
+                      </ng-template>
+
+                      <!-- <button type="button" class="btn btn-light btn-sm mr-2" title="Project View" [routerLink]="['/', urlPrefix, 'projects','project-preview', project._id]"><span class="fa fa-eye"></span>
+                      </button> -->
+
+                      <button type="button" class="btn btn-light btn-sm mr-2" title="Project View" [routerLink]="['/', urlPrefix, 'projects','projects-preview', project._id]"><span class="fa fa-eye"></span>
+                      </button>
+                    </div>
+                    <!--End right side buttons section-->
+                  </div>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <!-- pagination start here -->
+        <div class="col-12 custom-pgn" *ngIf="totalItems>itemsPerPage">
+          <pagination class="pagination" [totalItems]="totalItems" [itemsPerPage]="itemsPerPage" [(ngModel)]="currentPage" (pageChanged)="pageChanged($event)"></pagination>
+        </div>
+        <!-- pagination end here -->
+      </div>
+      <!-- Add and edit model for skill -->
+      <div class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static" data-keyboard="false" id="projectAction">
+        <div class="modal-dialog modal-md">
+          <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header text-center">
+              <h4 aria-hidden="true">Action</h4>
+              <button type="button" class="close" data-dismiss="modal" title="Close" aria-label="Close" #closeModal>
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <form class="form-group" [formGroup]="projectStatusFrom">
+                <div class="row form-group">
+                  <label class="col-sm-2 control-label p-0" for="Skill Title"><span class="form_required">*</span>Status:</label>
+                  <div class="col-sm-10">
+                    <select formControlName="status" class="form-control">
+                      <option value="" selected disabled>Select status</option>
+                      <option *ngFor="let status of projectActionStatus" value="{{status.val}}">{{status.key}}</option>
+                    </select>
+                    <div class="err" *ngIf="projectStatusFrom.get('status').touched && projectStatusFrom.get('status').errors">
+                      <div class="error ml-2" *ngIf="projectStatusFrom.get('status').errors.required">
+                        Status is required
+                      </div>
+                    </div>
+                  </div>
+                  <label class="col-sm-2 control-label mt-2 mb-2 p-0"><span class="form_required">*</span>Message: </label>
+                  <div class="col-sm-10">
+                    <textarea rows="4" formControlName="message" class="form-control mt-2 mb-2"></textarea>
+                    <div class="err" *ngIf="projectStatusFrom.get('message').touched && projectStatusFrom.get('message').errors">
+                      <div class="error ml-2" *ngIf="projectStatusFrom.get('message').errors.required">
+                        Message is required
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-cancel" data-dismiss="modal" title="Cancel">
+                    Cancel
+                  </button>
+                  <button type="button" class="btn btn-save" [disabled]="projectStatusFrom.invalid" (click)="submitProjectStatus()">
+                    Submit
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- close -->
+    </div>
+  </div>
+</div>

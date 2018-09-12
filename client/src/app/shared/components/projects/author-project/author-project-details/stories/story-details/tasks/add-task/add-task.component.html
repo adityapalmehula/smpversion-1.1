@@ -1,0 +1,147 @@
+<div class="container-section">
+  <div class="row">
+    <div class="col-md-1 pl-0 pr-0">
+    </div>
+    <div class="col-md-11">
+      <div class="container-fluid">
+        <div class="row breadcrumb">
+          <div class="col-8 text-left mt-2 mb-1 ">
+            <a class="page-heading" [routerLink]="['/', urlPrefix, 'projects']"><i class="fa fa-home" aria-hidden="true"></i> Projects </a> / <a class="page-heading" [routerLink]="['/', urlPrefix, 'projects',projectId,'stories', storyId]"><i class="fa fa-home" aria-hidden="true"></i> Task</a> / <span *ngIf="!taskId" class="breadcrumb-active">Add a new Task</span>
+            <span *ngIf="taskId" class="breadcrumb-active">Update Task</span>
+          </div>
+          <div class="col-4 text-right">
+            <a class="btn btn-outline-info back" [routerLink]="['/', urlPrefix, 'projects',projectId,'stories', storyId]"><i class="fa fa-arrow-circle-o-left" aria-hidden="true"></i> Back
+      </a>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12 pt-4">
+            <h2 *ngIf="!taskId" class="legend">Add A New Task</h2>
+            <h2 *ngIf="taskId" class="legend">Update Task</h2>
+          </div>
+        </div>
+        <form class="form-horizontal" role="form" [formGroup]="formTask">
+          <div class="row">
+            <div class="col-12 container-section">
+              <div class="form-group ">
+                <div class="row">
+                  <label for="title" class="col-sm-2 text-center form-label">
+                    <span class="form_required">*</span> Title
+                  </label>
+                  <div class="col-sm-8">
+                    <input class="form-control" name="title" type="text" formControlName="taskTitle">
+                    <div *ngIf="formTask.get('taskTitle').touched && formTask.get('taskTitle').errors">
+                      <div class="error-msg ml-4">
+                        <div *ngIf="formTask.get('taskTitle').errors.required">
+                          {{Config.title.required}}
+                        </div>
+                        <div *ngIf="formTask.get('taskTitle').errors.minlength">
+                          {{Config.title.minlength[1]}}
+                        </div>
+                        <div *ngIf="formTask.get('taskTitle').errors.maxlength">
+                          {{Config.title.maxlength[1]}}
+                        </div>
+                      </div>
+                    </div>
+                    <!--               <div *ngIf="formTask.get('taskTitle').touched && formTask.get('taskTitle').errors">
+                <div class="error">
+                  Title is required.
+                </div>
+              </div> -->
+                  </div>
+                </div>
+                <div class="row pt-4">
+                  <label for="description" class="col-sm-2 text-center form-label">
+                    <span class="form_required">*</span> Description
+                  </label>
+                  <div class="col-sm-8">
+                    <ckeditor class="form-control" [(ngModel)]="taskDescription" debounce="500" [ngModelOptions]="{standalone: true}">
+                    </ckeditor>
+                  </div>
+                </div>
+                <div class="row pt-4">
+                  <label for="duration" class="col-sm-2 text-center form-label">
+                    <span class="form_required">*</span> Duration (In hours)
+                  </label>
+                  <div class="col-sm-3">
+                    <input class="form-control" name="duration" type="text" formControlName="duration">
+                    <div *ngIf="formTask.get('duration').touched && formTask.get('duration').errors">
+                      <div class="error" *ngIf="formTask.get('duration').errors.required">
+                        {{Config.duration.required}}
+                      </div>
+                      <div class="error" *ngIf="formTask.get('duration').errors.pattern">
+                        {{Config.duration.pattern}}
+                      </div>
+                    </div>
+                  </div>
+                  <label for="doneCriteria" class="col-sm-2 text-center form-label">
+                    <span class="form_required">*</span> Done Criteria
+                  </label>
+                  <div class="col-sm-3">
+                    <input class="form-control" name="doneCriteria" type="text" formControlName="doneCriteria">
+                    <div *ngIf="formTask.get('doneCriteria').touched && formTask.get('doneCriteria').errors">
+                      <div class="error" *ngIf="formTask.get('doneCriteria').errors.required">
+                        {{Config.criteria.required}}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row pt-4">
+                  <label for="action" class="col-sm-2 text-center form-label">
+                    <span class="form_required">*</span> Action
+                  </label>
+                  <div class="col-sm-3">
+                    <!-- <input class="form-control" name="action" type="text" formControlName="action"> -->
+                    <angular2-multiselect [ngModelOptions]="{standalone: true}" [data]="actionsTypesList" [(ngModel)]="selectedActionTypes" [settings]="actionsConfig"></angular2-multiselect>
+                    <!--  <div *ngIf="formTask.get('action').touched && formTask.get('action').errors">
+                      <div class="error" *ngIf="formTask.get('action').errors.required">
+                        {{Config.action.required}}
+                      </div>
+                    </div> -->
+                  </div>
+                </div>
+                <!--STAR-->
+                <!-- <div class="row pt-4">
+                  <label for="type">Question types</label>
+                  <angular2-multiselect [ngModelOptions]="{standalone: true}" [data]="actionsTypesList" [(ngModel)]="selectedActionTypes" [settings]="actionsConfig"></angular2-multiselect>
+                </div> -->
+                <!--STAR-->
+                <div class="row pt-4" *ngIf="taskId">
+                  <label for="Status" class="col-sm-2 text-center form-label">
+                    <span class="form_required">*</span> Status
+                  </label>
+                  <div class="col-sm-8">
+                    <div class="form-check form-check-inline">
+                      <label class="form-check-label">
+                        <input class="form-check-input" type="radio" name="statusCheck" [value]="status.ACTIVE" checked formControlName="statusCheck"> Active
+                      </label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                      <label class="form-check-label">
+                        <input class="form-check-input" type="radio" name="statusCheck" [value]="status.INACTIVE" formControlName="statusCheck"> Inactive
+                      </label>
+                    </div>
+                  </div>
+                </div>
+                <div class="row pt-4 text-center">
+                  <div class="col-sm-2"></div>
+                  <div class="col-sm-8">
+                    <button class="btn btn-default" (click)="intializeForm()">
+                      Reset
+                    </button>
+                    <button type="button" class="btn btn-save" *ngIf="!taskId" title="Save" [disabled]="!formTask.valid" (click)="saveTask(formTask)" [ngStyle]="{'cursor':formTask.valid ? 'pointer' : 'not-allowed' }">
+                      Save
+                    </button>
+                    <button type="button" class="btn btn-save" *ngIf="taskId" title="Update" [disabled]="!formTask.valid" (click)="updateTask(formTask)" [ngStyle]="{'cursor':formTask.valid ? 'pointer' : 'not-allowed' }">
+                      Update
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

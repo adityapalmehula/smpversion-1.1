@@ -1,0 +1,179 @@
+<div class="container-section">
+  <div class="row">
+    <div class="col-md-1 pl-0 pr-0">
+    </div>
+    <div class="col-md-11">
+      <div class="container-fluid container-section">
+  <div class="row breadcrumb">
+    <div class="col-8 text-left mt-2 mb-1 ">
+      <h3 class="page-heading">My Categories</h3>
+      <div *ngxPermissionsOnly="permissions; else elseBlock; then thenBlock"></div>
+      <ng-template #elseBlock>
+        <div></div>
+      </ng-template>
+      <ng-template #thenBlock>
+        <a class="btn btn-outline-info add-new" [routerLink]="['/',urlPrefix,'categories','add']"><i class="fa fa-plus-circle"> </i> Add</a>
+      </ng-template>
+    </div>
+    <div class="col-4 text-right">
+      <a class="btn btn-outline-info back" [routerLink]="['/', urlPrefix, 'dashboard']"><i class="fa fa-arrow-circle-o-left" aria-hidden="true"></i> Back
+      </a>
+    </div>
+  </div>
+
+  <div class="row">
+   <div class="col-12 text-center errMessage" *ngIf="errMessage">
+    <h6>{{errMessage}}</h6>
+  </div>
+  <div class="col-12 middle-section">
+    <ul class="list-group">
+     <li class="list-group-item d-flex justify-content-between"  *ngFor="let category of categoryData; let i=index; ">
+      <a href="javascript:void(0)" class="anchor-link text-capitalize" [routerLink]="['/', urlPrefix, 'categories', category._id]">
+        {{category.name | titlecase}}
+      </a>
+      <div class="row">
+       <!--  <button type="button" class="btn btn-light btn-sm mr-2" title="Submit for review">Submit</button> -->
+       <button type="button" class="btn btn-light btn-sm mr-2" [routerLink]="['/', urlPrefix, 'categories',category._id,'subcategories','add']" title="Add Subcategory">+ Subcategory</button>
+       <button type="button" class="btn btn-light btn-sm mr-2" title="Edit Category "><span class="fa fa-pencil" [routerLink]="['/',urlPrefix,'categories','edit',category._id]"></span></button>
+       <button type="button" class="btn btn-light btn-sm mr-2"  (click)="deleteCategory(category._id)" title="Delete Category"><span class="fa fa-trash"></span></button>
+     </div>
+   </li>
+ </ul>
+</div>
+<!-- pagination start here -->
+<div class="col-12 custom-pgn" *ngIf="totalItems>itemsPerPage">
+  <pagination class="pagination" [totalItems]="totalItems" [itemsPerPage]="itemsPerPage" [(ngModel)]="currentPage" (pageChanged)="pageChanged($event)"></pagination>
+</div>
+<!-- pagination end here -->
+</div>
+</div>
+<div class="">
+<!--   <div class="row add-new-container">
+    <div class="col-8 text-left ">
+      <h3 class="page-heading">Categories</h3>
+      <div *ngxPermissionsOnly="permissions; else elseBlock; then thenBlock"></div>
+      <ng-template #elseBlock>
+        <div></div>
+      </ng-template>
+      <ng-template #thenBlock>
+        <a class="btn btn-outline-info add-new" data-toggle="modal" data-target=".addCategoryModal"><i class="fa fa-plus-circle"> </i> Add</a>
+      </ng-template>
+    </div>
+    <div class="col-4 text-right">
+      <a class="btn btn-outline-info back" [routerLink]="['/', urlPrefix, 'dashboard']"><i class="fa fa-arrow-circle-o-left" aria-hidden="true"></i> Back
+      </a>
+    </div>
+  </div> -->
+  <div class="row">
+ <!--    <div class="col-12 text-center errMessage" *ngIf="errMessage">
+      <h6>{{errMessage}}</h6>
+    </div> -->
+  <!--   <div class="col-md-3 content-list" *ngFor="let data of categoryData; let i=index; ">
+      <div class="card">
+        <div class="card-title text-center" [ngStyle]="{'background-color': colors[i]}">
+          <span class="headingTitle">{{data.name}}</span>
+        </div>
+        <div class="card-body ">
+          <p class="card-text">{{data.description | words: 30}} </p>
+        </div>
+        <div class="card-footer text-muted text-center">
+          <div class="row">
+            <div *ngxPermissionsOnly="permissions; else elseBlock; then thenBlock"></div>
+            <ng-template #elseBlock>
+              <div class="col-12 text-center"><a [ngStyle]="{'color': colors[i]}" href="javascript:void(0)" [routerLink]="['/', urlPrefix, 'categories', data._id]"><i class="fa fa-eye" title="View Category Details"></i> View Category Details</a></div>
+            </ng-template>
+            <ng-template #thenBlock>
+              <div class="col-4"><a [ngStyle]="{'color': colors[i]}" href="javascript:void(0)" [routerLink]="['/', urlPrefix, 'categories', data._id]"><i class="fa fa-eye" title="View Category Details"></i> View</a></div>
+
+              <div class="col-4"><a [ngStyle]="{'color': colors[i]}" href="javascript:void(0)" (click)="getCategoryForUpdate(data._id)" data-toggle="modal" data-target=".addCategoryModal"><i class="fa fa-pencil" title="Edit category"></i> Edit</a></div>
+
+              <div class="col-4"><a [ngStyle]="{'color': colors[i]}" href="javascript:void(0)" (click)="deleteCategory(data._id)"> <i class="fa fa-trash" title="Delete category"></i> Delete</a></div>
+            </ng-template>
+          </div>
+        </div>
+      </div>
+    </div> -->
+
+  </div>
+  <!-- Edit / Update category modal  -->
+  <div class="modal fade addCategoryModal" tabindex="-1" role="dialog" aria-labelledby="categoryModal" aria-hidden="true" data-backdrop="static" data-keyboard="false" id="categoryModal">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h4 aria-hidden="true" class="modal-heading">Category</h4>
+          <span class="sr-only">Category</span>
+          <button type="button" class="close" data-dismiss="modal" title="Close" (click)="closeModal()" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <!-- Modal Body -->
+        <div *ngIf="errorMessage">
+          <div class="errorMessage">
+            {{errorMessage}}
+          </div>
+        </div>
+        <form class="form-horizontal" role="form" [formGroup]="formCategory">
+          <div class="modal-body">
+            <div class="row form-group">
+              <label class="col-sm-2 control-label" for="category Description">Name : </label>
+              <div class="col-sm-10">
+                <input type="text" class="form-control" formControlName="categoryName" />
+                <div *ngIf="formCategory.get('categoryName').touched && formCategory.get('categoryName').errors">
+                  <div class="error">
+                    Name is required.
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row form-group">
+              <label class="col-sm-2 control-label" for="category Description">Description : </label>
+              <div class="col-sm-10">
+                <textarea class="form-control" formControlName="categoryDescription"></textarea>
+                <div *ngIf="formCategory.get('categoryDescription').errors && formCategory.get('categoryDescription').touched">
+                  <div class="error" *ngIf="formCategory.get('categoryDescription').errors.required">
+                    Description is required.
+                  </div>
+                  <div class="error" *ngIf="formCategory.get('categoryDescription').errors.maxlength">
+                    Description exceeded the max length limit.
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row form-group">
+              <label class="col-sm-2 control-label" for="category Description">Status : </label>
+              <div class="col-sm-3 col-md-12 col-lg-3">
+                <div class="form-check form-check-inline">
+                  <label class="form-check-label">
+                    <input class="form-check-input" type="radio" name="statusCheck" [value]="status.ACTIVE" checked formControlName="statusCheck"> Active
+                  </label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <label class="form-check-label">
+                    <input class="form-check-input" type="radio" name="statusCheck" [value]="status.INACTIVE" formControlName="statusCheck"> Inactive
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-cancel" data-dismiss="modal" title="Cancel" (click)="closeModal()" #catModalClose>
+              Cancel
+            </button>
+            <button type="button" class="btn btn-save" *ngIf="!category" title="Save" data-dismiss="modal" [disabled]="!formCategory.valid" (click)="saveCategory(formCategory)" [ngStyle]="{'cursor':formCategory.valid ? 'pointer' : 'not-allowed' }">
+              Save
+            </button>
+            <button type="button" class="btn btn-update" *ngIf="category" title="Update" data-dismiss="modal" [disabled]="!formCategory.valid" (click)="updateCategory(formCategory)" [ngStyle]="{'cursor':formCategory.valid ? 'pointer' : 'not-allowed' }">
+              Update
+            </button>
+          </div>
+        </form>
+        <!-- Modal Footer -->
+      </div>
+    </div>
+  </div>
+</div>
+    </div>
+  </div>
+</div>
+

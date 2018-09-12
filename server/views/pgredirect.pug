@@ -1,0 +1,11 @@
+doctype html  
+html(lang='en')  
+  head
+    title Pug
+  body
+    form(method="post", action=txnReqApi, name="f1")
+      - for (name in restdata) { 
+          input(type="hidden" name=name value=restdata[name])
+      - }
+    script
+      | document.f1.submit()

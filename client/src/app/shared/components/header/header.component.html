@@ -1,0 +1,81 @@
+<div class="row mb-63" >
+	<div class="col-md-12 pl-0 pr-0">
+		<nav class="navbar navbar-toggleable-md navbar-inverse bg-navbar pl-0 pr-0" data-spy="affix" data-offset-top="197">
+			<div class="navbar-division">
+				<button *ngIf="showNavBar" id="sidebar-toggle" class="navbar-toggler navbar-toggler-left " type="button" (click)="toggelSidebar()">
+				<i class="fa fa-ellipsis-v"></i>
+				</button>
+			</div>
+			<div class="navbar-division">
+				<button *ngIf="showNavBar" class="navbar-toggler navbar-toggler-right custom-toggler mt-1 p-1" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+				<!-- <span class="fa fa-reorder"></span> -->
+				<!-- <span class="sr-only">Toggle navigation</span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span> -->
+				</button>
+			</div>
+			<div class="navbar-division logo-container">
+				<!-- Smartpathshala Logo -->
+				<div  *ngIf="currentApp === apps[0]">
+					<a  *ngIf="urlPrefix" class="navbar-brand mr-0" href="#" [routerLink]="['/', urlPrefix]"><img class="logo img-fluid" [attr.src]="logo+commonConfig.LOGO[0]"></a>
+					<a *ngIf="!urlPrefix" class="navbar-brand mr-0" href="#" [routerLink]="['/']"><img class="logo img-fluid"[attr.src]="logo+commonConfig.LOGO[0]"></a>
+				</div>
+				<!-- Codestrippers Logo -->
+				<div  *ngIf="currentApp === apps[1]">
+					<a  *ngIf="urlPrefix" class="navbar-brand mr-0" href="#" [routerLink]="['/', urlPrefix]"><img class="logo img-fluid" [attr.src]="logo+commonConfig.LOGO[1]"></a>
+					<a *ngIf="!urlPrefix" class="navbar-brand mr-0" href="#" [routerLink]="['/']"><img class="logo img-fluid"[attr.src]="logo+commonConfig.LOGO[1]"></a>
+				</div>
+			</div>
+			<div  *ngIf="showNavBar" class="collapse navbar-collapse pl-3 navbar-section" id="navbarSupportedContent">
+				<ul class="navbar-nav mr-auto">
+					<li class="nav-item dropdown" data-toggle="collapse" data-target=".navbar-collapse.show">
+						<a class="nav-link" href="#" [routerLink]="['/', urlPrefix]">Dashboard</a>
+					</li>
+					<li class="nav-item dropdown" *ngFor="let menuItem of menus; let i = index" data-toggle="collapse" data-target=".navbar-collapse.show">
+						<!-- Menu item without submenus -->
+						<a *ngIf="!menuItem.subMenus" class="nav-link" href="#"  [routerLink]="['/', urlPrefix, menuItem.url]">{{menuItem.label}}</a>
+						<!-- Menu item with submenus -->
+						<a *ngIf="menuItem.subMenus"  class="nav-link dropdown-toggle" href="#" [id]="'navbarDropdownMenuLink'+i" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{menuItem.label}}</a>
+						<div class="dropdown-menu" [attr.aria-labelledby]="'navbarDropdownMenuLink'+i">
+							<a *ngFor="let subMenuItem of menuItem.subMenus" class="dropdown-item" [routerLink]="['/', urlPrefix, subMenuItem.url]">{{subMenuItem.label}}</a>
+						</div>
+						
+					</li>
+					<!-- <li class="nav-item dropdown" data-toggle="collapse" data-target=".navbar-collapse.show">
+						<a class="nav-link" href="#" [routerLink]="['/', urlPrefix , 'projects' , 'all-projects' ]">Projects</a>
+					</li> -->
+					<!-- <li class="nav-item dropdown" data-toggle="collapse" data-target=".navbar-collapse.show">
+						<a class="nav-link" href="#" [routerLink]="['/', urlPrefix , 'programs'  ]">Programs</a>
+					</li> -->
+				</ul>
+				<ul class="navbar-nav">
+					<!-- Account section -->
+					<li class="nav-item dropdown" data-toggle="collapse" data-target=".navbar-collapse.show">
+						<a class="nav-link dropdown-toggle user-details" href="#" id="profileDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							<div *ngIf="userData?.profilePic; else defaultImg; then userImg"></div>
+							<ng-template #defaultImg>
+							<img class="img-fluid  profileImage" [src]="imgPath">
+							</ng-template>
+							<ng-template #userImg>
+							<img class="img-fluid  profileImage" [attr.src]="userImgPath+userData.profilePic">
+							</ng-template>
+						{{userData?.name}}</a>
+						<div class="dropdown-menu" aria-labelledby="profileDropdownMenuLink">
+							<a class="dropdown-item" [routerLink]="['/', urlPrefix, 'profiles']">
+								<i class="fa fa-user-circle-o" aria-hidden="true"></i>
+							Settings</a>
+							<a class="dropdown-item" href="#" (click)="logout()">
+								<i class="fa fa-sign-out" aria-hidden="true"></i> Logout
+							</a>
+						</div>
+					</li>
+				</ul>
+			</div>
+		</nav>
+	</div>
+	<div  id="sidebar-container">
+	<app-sidebar (menuClick)="handleClick()"></app-sidebar>
+</div>
+</div>

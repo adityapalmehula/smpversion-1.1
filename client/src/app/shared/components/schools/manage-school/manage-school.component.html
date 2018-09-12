@@ -1,0 +1,216 @@
+<div class="container-section">
+  <div class="row">
+    <div class="col-md-1 pl-0 pr-0"></div>
+    <div class="col-md-11">
+      <div class="container-fluid">
+        <div class="row breadcrumb">
+          <div class="col-8 text-left mt-2 mb-1 ">
+            <a class="page-heading" [routerLink]="['/', urlPrefix, 'schools']"><i class="fa fa-home" aria-hidden="true"></i> Schools</a> / <span class="breadcrumb-active" *ngIf="formType!='edit'">Add a new school</span>
+            <span class="breadcrumb-active" *ngIf="formType=='edit'">Update school</span>
+          </div>
+          <div class="col-4 text-right">
+            <a class="btn btn-outline-info back" [routerLink]="['/', urlPrefix, 'schools']"><i class="fa fa-arrow-circle-o-left" aria-hidden="true"></i> Back
+            </a>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12 pt-4">
+            <h2 class="legend" *ngIf="formType!='edit'">Add A New School</h2>
+            <h2 class="legend" *ngIf="formType=='edit'">Update School</h2>
+          </div>
+        </div>
+        <div class="row reg-form-container add-new-container pt-0">
+          <div class=" col-xl-10 col-lg-8 col-md-10 col-sm-12 reg-form">
+            <form [formGroup]="schForm">
+              <div class="row">
+                <div class="col-md-1"></div>
+                <div class="form-group col-md-5">
+                  <div class="row">
+                    <label for="name" class="form-label">
+                      <span class="form_required">*</span>Name
+                    </label>
+                  </div>
+                  <div class="row">
+                    <input type="text" formControlName="name">
+                  </div>
+                  <div *ngIf="schForm.get('name').touched && schForm.get('name').errors">
+                    <div class="error" *ngIf="schForm.get('name').errors.required">
+                      Name is required.
+                    </div>
+                    <div class="error" *ngIf="schForm.get('name').errors.pattern">
+                      Enter valid school name
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group col-md-5">
+                  <div class="row">
+                    <label for="email" class="form-label">
+                      <span class="form_required">*</span>Email
+                    </label>
+                  </div>
+                  <div class="row">
+                    <input type="email" formControlName="email">
+                  </div>
+                  <div *ngIf="schForm.get('email').touched && schForm.get('email').errors">
+                    <div class="error" *ngIf="schForm.get('email').errors.required">
+                      Email is required.
+                    </div>
+                    <div class="error" *ngIf="schForm.get('email').errors.pattern">
+                      Enter valid email
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-1"></div>
+              </div>
+              <div class="row">
+                <div class="col-md-1"></div>
+                <div class="form-group col-md-5">
+                  <div class="row">
+                    <label for="mobile" class="form-label">
+                      <span class="form_required">*</span>Mobile Number
+                    </label>
+                  </div>
+                  <div class="row">
+                    <input type="text" formControlName="mobile">
+                  </div>
+                  <div *ngIf="schForm.get('mobile').touched && schForm.get('mobile').errors">
+                    <div class="error" *ngIf="schForm.get('mobile').errors.required">
+                      Mobile No is required.
+                    </div>
+                    <div class="error" *ngIf="schForm.get('mobile').errors.pattern || schForm.get('mobile').errors.maxlength">
+                      Enter valid mobile number
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group col-md-5">
+                  <div class="row">
+                    <label for="mobile" class="form-label">
+                      <span class="form_required"></span>Phone No.
+                    </label>
+                  </div>
+                  <div class="row">
+                    <input type="text" formControlName="phoneNo">
+                  </div>
+                </div>
+                <div class="col-md-1"></div>
+              </div>
+              <div class="row">
+                <div class="col-md-1"></div>
+                <div class="form-group col-md-5">
+                  <label for="country" class="form-label">
+                    <span class="form_required">*</span>Country
+                  </label>
+                  <select class="form-control" formControlName="country" (change)="getStates($event.target.value)">
+                    <option value="" disabled selected>Select country </option>
+                    <option value="{{country}}" *ngFor="let country of countries">{{country}}</option>
+                  </select>
+                  <div *ngIf="schForm.get('country').touched && schForm.get('country').errors">
+                    <div class="error">
+                      Country is required.
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group col-md-5">
+                  <div class="row">
+                    <label for="state" class="form-label">
+                      <span class="form_required">*</span>State
+                    </label>
+                  </div>
+                  <select class="form-control" formControlName="state" (change)="getCities($event.target.value)">
+                    <option value="" disabled selected>Select state </option>
+                    <option value="{{state}}" *ngFor="let state of states">{{state}}</option>
+                  </select>
+                  <div *ngIf="schForm.get('state').touched && schForm.get('state').errors">
+                    <div class="error">
+                      State is required.
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-1"></div>
+              </div>
+              <div class="row">
+                <div class="col-md-1"></div>
+                <div class="form-group col-md-5">
+                  <label for="city" class="form-label">
+                    <span class="form_required">*</span>City
+                  </label>
+                  <select class="form-control" formControlName="city">
+                    <option value="" disabled selected>Select city </option>
+                    <option value="{{city}}" *ngFor="let city of cities">{{city}}</option>
+                  </select>
+                  <div *ngIf="schForm.get('city').touched && schForm.get('city').errors">
+                    <div class="error" *ngIf="schForm.get('city').errors.required">
+                      City is required.
+                    </div>
+                    <div class="error" *ngIf="schForm.get('city').errors.pattern">
+                      Enter valid city name
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group col-md-5">
+                  <div class="row">
+                    <label class="form-label">
+                      <span class="form_required">*</span>Pin Code
+                    </label>
+                  </div>
+                  <div class="row">
+                    <input type="text" formControlName="pincode">
+                  </div>
+                  <div *ngIf="schForm.get('pincode').touched && schForm.get('pincode').errors">
+                    <div class="error" *ngIf="schForm.get('pincode').errors.required">
+                      Zip code is required.
+                    </div>
+                    <div class="error" *ngIf="schForm.get('pincode').errors.pattern || schForm.get('pincode').errors.maxlength">
+                      Enter valid zip code
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-1"></div>
+              </div>
+              <!-- updated -->
+              <div class="row">
+                <div class="col-md-1"></div>
+                <div class="form-group col-md-5">
+                  <label for="address" class="form-label">
+                    <span class="form_required">*</span>Address
+                  </label>
+                  <div class="row pt-2">
+                    <textarea formControlName="address" rows="1"></textarea>
+                  </div>
+                  <div *ngIf="schForm.get('address').touched && schForm.get('address').errors">
+                    <div class="error" *ngIf="schForm.get('address').errors.required">
+                      Address is required.
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group col-md-5">
+                  <div class="row">
+                    <label class="form-label">
+                      <span class="form_required"></span>Website
+                    </label>
+                  </div>
+                  <div class="row">
+                    <input type="text" formControlName="website">
+                  </div>
+                  <div *ngIf="schForm.get('website').touched && schForm.get('website').errors">
+                    <div class="error" *ngIf="schForm.get('website').errors.pattern || schForm.get('website').errors.maxlength">
+                      Enter valid website
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-1"></div>
+              </div>
+              <div class="row">
+                <div class="col-12 form-actions">
+                  <button type="button" class="btn btn-cancel" [routerLink]="['/', urlPrefix, 'schools']">Cancel</button>
+                  <button type="button" *ngIf="formType=='add'" class="btn btn-save" title="Save" [disabled]="!schForm.valid" (click)="register()" [ngStyle]="{'cursor':schForm.valid ? 'pointer' : 'not-allowed' }">Save</button>
+                  <button type="button" *ngIf="formType=='edit'" class="btn btn-save" title="Save" [disabled]="!schForm.valid" (click)="update()" [ngStyle]="{'cursor':schForm.valid ? 'pointer' : 'not-allowed' }">Update</button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

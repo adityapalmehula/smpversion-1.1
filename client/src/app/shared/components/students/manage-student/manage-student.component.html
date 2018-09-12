@@ -1,0 +1,373 @@
+<!-- <div class="container-section">
+  <div class="row">
+    <div class="col-12 back-button text-right">
+      <a class="btn btn-outline-info back" [routerLink]="['/', urlPrefix, 'students']"><i class="fa fa-arrow-circle-o-left" aria-hidden="true"></i> Back
+      </a>
+    </div>
+  </div>
+  <div class="row reg-form-container add-new-container">
+    <div class="col-xl-2 col-lg-8 col-md-1"></div>
+    <div class=" col-xl-8 col-lg-8 col-md-10 col-sm-12 reg-form">
+      <h1 *ngIf="formType=='add'" class="flow-h1">Student Registration</h1>
+      <h1 *ngIf="formType=='edit'" class="flow-h1">Update Student</h1>
+      <div *ngIf="errorMessage" class="alert alert-danger danger-alert" role="alert">
+        <strong>{{errorMessage}}</strong>
+      </div>
+      <form [formGroup]="stuForm">
+        <div class="row">
+          <div class="col-md-1"></div>
+          <div class="form-group col-md-5">
+            <span class="mendatoryField">*</span>
+            <input type="text" formControlName="name" placeholder="Name">
+            <div *ngIf="stuForm.get('name').touched && stuForm.get('name').errors">
+              <div class="error-msg ml-4" *ngIf="stuForm.get('name').errors.required">
+                User name is required
+              </div>
+            </div>
+          </div>
+          <div class="form-group col-md-5">
+            <span class="mendatoryField">*</span>
+            <select class="form-control" formControlName="gender">
+              <option value="" disabled selected hidden>Select gender </option>
+              <option value="{{gender}}" *ngFor="let gender of genders">{{ gender }}</option>
+            </select>
+            <div *ngIf="stuForm.get('gender').touched && stuForm.get('gender').errors">
+              <div class="error-msg ml-4" *ngIf="stuForm.get('gender').errors.required">
+                Gender is required
+              </div>
+            </div>
+          </div>
+          <div class="col-md-1"></div>
+          <div class="col-md-1"></div>
+          <div class="form-group col-md-5">
+            <span class="mendatoryField">*</span>
+            <input type="email" [readonly]="formType=='edit'" formControlName="email" placeholder="Email" class="txt-trans">
+            <div *ngIf="stuForm.get('email').touched && stuForm.get('email').errors">
+              <div class="error-msg ml-4" *ngIf="stuForm.get('email').errors.required">
+                Email is required
+              </div>
+              <div class="error-msg ml-4" *ngIf="stuForm.get('email').errors.pattern">
+                Please enter valid email
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group col-md-5">
+            <span class="mendatoryField">*</span>
+            <input type="text" formControlName="mobile" placeholder="Mobile number">
+            <div *ngIf="stuForm.get('mobile').touched && stuForm.get('mobile').errors">
+              <div class="error-msg ml-4" *ngIf="stuForm.get('mobile').errors.required">
+                Mobile number is required
+              </div>
+              <div class="error-msg ml-4" *ngIf="stuForm.get('mobile').errors.pattern || stuForm.get('mobile').errors.maxlength">
+                Please enter valid mobile number
+              </div>
+            </div>
+          </div>
+          <div class="col-md-1"></div>
+          <div class="col-md-1"></div>
+          <div class="form-group col-md-5">
+            <span class="mendatoryField">*</span>
+            <input type="text" formControlName="class" placeholder="Class">
+            <div *ngIf="stuForm.get('class').touched && stuForm.get('class').errors">
+              <div class="error-msg ml-4" *ngIf="stuForm.get('class').errors.required">
+                Class is required
+              </div>
+              <div class="error-msg ml-4" *ngIf="stuForm.get('class').errors.pattern">
+                Please enter valid class
+              </div>
+            </div>
+          </div>
+
+          <div *ngIf="role!='School'" class="form-group col-md-5">
+            <span class="mendatoryField">*</span>
+            <select class="form-control" formControlName="schoolId">
+              <option value="" disabled selected hidden>Select school </option>
+              <option value="{{school.schoolId}}" *ngFor="let school of schools">{{ school.schoolName }}</option>
+            </select>
+            <div *ngIf="stuForm.get('schoolId').touched && stuForm.get('schoolId').errors">
+              <div class="error-msg ml-4" *ngIf="stuForm.get('schoolId').errors.required">
+                School is required
+              </div>
+            </div>
+          </div>
+          <div class="col-md-1"></div>
+          <div class="col-md-1"></div>
+          <div class="form-group col-md-5">
+            <div class="row col-md-12 radio-btn">
+              <label class="form-check-label">
+                <input type="radio" class="form-check-input checkbox-custom" name="status" formControlName="status" [value]='status.ACTIVE'> Active
+              </label>
+              <label class="form-check-label">
+                <input type="radio" class="form-check-input checkbox-custom" name="status" formControlName="status" [value]='status.INACTIVE'> In Active
+              </label>
+            </div>
+          </div>
+          <div class=" col-12  form-actions">
+            <button type="button"  [routerLink]="['/', urlPrefix, 'students']" class="btn btn-cancel">Cancel</button>
+            <button *ngIf="formType=='add'" type="submit" class="btn btn-save" [disabled]="stuForm.invalid" (click)="register()" [ngStyle]="{'cursor':stuForm.valid ? 'pointer' : 'not-allowed' }">Submit</button>
+            <button *ngIf="formType=='edit'" type="submit" class="btn btn-update" [disabled]="stuForm.invalid" (click)="update()" [ngStyle]="{'cursor':stuForm.valid ? 'pointer' : 'not-allowed' }">Update</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div> -->
+<div class="container-section">
+  <div class="row">
+    <div class="col-md-1 pl-0 pr-0"></div>
+    <div class="col-md-11">
+      <div class="container-fluid">
+        <div class="row breadcrumb">
+          <div class="col-8 text-left mt-2 mb-1 ">
+            <a class="page-heading" [routerLink]="['/', urlPrefix, 'students']"><i class="fa fa-home" aria-hidden="true"></i> Students</a> / <span *ngIf="!studentId" class="breadcrumb-active">Add New Student</span>
+            <span *ngIf="studentId" class="breadcrumb-active">Update Student</span>
+          </div>
+          <div class="col-4 text-right">
+            <a class="btn btn-outline-info back" [routerLink]="['/', urlPrefix, 'students']"><i class="fa fa-arrow-circle-o-left" aria-hidden="true"></i> Back
+            </a>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12 pt-4">
+            <div *ngIf="studentId; else elsblock; then thenblock;"></div>
+            <ng-template #elsblock>
+              <h2 class="legend">Add New Student</h2>
+            </ng-template>
+            <ng-template #thenblock>
+              <h2 class="legend">Update Student</h2>
+            </ng-template>
+          </div>
+        </div>
+        <div class="row reg-form-container add-new-container pt-0">
+          <!--  <div *ngIf="backendErrorMsg">
+            <ul>
+              <li class="backend-errors" *ngFor="let msg of backendErrorMsg.slice().reverse() ">{{msg}}</li>
+            </ul>
+          </div> -->
+          <div class=" col-xl-10 col-lg-8 col-md-10 col-sm-12 reg-form">
+            <form [formGroup]="stuForm">
+              <div class="row">
+                <div class="col-md-1"></div>
+                <div class="form-group col-md-5">
+                  <div class="row">
+                    <label for="name" class="form-label">
+                      <span class="form_required">*</span>Name
+                    </label>
+                  </div>
+                  <div class="row">
+                    <input type="text" formControlName="name">
+                  </div>
+                  <div *ngIf="stuForm.get('name').touched && stuForm.get('name').errors">
+                    <div class="error" *ngIf="stuForm.get('name').errors.required">
+                      Name is required
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group col-md-5">
+                  <div class="row">
+                    <label for="email" class="form-label">
+                      <span class="form_required">*</span>Email
+                    </label>
+                  </div>
+                  <div class="row">
+                    <input type="email" formControlName="email">
+                  </div>
+                  <div *ngIf="stuForm.get('email').touched && stuForm.get('email').errors">
+                    <div class="error" *ngIf="stuForm.get('email').errors.required">
+                      Email is required
+                    </div>
+                    <div class="error" *ngIf="stuForm.get('email').errors.pattern">
+                      Please enter valid email
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-1"></div>
+              </div>
+              <div class="row">
+                <div class="col-md-1"></div>
+                <div class="form-group col-md-5">
+                  <div class="row">
+                    <label for="mobile" class="form-label">
+                      <span class="form_required">*</span>Mobile Number
+                    </label>
+                  </div>
+                  <div class="row">
+                    <input type="text" formControlName="mobile">
+                  </div>
+                  <div *ngIf="stuForm.get('mobile').touched && stuForm.get('mobile').errors">
+                    <div class="error" *ngIf="stuForm.get('mobile').errors.required">
+                      Mobile number is required
+                    </div>
+                    <div class="error" *ngIf="stuForm.get('mobile').errors.pattern || stuForm.get('mobile').errors.maxlength">
+                      Please enter valid mobile number
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group col-md-5">
+                  <label for="gender" class="form-label">
+                    <span class="form_required">*</span>Gender
+                  </label>
+                  <select class="form-control" formControlName="gender">
+                    <option value="" disabled selected>Select gender </option>
+                    <option value="{{gender}}" *ngFor="let gender of genders">{{gender}}</option>
+                  </select>
+                  <div *ngIf="stuForm.get('gender').touched && stuForm.get('gender').errors">
+                    <div class="error" *ngIf="stuForm.get('gender').errors.required">
+                      Gender is required.
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-1"></div>
+              </div>
+              <div class="row">
+                <div class="col-md-1"></div>
+                <div class="form-group col-md-5">
+                  <label for="board" class="form-label">
+                    <span class="form_required">*</span>Board
+                  </label>
+                  <select class="form-control" formControlName="board" (change)="categoryChange($event.target.value)">
+                    <option value="" disabled selected>Select board </option>
+                    <option value="{{board?._id}}" *ngFor="let board of categories">{{board?.name}}</option>
+                  </select>
+                  <div *ngIf="stuForm.get('board').touched && stuForm.get('board').errors">
+                    <div class="error" *ngIf="stuForm.get('board').errors.required">
+                      Board is required.
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group col-md-5">
+                  <div class="row">
+                    <label for="class" class="form-label">
+                      <span class="form_required">*</span>Class
+                    </label>
+                  </div>
+                  <select class="form-control" formControlName="class">
+                    <option value="" disabled selected>Select class </option>
+                    <option value="{{class?._id}}" *ngFor="let class of subCategories">{{class?.name}}</option>
+                  </select>
+                  <div *ngIf="stuForm.get('class').touched && stuForm.get('class').errors">
+                    <div class="error" *ngIf="stuForm.get('class').errors.required">
+                      Class is required.
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-1"></div>
+              </div>
+              <div class="row">
+                <div class="col-md-1"></div>
+                <div class="form-group col-md-5">
+                  <label for="country" class="form-label">
+                    <span class="form_required">*</span>Country
+                  </label>
+                  <select class="form-control" formControlName="country" (change)="getStates($event.target.value)">
+                    <option value="" disabled selected>Select country </option>
+                    <option value="{{country}}" *ngFor="let country of countries">{{country}}</option>
+                  </select>
+                  <div *ngIf="stuForm.get('country').touched && stuForm.get('country').errors">
+                    <div class="error" *ngIf="stuForm.get('country').errors.required">
+                      Country is required.
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group col-md-5">
+                  <div class="row">
+                    <label for="state" class="form-label">
+                      <span class="form_required">*</span>State
+                    </label>
+                  </div>
+                  <select class="form-control" formControlName="state" (change)="getCities($event.target.value)">
+                    <option value="" disabled selected>Select state </option>
+                    <option value="{{state}}" *ngFor="let state of states">{{state}}</option>
+                  </select>
+                  <div *ngIf="stuForm.get('state').touched && stuForm.get('state').errors">
+                    <div class="error" *ngIf="stuForm.get('state').errors.required">
+                      State is required.
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-1"></div>
+              </div>
+              <div class="row">
+                <div class="col-md-1"></div>
+                <div class="form-group col-md-5">
+                  <label for="city" class="form-label">
+                    <span class="form_required">*</span>City
+                  </label>
+                  <select class="form-control" formControlName="city">
+                    <option value="" disabled selected>Select city </option>
+                    <option value="{{city}}" *ngFor="let city of cities">{{city}}</option>
+                  </select>
+                  <div *ngIf="stuForm.get('city').touched && stuForm.get('city').errors">
+                    <div class="error" *ngIf="stuForm.get('city').errors.required">
+                      City is required.
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group col-md-5">
+                  <div class="row">
+                    <label for="pincode" class="form-label">
+                      <span class="form_required">*</span>Pin Code
+                    </label>
+                  </div>
+                  <div class="row">
+                    <input type="text" formControlName="pincode">
+                  </div>
+                  <div *ngIf="stuForm.get('pincode').touched && stuForm.get('pincode').errors">
+                    <div class="error" *ngIf="stuForm.get('pincode').errors.required">
+                      Pin code is required.
+                    </div>
+                    <div class="error" *ngIf="stuForm.get('pincode').errors.pattern || stuForm.get('pincode').errors.maxlength">
+                      Enter valid pin code
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-1"></div>
+              </div>
+              <div class="row">
+                <div class="col-md-1"></div>
+                <div class="form-group col-md-5">
+                  <label for="address" class="form-label">
+                    <span class="form_required">*</span>Address
+                  </label>
+                  <div class="row pt-2">
+                    <textarea formControlName="address" rows="1"></textarea>
+                  </div>
+                  <div *ngIf="stuForm.get('address').touched && stuForm.get('address').errors">
+                    <div class="error" *ngIf="stuForm.get('address').errors.required">
+                      Address is required.
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group col-md-5" *ngIf="role==CommonConfig.USER_ADMIN || role==CommonConfig.USER_INSTRUCTOR ">
+                  <label for="schoolId" class="form-label">
+                    <span class="form_required">*</span>School
+                  </label>
+                  <select class="form-control" formControlName="schoolId">
+                    <option value="" disabled selected hidden>Select school </option>
+                    <option value="{{school?._id}}" *ngFor="let school of schools">{{school?.name}}</option>
+                  </select>
+                  <div *ngIf="stuForm.get('schoolId').touched && stuForm.get('schoolId').errors">
+                    <div class="error" *ngIf="stuForm.get('schoolId').errors.required">
+                      School is required
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-1"></div>
+              </div>
+              <div class="row">
+                <div *ngIf="!studentId" class="col-12 form-actions">
+                  <button type="button" class="btn btn-cancel" title="Cancel" [routerLink]="['/', urlPrefix, 'students']">Cancel</button>
+                  <button type="button" class="btn btn-save" title="Save" [disabled]="stuForm.invalid" (click)="register()" [ngStyle]="{'cursor':stuForm.valid ? 'pointer' : 'not-allowed' }">Save</button>
+                </div>
+                <div *ngIf="studentId" class="col-12  form-actions">
+                  <button type="button" class="btn btn-cancel" title="Cancel" [routerLink]="['/', urlPrefix, 'students']">Cancel</button>
+                  <button type="button" class="btn btn-update" title="Update" [disabled]="stuForm.invalid" (click)="update()" [ngStyle]="{'cursor':stuForm.valid ? 'pointer' : 'not-allowed' }">Update</button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

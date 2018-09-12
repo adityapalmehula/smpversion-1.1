@@ -1,0 +1,23 @@
+<div class="base">
+  <div class="row col-md-12 px-2 py-3">
+    <div class="col-md-1 my-3 text-center"><strong>Topics</strong></div>
+    <div class="col-md-11 topic-list accordion acordin" id="topic">
+      <div class="card p-0" *ngFor="let topic of topics; let i=index; ">
+        <div id="headingOne">
+          <h5 class="mb-0">
+            <button class="btn btn-link" type="button" data-toggle="collapse" aria-expanded="true" [attr.data-target]='"#topic"+i'>{{topic?.title}}
+            </button>
+            <span title="Subtopics" class="float-right count">{{topic?.subtopics.length}}</span>
+          </h5>
+        </div>
+        <div id="topic{{i}}" class="collapse" aria-labelledby="headingOne" data-parent="#topic">
+          <div class="list">
+            <ul>
+              <li *ngFor="let subtopic of topic?.subtopics; let j=index; ">{{subtopic?.title}}</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

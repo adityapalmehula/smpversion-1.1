@@ -1,0 +1,91 @@
+<div class="row" *ngIf="CONFIG.ADMIN.indexOf(role) > -1 || textBookOwnerUserId == userId">
+  <div class="col-12 text-right">
+    <div *ngxPermissionsOnly="permissions; else elseBlock; then thenBlock"></div>
+    <ng-template #elseBlock>
+      <div></div>
+    </ng-template>
+    <ng-template #thenBlock>
+      <a class="btn btn-outline-info add-new" data-toggle="modal" data-target=".textBookSolutions" data-backdrop="static" data-keyboard="false"><i class="fa fa-plus-circle"> </i> Add</a>
+    </ng-template>
+  </div>
+</div>
+<!-- Start display media files -->
+<div class="row">
+  <div class="col-12 text-center" *ngIf="solutions?.length===0">
+    There is no text book solutions
+  </div>
+  <div class="col-md-2 col-sm-2" *ngFor="let data of solutions">
+    <div class="card-deck">
+      <div class="card">
+        <div class="text-center">
+          <a target="_blank" [attr.href]="solutionPath+data.path">
+            <img class="card-img-top mediaImage" [attr.src]="imgPath+'contents/pdf.jpg'" [alt]="data.title">
+          </a>
+        </div>
+        <div class="card-block">
+          <p class="card-text"><a target="_blank" [attr.title]="data.title" [attr.href]="solutionPath+data.path">{{data.title| slice:0:35}}<span *ngIf="data.title?.length>35">..</span></a></p>
+        </div>
+        <div class="card-footer" *ngIf="CONFIG.ADMIN.indexOf(role) > -1 || textBookOwnerUserId == userId">
+          <div class="row text-left">
+            <div *ngxPermissionsOnly="permissions; else elseBlock; then thenBlock"></div>
+            <ng-template #elseBlock>
+            </ng-template>
+            <ng-template #thenBlock>
+              <div class="col-12 text-center">
+                <a href="javascript:void(0)" (click)="delete(data._id)"><i class="fa fa-trash"></i> Delete</a>
+              </div>
+            </ng-template>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- End display media files -->
+
+<!-- Add and edit model for  text book solutions -->
+<div class="modal fade textBookSolutions" tabindex="-1" role="dialog" aria-labelledby="textBookSolutions" aria-hidden="true" data-backdrop="static" data-keyboard="false" id="">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <!-- Modal Header -->
+      <div class="modal-header text-center">
+        <h4>Upload Text Book Solution</h4>
+        <span class="sr-only">Text Book Solution</span>
+        <button type="button" class="close" data-dismiss="modal" title="Close" (click)="closeModal()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <!-- Modal Body -->
+      <div *ngIf="errorMessage">
+        <div class="errorMessage">
+          {{errorMessage}}
+        </div>
+      </div>
+      <div class="modal-body">
+        <div class="row form-group">
+          <label class="col-sm-2 control-label" for="Title">Title : </label>
+          <div class="col-sm-10">
+            <input type="text" class="form-control" placeholder="" [(ngModel)]="solutionTitle" />
+          <span class="error" *ngIf="titleError"> {{titleError}}</span>
+          </div>
+        </div>
+      </div>
+      <div class="row form-group">
+        <label class="col-sm-2 control-label" for="Description">Upload Files : </label>
+        <div class="col-sm-10">
+          <input type="file" class="form-control" id="file" (change)="fileChange($event)" [(ngModel)]="myFile" [(ngModel)]="myFile">
+            <span class="error" *ngIf="sizeError"> {{sizeError}}</span>
+          <div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-save" title="Save" (click)="save(close)">Save
+        </button>
+        <button type="button" class="btn btn-cancel" data-dismiss="modal" title="Cancel" #close (click)="closeModal()">
+          Cancel
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

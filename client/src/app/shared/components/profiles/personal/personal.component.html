@@ -1,0 +1,178 @@
+<div class="container-fluid ">
+  <div class="tab-content tab-resize">
+    <div class="tab-pane active">
+      <!-- form start here  -->
+      <form [formGroup]="basicProfileForm">
+        <div class="row">
+          <div class="col-md-12 col-12 pb-3">
+            <div class="row">
+              <div class="col-md-2 fields padding-0">
+                <label for="inputEmail3" class="label-modify">Avatar</label>
+              </div>
+              <div class="col-md-6 padding-0">
+                <div class="media v-middle">
+                  <div class="media-left">
+                    <div class="img-block">
+                      <div class="profile-image">
+                        <img class="img-fluid" [src]="imgPath" class="img-size">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="media-body pt-4">
+                    <button type="button" class="btn btn-secondary btn-sm label-modify btn-Img" value="upload new picture" data-toggle="modal" data-target="#profileModal">Add</button>
+
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!--  -->
+          <div class="col-md-12 pb-3">
+            <div class="form-field">
+              <div class="row">
+                <div class="col-md-2 fields padding-0">
+                  <label class="label-modify"> Name</label>
+                </div>
+                <div class="col-md-6 padding-0">
+                	<div class="input-group">
+                      <span class="input-group-addon"><i class="fa fa-user-o"></i></span>
+                  <input type="text" class="form-control" name="" formControlName="name">
+                </div>
+                  <div class="py-1" *ngIf="basicProfileForm.get('name').touched && basicProfileForm.get('name').errors">
+                    <div class="error-msg" *ngIf="basicProfileForm.get('name').errors.required">
+                      Name is required
+                    </div>
+                    <div class="error-msg" *ngIf="basicProfileForm.get('name').errors.pattern">
+                      Please enter valid name
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-12 pb-3">
+            <div class="form-field">
+              <div class="row">
+                <div class="col-md-2 fields padding-0">
+                  <label class="label-modify">Email</label>
+                </div>
+                <div class="col-md-6 padding-0">
+                  <div class="form-control-material emailBorder">
+                    <div class="input-group ">
+                    	<!-- <div class="emailModify"> -->
+                      <span class="input-group-addon mr-2"><i class="fa fa-envelope"></i></span>
+                     <!--  <input type="email" class="form-control" name="" formControlName="email" readonly="readonly"> -->
+                     <div class="emailModify pt-2">
+                     {{userData.email}}
+                   </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-12 pb-3">
+            <div class="form-field">
+              <div class="row">
+                <div class="col-md-2 fields padding-0">
+                  <label class="label-modify">Mobile</label>
+                </div>
+                <div class="col-md-6 padding-0">
+                  <div class="form-control-material">
+                    <div class="input-group">
+                      <span class="input-group-addon"><i class="fa fa-mobile fa-lg"></i></span>
+                      <input type="text" class="form-control" name="" formControlName="mobile">
+                    </div>
+                    <div class="py-1" *ngIf="basicProfileForm.get('mobile').touched && basicProfileForm.get('mobile').errors">
+                      <div class="error-msg" *ngIf="basicProfileForm.get('mobile').errors.required">
+                        Mobile number is required
+                      </div>
+                      <div class="error-msg" *ngIf="basicProfileForm.get('mobile').errors.pattern || basicProfileForm.get('mobile').errors.maxlength">
+                        Please enter valid mobile number
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-12 pb-3 ">
+            <div class="form-field">
+              <div class="row">
+                <div class="col-md-2 fields padding-0">
+                  <label for="inputEmail3" class="label-modify">Gender</label>
+                </div>
+                <div class="col-md-6">
+                  <div class="media v-middle">
+                    <div class="media-left">
+                      <input type="radio" value="Male" formControlName="gender">
+                    </div>
+                    <div class="media pl-2">
+                      <label>Male</label>
+                    </div>
+                    <div class="media-right ml-3">
+                      <input type="radio" value="Female" formControlName="gender">
+                    </div>
+                    <div class="media-body pl-2">
+                      <label>Female</label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div *ngIf="basicProfileForm.get('gender').touched && basicProfileForm.get('gender').errors">
+                  <div class="error-msg" *ngIf="basicProfileForm.get('gender').errors.required">
+                    Gender is required
+                  </div>
+                </div>
+            </div>
+            <div class="row py-4 padding-0">
+              <div class="col-md-2 px-5">
+              </div>
+              <div class="col-md-6 padding-0">
+                <div class="form-field update-button ">
+                  <input type="button" class="btn btn-success" value="Update Profile" [disabled]="basicProfileForm.invalid" [ngStyle]="{'cursor':basicProfileForm.valid ? 'pointer' : 'not-allowed' }" (click)="updateBasicForm(basicProfileForm)">
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- row close  -->
+        </div>
+        <!-- form row close -->
+      </form>
+    </div>
+    <!-- tab close -->
+  </div>
+  <!-- modal open -->
+  <div class="modal fade" id="profileModal" tabindex="-1" role="dialog" aria-labelledby="profileModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header modalColor">
+          <h6 class="modal-title" id="profileModalLabel">Change Profile Photo</h6>
+          <button type="button" class="close" data-dismiss="modal" #closeModal aria-label="Close" (click)="close()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="error text-center pt-2" *ngIf="imgError">{{imgError}}</div>
+        <div class="modal-body text-center">
+          <div class="row">
+            <div class="col-6">
+            	
+              <image-cropper [imageChangedEvent]="imageChangedEvent" [maintainAspectRatio]="true" [aspectRatio]="300 / 300" [resizeToWidth]="128" format="png, jpg, jpeg" (imageCropped)="imageCropped($event)" (loadImageFailed)="loadImageFailed()"></image-cropper>
+              <input type="file" [(ngModel)]="profilePicture" (change)="fileChangeEvent($event)" />
+            </div>
+            <div class="col-6">
+              <img [src]="croppedImage" />
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <div class="col-sm-3">
+            <button type="button" class="btn btn-secondary upload" (click)="uploadFile(closeModal)">Upload</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- close modal -->
+  </div>
+  <!-- Close container -->
+</div>

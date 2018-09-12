@@ -1,0 +1,188 @@
+<div class="container-section">
+  <div class="row">
+    <div class="col-md-1 pl-0 pr-0">
+    </div>
+    <div class="col-md-11">
+      <div class="container-section">
+        <div class="row add-new-container header">
+          <div class="col-9 pl-5">
+            <h3 class="heading  label-modify ml-4">{{projectData?.title}}
+              <span class="rating">
+              </span>
+            </h3>
+          </div>
+          <div class="col-3 text-right">
+            <a class="btn btn-outline-info back-button" [routerLink]="['/', urlPrefix, 'projects']"><i class="fa fa-arrow-circle-o-left" aria-hidden="true"></i> Back
+            </a>
+          </div>
+        </div>
+        <div class="row add-new-container mid-section">
+          <div class="col-md-9 col-sm-12">
+            <p class="list-heading pt-2">Description :-</p>
+            <p class="long-description text-left" [innerHtml]="projectData?.description"></p>
+            <hr>
+            <p class="list-heading pt-4">Prerequisites :-</p>
+            <p class="long-description text-left" [innerHtml]="projectData?.prerequisites"></p>
+            <hr>
+            <p class="list-heading pt-4">Tags :-</p>
+            <p class="long-description text-left">
+              <span *ngFor="let tag of projectData.tags">
+              {{tag}} </span>
+            </p>
+            <hr>
+            <ul class="nav nav-tabs nav-modify mt-4" id="nav-tab" role="tablist">
+              <!-- *ngFor=" let data of sidebar; let i=index; " -->
+              <li class="nav-item">
+                <a class="nav-link active" id="nav-home-tab" href="#nav-home" role="tab" data-toggle="tab"><span class="fontresize pl-2 list-heading">Epics</span></a> </li>
+                <li class="nav-item">
+                  <a class="nav-link" id="nav-profile-tab" href="#nav-profile" role="tab" data-toggle="tab"><span class="fontresize pl-2 list-heading">Stories</span></a>
+                </li>
+              </ul>
+              <!-- list group start from here  -->
+              <div class="tab-content tab-resize " id="nav-tabContent">
+                <!-- start tab contant -->
+                <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+                  <!-- first tab start here -->
+                  <ol class="list-group">
+                    <!-- <p class="list-heading">Epics :-</p> -->
+                    <div *ngIf="epicsDetails.length!== 0">
+                      <li class="list-group-item justify-content-between epics-list" *ngFor="let epics of epicsDetails; let i=index ">
+                        <div (click)="rotate('epics'+i)" class="d-flex w-100 justify-content-between" data-toggle="collapse" [attr.data-target]='"#epics-"+i' aria-expanded="false">
+                          <div class="row epics-title">
+                            <div class="col-10 text-left padding-0">
+                              <span class="hidden-sm icon-block img-rounded text-white text-center mr-2 px-1 py-1" [ngStyle]="{'background-color': colors[i%colors.length]}">
+                                <i class="fa fa-graduation-cap"></i>
+                              </span>
+                              <span class="pL10 list-heading">{{epics?.title | titleCase}}<br>
+                              </span>
+                              <div class="w-100 collapse pL20 mt4 long-description pt-2" [attr.id]='"epics-"+i'>
+                                <div [innerHTML]="epics?.description"></div>
+                              </div>
+                            </div>
+                            <div class="col-1 text-right">
+                              <span>
+                                <i id="epics{{i}}"  class="fa fa-chevron-down rotate-down"></i>
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+                      </li>
+                    </div>
+                    <div *ngIf="epicsDetails?.length === 0">
+                      <li class="list-group-item justify-content-between epic-list">
+                        There is no epics.
+                      </li>
+                    </div>
+                  </ol>
+                  <!-- first tab close here -->
+                </div>
+                <!-- tab 2 start -->
+                <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+                  <ol class="list-group">
+                    <!-- <p class="list-heading">Stories :-</p> -->
+                    <div *ngIf="stories?.length !== 0">
+                      <li class="list-group-item justify-content-between epics-list" *ngFor=" let story of stories; let i=index ">
+                        <div (click)="rotate('story'+i)" class="d-flex w-100 justify-content-between" data-toggle="collapse" [attr.data-target]='"#story-"+i' aria-expanded="false">
+                          <div class="row epics-title">
+                            <div class="col-11 text-left padding-0">
+                              <span class="hidden-sm icon-block img-rounded text-white text-center mr-2 px-1 py-1" [ngStyle]="{'background-color': colors[i%colors.length]}">
+                                <i class="fa fa-graduation-cap"></i>
+                              </span>
+                              <span class="pL10 list-heading">{{story?.title | titleCase}}<br>
+                              </span>
+                            </div>
+                            <span>
+                             <i id="story{{i}}"  class="fa fa-chevron-down rotate-down"></i>
+                           </span>
+                           <!-- row close -->
+                         </div>
+                       </div>
+                       <div class="row pt-2" class="w-100 pL20 mt4 epic-description collapse" aria-expanded="false" [attr.id]='"story-"+i'>
+                        <div class=" col-12 text-left long-description">
+                          <div [innerHTML]="story?.description"></div>
+                        </div>
+                        <div class="w-100 col-12 text-left padding-0 ">
+                           <div *ngIf="story?.tasks?.length === 0">
+                                 <li class="list-group-item justify-content-between list-heading">
+                                  No Tasks
+                                 </li>
+                            </div>
+                          <li class="list-group-item mb-2" *ngFor=" let task of story.tasks; let k=index ">        <div (click)="subproject('task'+k)" class="d-flex w-100 justify-content-between" data-toggle="collapse" [attr.data-target]='"#task-"+k' aria-expanded="false">
+                              <div class="w-100 col-11 text-left padding-0 ">
+                                <span class="pL10 list-heading ">{{task?.title | titleCase}}<br>
+                                </span>
+                                <div class="w-100 collapse pL20 mt4 long-description " [attr.id]='"task-"+k'>
+                                  <div [innerHTML]="task?.description "></div>
+                                </div>
+                              </div>
+                              <div class="col-1 text-left padding-0 ">
+                                <span>
+                                  <i id="task{{k}}"  class="fa fa-chevron-down rotate-down "></i>
+                                </span>
+                              </div>
+                            </div>
+                          </li>
+                        </div>
+                      </div>
+                    </li>
+                    <!-- 1 div close -->
+                  </div>
+                  <div *ngIf="stories?.length === 0">
+                    <li class="list-group-item justify-content-between epic-list">
+                      There is no stories.
+                    </li>
+                  </div>
+                  <!-- ol close -->
+                </ol>
+                <!-- nav close -->
+              </div>
+              <!-- close tab contain -->
+            </div>
+            <!-- 12 size main close -->
+          </div>
+          <hr>
+          <div class="col-md-3 pt-3">
+            <ul class="list-group">
+              <li class="list-group-item section-heading py-1">Project</li>
+
+              <li class="list-group-item list-item ">
+                <div class="d-flex w-100 justify-content-between ">
+                  <small class="items-modify" > <strong>Code :- </strong>  {{projectData?.code}}</small>
+                </div>
+                <div class="d-flex w-100 justify-content-between">
+                  <small class="items-modify"><strong> Version :- </strong> {{projectData?.version}}</small>
+                </div>
+                <div class="d-flex w-100 justify-content-between">
+                  <small class="items-modify"> <strong>Level :- </strong> {{projectData?.level}}</small>
+                </div>
+                <div class="d-flex w-100 justify-content-between">
+                  <small class="items-modify"> <strong>Tenure :- </strong>{{projectData?.tenure}}</small>
+                </div>
+                <div class="d-flex w-100 justify-content-between">
+                  <small class="items-modify"> <strong>Duration :- </strong>{{projectData?.duration}}</small>
+                </div>
+                <div class="d-flex w-100 justify-content-between">
+                  <small class="items-modify"> <strong>Actual Price :- </strong> <i class="fa fa-inr"></i> {{projectData?.price?.actual}}</small>
+                </div>
+                <div class="d-flex w-100 justify-content-between">
+                  <small class="items-modify"> <strong>Discount :- </strong>{{projectData?.price?.discount}} <i class="fa fa-percent"></i></small>
+                </div>
+                <div class="d-flex w-100 justify-content-between">
+                  <small class="items-modify"><strong> Offered Price :- </strong> <i class="fa fa-inr"></i> {{projectData?.price?.offered}}</small>
+
+                </div>
+              </li>
+              <li class="list-group-item list-item text-center">
+                <button *ngIf="!projectData?.isPaid" type="button" class="btn btn-success btn-sm c-btn">Take Course</button>
+                <!-- <button _ngcontent-c5="" class="btn btn-success btn-sm c-btn">Start Course</button> -->
+                <button *ngIf="projectData?.isPaid && projectData?.activationMethod ==='Paid'" type="button" class="btn btn-success btn-sm c-btn">Buy Now</button>
+                <button *ngIf="projectData?.isPaid && projectData?.activationMethod=='Promotion'" type="button" class="btn btn-success btn-sm c-btn">Subscribe</button>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <!-- close  -->
+    </div>
+  </div>
+</div>

@@ -1,0 +1,96 @@
+  .header {
+  	background-color: #fff;
+  	border-bottom: 2px solid #ebebeb;
+  }
+  .mid-section {
+  	margin-top: 12px;
+  	margin-bottom: 12px;
+  	padding-right: 60px;
+  	padding-left: 60px;
+  }
+  .epics-list {
+  	margin-bottom: 10px;
+  	cursor: pointer;
+  }
+  .epics-title {
+  	width: 100%;
+  }
+
+  .epics-icon {
+  	padding-right: 0px;
+  }
+  .story-title {
+    width: 100%;
+  }
+
+  .story-icon {
+    padding-right: 0px;
+  }
+  .long-description {
+  	font-weight: 400;
+  	line-height: 1.84rem;
+  	font-size: .9rem;
+  }
+  .list-heading {
+  	color: #757575;
+  	margin-bottom: 10px;
+  	font-weight: 500 !important;
+  }
+  .icon-block.half {
+  	width: 50px;
+  	height: 50px;
+  	line-height: 50px;
+  	font-size: 27px;
+  	padding: 10px;
+  }
+  .img-circle {
+  	border-radius: 50%;
+  }
+  .topic-title {
+  	width: 100%;
+  }
+  .epic-description {
+  	font-size: 14px;
+  	padding-top: 12px;
+  }
+  @media(max-width: 768px) {
+  	.back-button {
+  		color: #4f6f8f;
+  		border: none;
+  		font-size: 12px;
+  		text-align: left;
+  		padding-right: 5px;
+  		padding-left: 5px;
+  	}
+  	.mid-section {
+  		padding-right: 0px;
+  		padding-left: 0px;
+  	}
+  	.epics-icon {
+  		position: relative;
+  		width: 120%;
+  		min-height: 1px;
+  		padding-right: 8px;
+  		padding-left: 8px;
+  	}
+    .story-icon {
+      position: relative;
+      width: 120%;
+      min-height: 1px;
+      padding-right: 8px;
+      padding-left: 8px;
+    }
+  }
+.error-warning {
+  color: #dc3545 !important;
+}
+.error-border {
+  border-color: #dc3545 !important;
+}
+.err-bg {
+  background-color: #dc3545 !important;
+  color: #ffffff;
+}
+.validation{
+border:1px solid red;
+}

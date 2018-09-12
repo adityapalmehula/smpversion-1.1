@@ -1,0 +1,468 @@
+<div class="container-section">
+  <div class="row">
+    <div class="col-md-1 pl-0 pr-0">
+    </div>
+    <div class="col-md-11">
+      <div class="container-fluid">
+        <div class="row breadcrumb">
+          <div class="col-8 text-left mt-2 mb-1 ">
+            <a class="page-heading"><i class="fa fa-home" aria-hidden="true"></i> Programs</a> / <span class="breadcrumb-active">Add a new Program</span>
+          </div>
+          <div class="col-4 text-right">
+            <a class="btn btn-outline-info back"  [routerLink]="['/', urlPrefix, 'programs']"><i class="fa fa-arrow-circle-o-left" aria-hidden="true"></i> Back
+            </a>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12 pt-4">
+            <h2 class="legend">Add A New Program</h2>
+          </div>
+        </div>
+        <div class="row reg-form-container add-new-container">
+          <div class="col-md-12 reg-form">
+            <form [formGroup]="programForm">
+              <div class="row">
+                <div class="col-md-1"></div>
+                <div class="form-group col-md-5">
+                  <label for="title" class="text-center form-label">
+                    <span class="form_required">*</span> Code
+                  </label>
+                  <input type="text" formControlName="code">
+                  <div *ngIf="programForm.get('code').touched && programForm.get('code').errors">
+                    <div class="error-msg ml-4">
+                      <div *ngIf="programForm.get('code').errors.required">
+                        {{Config.code.required}}
+                      </div>
+                      <div *ngIf="programForm.get('code').errors.minlength">
+                        {{Config.code.minlength[1]}}
+                      </div>
+                      <div *ngIf="programForm.get('code').errors.maxlength">
+                        {{Config.code.maxlength[1]}}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group col-md-5">
+                  <label for="title" class="text-center form-label">
+                    <span class="form_required">*</span> Version
+                  </label>
+                  <input type="text" formControlName="version">
+                  <div *ngIf="programForm.get('version').touched && programForm.get('version').errors">
+                    <div class="error-msg ml-4" *ngIf="programForm.get('version').errors.required">
+                      {{Config.version.required}}
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-1"></div>
+              </div>
+              <div class="row">
+                <div class="col-md-1"></div>
+                <div class="form-group col-md-5">
+                  <label for="title" class="text-center form-label">
+                    <span class="form_required">*</span> Title
+                  </label>
+                  <input type="text" formControlName="title">
+                  <div *ngIf="programForm.get('title').touched && programForm.get('title').errors">
+                    <div class="error-msg ml-4">
+                      <div *ngIf="programForm.get('title').errors.required">
+                        {{Config.title.required}}
+                      </div>
+                      <div *ngIf="programForm.get('title').errors.minlength">
+                        {{Config.title.minlength[1]}}
+                      </div>
+                      <div *ngIf="programForm.get('title').errors.maxlength">
+                        {{Config.title.maxlength[1]}}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-1"></div>
+              </div>
+              <hr>
+              <!-- drag and drop Courses data start here  -->
+              <div class="row pt-4">
+                <div class="col-md-12 align-middle" *ngIf="alreadadd">
+                  <p class="text-center" style="color: red;border: thin;">!Opps already added</p>
+                </div>
+                <div class="col-md-4 col-sm-12">
+                  <div class="card card-outline-primary mb-3" droppable [dragOverClass]="'drag-target-border'" [dragHintClass]="'drag-hint'">
+                    <div class="card-header card-inverse card-primary">Project Contents</div>
+                    <div class="card-block scroll-list">
+                      <ul class="list-group">
+                        <li class="list-group-item">
+                          <div class="d-flex w-100 justify-content-between pb-2" data-toggle="collapse" aria-expanded="false" aria-controls="project" data-target='#project' (click)="rotate('toggleProject')">
+                            Projects
+                            <span>
+                         <i id="toggleProject"  class="fa fa-chevron-down rotate-down"></i>
+                            </span>
+                          </div>
+                          <div class="collapse" id="project">
+                            <ul class="list-group">
+                              <li draggable class="content-list" *ngFor="let item of projects" [dragData]="item" [dragClass]="'drag-over'">
+                                {{item.title}}
+                              </li>
+                            </ul>
+                          </div>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                  <!-- list -->
+                </div>
+                <div class="col-md-4 col-sm-12">
+                  <div class="card card-outline-primary mb-3">
+                    <div class="card-header card-inverse card-primary">Drop Project Content</div>
+                    <div class="add-learning-path">
+                      <div class="card card-outline-primary " droppable [dragOverClass]="'drag-target-border'" [dragHintClass]="'drag-hint'" (onDrop)="onProjectContentDrop($event)">
+                        <div class="card-block scroll-list mt-4 mb-4">
+                          <ul class="list-group">
+                            <li draggable *ngIf="projectContent?.title" [dragClass]="'drag-over'" [dragData]="projectContent" class="list-group-item">
+                              <div class="d-flex w-100 justify-content-between">
+                                {{projectContent?.title}}
+                              </div>
+                            </li>
+                          </ul>
+                          <!-- <input type="button" class="btn btn-success" value="Update" (click)="sidedataadd()"> -->
+                        </div>
+                      </div>
+                      <div class="text-right pt-2">
+                        <button class="btn btn-primary cursor-pointer btn-modify" (click)="addProject()">Add</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-4 col-sm-12">
+                  <div class="card card-outline-primary mb-3">
+                    <div class="card-header card-inverse card-primary">Added Projects List<small></small></div>
+                    <div class="card-block scroll-list mt-4 mb-4">
+                      <ul class="list-group" [sortablejs]="learningData">
+                        <li class="list-group-item learningData" *ngFor=" let items of learningData">
+                          <div class="row">
+                            <div class="col-md-10 col-sm-10 stepper-content">
+                              <div class="" data-toggle="collapse" [attr.data-target]='stepper1' aria-expanded="false">
+                                {{items?.title}}
+                              </div>
+                            </div>
+                          </div>
+                          <span><i class="fa fa-close" (click)="removeProjectContentData(items.contentId)"></i></span>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- drag and drop of project is close -->
+              <hr>
+              <!-- drag and drop of courses data -->
+              <div class="row pt-4">
+                <div class="col-md-4 col-sm-12">
+                  <div class="card card-outline-primary mb-3" droppable [dragOverClass]="'drag-target-border'" [dragHintClass]="'drag-hint'">
+                    <div class="card-header card-inverse card-primary">Courses Contents</div>
+                    <div class="card-block scroll-list ">
+                      <ul class="list-group">
+                        <li class="list-group-item">
+                          <div class="d-flex w-100 justify-content-between pb-2" data-toggle="collapse" aria-expanded="false" aria-controls="course" data-target='#course' (click)="rotate('toggleCourse')">
+                            Courses
+                            <span>
+                         <i id="toggleCourse"  class="fa fa-chevron-down rotate-down"></i>
+                            </span>
+                          </div>
+                          <div class="collapse" id="course">
+                            <ul class="list-group">
+                              <li draggable class="content-list" *ngFor="let item of courses" [dragData]="item" [dragClass]="'drag-over'">
+                                {{item.title}}
+                              </li>
+                            </ul>
+                          </div>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-4 col-sm-12">
+                  <div class="card card-outline-primary mb-3">
+                    <div class="card-header card-inverse card-primary">Drop Courses Content</div>
+                    <div class="add-learning-path">
+                      <div class="card card-outline-primary " droppable [dragOverClass]="'drag-target-border'" [dragHintClass]="'drag-hint'" (onDrop)="onCourseContentDrop($event)">
+                        <div class="card-block scroll-list mt-4 mb-4">
+                          <ul class="list-group">
+                            <li draggable *ngIf="courseContent?.title" [dragClass]="'drag-over'" [dragData]="courseContent" class="list-group-item">
+                              <div class="d-flex w-100 justify-content-between">
+                                {{courseContent?.title}}
+                              </div>
+                            </li>
+                          </ul>
+                        </div>
+                      </div>
+                      <div class="text-right pt-2">
+                        <button class="btn btn-success cursor-pointer btn-modify" (click)="addCourse()">Add</button>
+                        <!--  <button class="btn btn-success cursor-pointer" *ngIf="title==='Update'" (click)="updateStepper()">{{title}}</button>
+                      </div> -->
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-4 col-sm-12">
+                  <div class="card card-outline-primary mb-3">
+                    <div class="card-header card-inverse card-primary">Added Courses List<small></small></div>
+                    <div class="card-block scroll-list mt-4 mb-4">
+                      <ul class="list-group" [sortablejs]="coursesData">
+                        <li class="list-group-item learningData" *ngFor=" let items of coursesData">
+                          <div class="row">
+                            <div class="col-md-10 col-sm-10 stepper-content">
+                              <div class="" data-toggle="collapse" [attr.data-target]='stepper1' aria-expanded="false">
+                                {{items?.title}}
+                              </div>
+                            </div>
+                          </div>
+                          <span><i class="fa fa-close" (click)="removeCoursesContentData(items.contentId)"></i></span>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- drag and drop of courses is close -->
+              <hr>
+              <div class="row">
+                <div class="col-md-1"></div>
+                <div class="form-group col-md-10">
+                  <div class="row">
+                    <label for="title" class="text-center form-label">
+                      <span class="form_required">*</span> Description
+                    </label>
+                  </div>
+                  <div class="row">
+                    <ckeditor class="form-control" [(ngModel)]="description" debounce="500" [ngModelOptions]="{standalone: true}">
+                    </ckeditor>
+                  </div>
+                </div>
+                <div class="col-md-1"></div>
+              </div>
+              <div class="row">
+                <div class="col-md-1"></div>
+                <div class="form-group col-md-10">
+                  <label for="title" class="text-center form-label">
+                    <span class="form_required">*</span> Why This Program
+                  </label>
+                  <div class="row">
+                    <ckeditor class="form-control" [(ngModel)]="programNeed" debounce="500" [ngModelOptions]="{standalone: true}">
+                    </ckeditor>
+                  </div>
+                </div>
+                <div class="col-md-1"></div>
+              </div>
+              <div class="row">
+                <div class="col-md-1"></div>
+                <div class="form-group col-md-5">
+                  <label for="title" class="text-center form-label">
+                    <span class="form_required">*</span> Activation Method
+                  </label>
+                  <select class="form-control" formControlName="activationMethod">
+                    <option value="Promotion">Promotion</option>
+                    <option value="Paid">Paid</option>
+                  </select>
+                  <div *ngIf="programForm.get('activationMethod').touched && programForm.get('activationMethod').errors">
+                    <div class="error-msg ml-4" *ngIf="programForm.get('activationMethod').errors.required">
+                      {{Config.activationMethod.required}}
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group col-md-5">
+                  <label for="title" class="text-center form-label">
+                    <span class="form_required">*</span> Currency
+                  </label>
+                  <select class="form-control" formControlName="currency">
+                    <option value="INR">INR</option>
+                    <option value="USD">USD</option>
+                  </select>
+                  <div *ngIf="programForm.get('currency').touched && programForm.get('currency').errors">
+                    <div class="error-msg ml-4" *ngIf="programForm.get('currency').errors.required">
+                      {{Config.currency.required}}
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-1"></div>
+              </div>
+              <div class="row">
+                <div class="col-md-1"></div>
+                <div class="form-group col-md-5">
+                  <label for="title" class="text-center form-label">
+                    <span class="form_required">*</span> Duration (In weeks)
+                  </label>
+                  <select class="form-control" formControlName="duration">
+                    <option value="" disabled selected hidden>Select Duration </option>
+                    <option value="{{duration}}" *ngFor="let duration of durations">{{ duration }}
+                    </option>
+                  </select>
+                  <div *ngIf="programForm.get('duration').touched && programForm.get('duration').errors">
+                    <div class="error-msg ml-4" *ngIf="programForm.get('duration').errors.required">
+                      {{Config.duration.required}}
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group col-md-5">
+                  <label for="title" class="text-center form-label">
+                    <span class="form_required">*</span> Effort (In weeks)
+                  </label>
+                  <select class="form-control" formControlName="effort">
+                    <option value="" disabled selected hidden>Select Effort (In weeks)</option>
+                    <option value="{{effort}}" *ngFor="let effort of efforts">{{ effort }}
+                    </option>
+                    <div *ngIf="programForm.get('effort').touched && programForm.get('effort').errors">
+                    <div class="error-msg ml-4" *ngIf="programForm.get('effort').errors.required">
+                      {{Config.effort.required}}
+                    </div>
+                  </div>
+                
+                  </select>
+                </div>
+                <div class="col-md-1"></div>
+              </div>
+              <div class="row">
+                <div class="col-md-1"></div>
+                <div class="form-group col-md-5">
+                  <label for="title" class="text-center form-label">
+                    <span class="form_required">*</span> Actual Price
+                  </label>
+                  <input type="text" formControlName="actualPrice">
+                  <div *ngIf="programForm.get('actualPrice').touched && programForm.get('actualPrice').errors">
+                    <div class="error-msg ml-4" *ngIf="programForm.get('actualPrice').errors.required">
+                      {{Config.actualPrice.required}}
+                    </div>
+                    <div class="error-msg ml-4" *ngIf="programForm.get('actualPrice').errors.pattern">
+                      {{Config.actualPrice.pattern}}
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group col-md-5">
+                  <label for="title" class="text-center form-label">
+                    Discount (%)
+                  </label>
+                  <input type="text" formControlName="discount">
+                  <div *ngIf="programForm.get('discount').touched && programForm.get('discount').errors">
+                    <div class="error-msg ml-4" *ngIf="programForm.get('discount').errors.pattern">
+                      {{Config.discount.pattern}}
+                    </div>
+                    <div class="error-msg ml-4" *ngIf="programForm.get('discount').errors.max">
+                      {{Config.discount.max}}
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-1"></div>
+              </div>
+              <div class="row">
+                <div class="col-md-1"></div>
+                <div class="form-group col-md-5">
+                  <label for="title" class="text-center form-label">
+                    <span class="form_required">*</span> Offered Price
+                  </label>
+                  <input type="text" readonly="true" formControlName="offeredPrice">
+                </div>
+                <div class="form-group col-md-5">
+                  <label for="title" class="text-center form-label">
+                    <span class="form_required">*</span> Is Paid
+                  </label>
+                  <select class="form-control" formControlName="isPaid">
+                    <option value="true">true</option>
+                    <option value="false">false</option>
+                  </select>
+                  <div *ngIf="programForm.get('isPaid').touched && programForm.get('isPaid').errors">
+                    <div class="error-msg ml-4" *ngIf="programForm.get('isPaid').errors.required">
+                      {{Config.isPaid.required}}
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-1"></div>
+              </div>
+              <div class="row">
+                <div class="col-md-1"></div>
+                <div class="form-group col-md-10">
+                  <div class="row">
+                    <label for="title" class="text-center form-label">
+                      <span class="form_required">*</span> Tags
+                    </label>
+                  </div>
+                  <div class="row">
+                    <!-- <input type="text" > -->
+                    <rl-tag-input class="col-md-10" placeholder="Enter Comma Separated keywords" [(ngModel)]="tags" [ngModelOptions]="{standalone: true}"></rl-tag-input>
+                  </div>
+                </div>
+                <div class="col-md-1"></div>
+              </div>
+              <!-- image upload start -->
+              <!-- <div class="row">
+                <div class="col-md-1"></div>
+                <div class="form-group col-md-10">
+                  <div class="row">
+                    <label for="title" class="text-center form-label">
+                      <span class="form_required">*</span> Project Icon <small>(Size less than 256 kb)</small>
+                    </label>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-5 col-lg-5 col-sm-12">
+                      <button data-toggle="modal" class="btn btn-secondary btn-sm" value="upload new image" data-target="#profileModal">Upload Program Icon</button>
+                    </div>
+                    <div class="col-md-4 col-lg-5 col-sm-12" *ngIf="!this.imageStatus">
+                      <img class="img-fluid" [src]="imgPath">
+                    </div>
+                    <div class="col-md-4 col-lg-5 col-sm-12" *ngIf="this.imageStatus">
+                      <img class="img-fluid" [src]="croppedImage">
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-1"></div>
+              </div> -->
+              <!-- image uoload close -->
+          
+
+              <div class="row">
+                <div *ngIf="!programId" class="col-12 form-actions">
+                  <button type="button" class="btn btn-cancel" title="Cancel" [routerLink]="['/', urlPrefix, 'programs']">Cancel</button>
+                  <button type="button" class="btn btn-save" title="Save" (click)="saveProgram(programForm)" [disabled]="programForm.invalid"  [ngStyle]="{'cursor':programForm.valid ? 'pointer' : 'not-allowed' }">Save</button>
+                </div>
+                <div *ngIf="programId" class="col-12  form-actions">
+                  <button type="button" class="btn btn-cancel" title="Cancel" [routerLink]="['/', urlPrefix, 'programs']">Cancel</button>
+                  <button type="button" class="btn btn-update" title="Update" (click)="updateProgram(programForm)">Update</button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Image Crop modal-->
+<!-- <div class="modal fade" id="profileModal" tabindex="-1" role="dialog" aria-labelledby="projectModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header modalColor">
+        <h6 class="modal-title" id="projectModalLabel">Change Project Icon</h6>
+        <button type="button" class="close" data-dismiss="modal" #closeModal aria-label="Close" (click)="close()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="error text-center pt-2" *ngIf="imgError">{{imgError}}</div>
+      <div class="modal-body text-center">
+        <div class="row">
+          <div class="col-6">
+            <image-cropper [imageChangedEvent]="imageChangedEvent" [maintainAspectRatio]="true" [aspectRatio]="269 / 150" [resizeToWidth]="128" format="png, jpg, jpeg" (imageCropped)="imageCropped($event)" (loadImageFailed)="loadImageFailed()"></image-cropper>
+            <input type="file" [(ngModel)]="coursePicture" (change)="fileChangeEvent($event)" />
+          </div>
+          <div class="col-6">
+            <img *ngIf="croppedImage" [src]="croppedImage" />
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <div class="col-sm-3">
+          <div data-dismiss="modal" #setOnClose type="hidden"></div>
+          <button type="button" class="btn btn-secondary upload" (click)="setImage()">Upload</button>
+        </div>
+        
+      </div>
+    </div>
+  </div>
+</div> -->
+<!--end modal-->

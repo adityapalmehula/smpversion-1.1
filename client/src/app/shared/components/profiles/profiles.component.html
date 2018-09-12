@@ -1,0 +1,37 @@
+<div class="container-section">
+  <div class="row pt-3">
+    <div class="col-md-2 ">
+    </div>
+    <div class="col-md-9">
+      <div class="container-section">
+        <div class="row add-new-container">
+          <div class="col-md-12 col-sm-12 profile-section ">
+            <ul class="nav nav-tabs nav-modify mx-3">
+              <!-- *ngFor=" let data of sidebar; let i=index; " -->
+              <li class="nav-item">
+                <a class="nav-link active" data-toggle="tab" (click)="changeProfileSection()"><i  class="fa fa-user" aria-hidden="true"></i><span class="hidden-sm  fontresize pl-2">Profile</span></a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" data-toggle="tab" (click)="profileAddress()"><i  class="fa fa-address-book-o " aria-hidden="true"></i><span class="hidden-sm hidden-xs fontresize  pl-2 ">Address</span></a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" data-toggle="tab" (click)="academicDetails()"><i  class="fa fa-graduation-cap " aria-hidden="true"></i><span class="hidden-sm hidden-xs fontresize pl-2">Academic</span></a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" data-toggle="tab" (click)="socialProfileDetails()"><i  class="fa fa-external-link " aria-hidden="true"></i><span class="hidden-sm hidden-xs fontresize pl-2">Social Profiles</span></a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" data-toggle="tab" (click)="changeProfilepassword()"><i  class="fa fa-key" aria-hidden="true"></i><span class="hidden-sm fontresize pl-2">Change Password</span></a>
+              </li>
+            </ul>
+            <app-personal *ngIf="profileSection===sidebar[0]" [userPersonalData]=userData (getDetailsFromChild)='getByChild($event)'></app-personal>
+            <app-change-password *ngIf="profileSection===sidebar[1]"></app-change-password>
+            <app-address *ngIf="profileSection===sidebar[2]" [userAddresscData]=userData (getDetailsFromChild)='getByChild($event)'></app-address>
+            <app-academic-details *ngIf="profileSection===sidebar[3]" [userAcademicData]=userData (getDetailsFromChild)='getByChild($event)'></app-academic-details>
+            <app-social-profile *ngIf="profileSection===sidebar[4]" [userSocialData]=userData (getDetailsFromChild)='getByChild($event)'></app-social-profile>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,41 @@
+
+.nav-link.active{
+  background-color: white !important;
+}
+
+.nav-modify{
+  background-color: #E8E7E7;
+   -webkit-box-shadow: 4px 0 5px -2px grey;
+          box-shadow: 4px 0 5px -2px grey;
+}
+
+/*425 to 518 */
+@media (max-width: 576px) {
+  .nav-modify {
+    width: 350px;
+  }
+}
+
+/*320*/
+@media only screen and (max-width: 320px) {
+  .nav-modify {
+    width: 250px;
+  }
+}
+
+/*375*/
+@media (min-width: 321px) and (max-width: 400px) {
+  .nav-modify {
+    width: 300px;
+  }
+}
+
+@media (max-width: 768px) and (max-width: 800px){
+.hidden-sm{
+  display: none !important;
+}
+
+}
+
+
+

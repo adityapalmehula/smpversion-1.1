@@ -1,0 +1,191 @@
+<div class="container-section">
+  <div class="row">
+    <div class="col-md-1 pl-0 pr-0">
+    </div>
+    <div class="col-md-11">
+      <div class="container-fluid" *ngIf="!this.playFlag">
+        <div class="row">
+          <div class="col-md-8">
+            <div id="vimeoPlayer" class="players"></div>
+            <div id="player" class="players"></div>
+            <div class="actionSection">
+              <div class="row">
+                <div class="col-12 p0">
+                  <h5 class="videoTitle">{{videoData.title}}</h5>
+                  <div *ngIf="videoData.statistics !== undefined" class="row">
+                    <div class="col-7 p0 videoStats"> <i>{{videoData.statistics?.viewCount}} views</i></div>
+                    <div class="col-5">
+                      <div class="row">
+                        <div class="col-12 text-right">
+                          <!--  <a href="javascript:void(0)" (click)="like(videoData._id)">
+                      <i class="fa fa-thumbs-up" aria-hidden="true"> {{videoData.likes.length}}</i></a>
+                      <a href="javascript:void(0)" (click)="unLike(videoData._id)">
+                        <i class="fa fa-thumbs-down" aria-hidden="true">{{videoData.dislikes.length}}</i></a> -->
+                          <a href="javascript:void(0)">
+                      <i class="fa fa-thumbs-up videoStats" aria-hidden="true"> {{videoData.statistics?.likeCount}}</i></a>
+                          <a href="javascript:void(0)">
+                        <i class="fa fa-thumbs-down videoStats" aria-hidden="true">{{videoData.statistics?.dislikeCount}}</i></a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <hr>
+                </div>
+              </div>
+            </div>
+            <div class="videoDescription">
+              <div class="row">
+                <div class="col-12 p0 videoDetailDescription">
+                  {{videoData.description}}
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div id="toc">
+              <div class="row">
+                <div *ngxPermissionsOnly="permissions; else elseBlock; then thenBlock"></div>
+                <ng-template #elseBlock>
+                  <div class="col-md-12 col-sm-12">
+                    <h6 class="block paddingtopbottom10 flex headoftocandtg"><strong>Table of Contents</strong></h6>
+                  </div>
+                </ng-template>
+                <ng-template #thenBlock>
+                  <div class="col-md-6 col-sm-6">
+                    <h6 class="block paddingtopbottom10 flex headoftocandtg"><strong>Table of Contents</strong></h6>
+                  </div>
+                  <div class="col-md-6 col-sm-6">
+                    <a href="#" data-toggle="modal" data-target="#add-toc" (click)="setVideoId(videoData._id,videoData.videoId)"><i class="fa fa-plus-circle" aria-hidden="true" title="Add TOC"></i></a>
+                  </div>
+                </ng-template>
+              </div>
+              <div class="row toc">
+                <div class="col-md-12 tocDetails" *ngIf="chapters.length>0">
+                  <ol class="list-group">
+                    <li *ngFor="let toc of chapters; let i = index" class="list-group-item">
+                      <div class="row ">
+                        <div *ngxPermissionsOnly="permissions; else elseBlock; then thenBlock"></div>
+                        <ng-template #elseBlock>
+                          <div class="col-md-12 tocTitle">
+                            <a (click)="setCurrentTOC(toc.startTime,toc.endTime, i)">{{i+1}}. {{toc.title}}</a>
+                          </div>
+                        </ng-template>
+                        <ng-template #thenBlock>
+                          <div class="col-md-9 tocTitle">
+                            <a (click)="setCurrentTOC(toc.startTime,toc.endTime, i)">{{i+1}}. {{toc.title}}</a>
+                          </div>
+                          <div class="col-md-3 actionButton">
+                            <a href="javascript:void(0)" (click)="deleteToc(videoData._id,toc._id)">
+                    <i class="fa fa-trash text-right"></i>
+                    </a>
+                            <a href="javascript:void(0)" data-toggle="modal" data-target="#add-toc" (click)="getTocDataForUpdate(videoData._id,videoData.videoId,toc._id)">
+                    <i class="fa fa-pencil text-right"></i>
+                    </a>
+                          </div>
+                        </ng-template>
+                      </div>
+                    </li>
+                  </ol>
+                </div>
+                <div class="col-md-12" *ngIf="chapterLength<=0">
+                  <ol class="list-group">
+                    <li class="list-group-item">
+                      <p>There are no chapters</p>
+                    </li>
+                  </ol>
+                </div>
+              </div>
+            </div>
+            <div class="row upnextSection">
+              <div class="col-md-12 text-left">
+               <!--  <h6 class="block paddingtopbottom10 flex headoftocandtg"><strong>Up Next</strong> -->
+                  <strong>Auto Play</strong><label class="switch">
+                    <input type="checkbox" *ngIf="isAutoPlay" checked (click)="toggleAutoPlay()">
+                    <input type="checkbox" *ngIf="!isAutoPlay"  (click)="toggleAutoPlay()">
+                    <span class="slider round"></span>
+                  </label>
+                <!-- </h6> -->
+              </div>
+            </div>
+            <div class="row upNextVideos" *ngFor="let videoItem of videos; let i =index">
+              <div class="col-md-6 videoImage">
+                <a href="javascript:void(0)" (click)="setCurrentVideo(videoItem,videoItem.videoId, i)">
+                <img class="img-thumbnail" [src]="videoItem.thumbnail">
+                </a>
+              </div>
+              <div class="col-md-6 upNextVideoTitle">
+                <a href="javascript:void(0)" (click)="setCurrentVideo(videoItem,videoItem.videoId, i)">
+                  <p class="upNextTitle">{{videoItem.title }}</p>
+                  <span *ngIf="videoItem.statistics !== undefined" class="videoShareStats">{{videoItem.statistics?.viewCount}} views</span>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Modal for add and update toc -->
+        <div *ngIf="showTOC" class="modal fade" id="add-toc" tabindex="-1" role="dialog" aria-labelledby="addContentTitle" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+          <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 *ngIf="!tocId" class="modal-title" id="addContentTitle">Add TOC</h5>
+                <h5 *ngIf="tocId" class="modal-title" id="addContentTitle">Update TOC</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" #close (click)="onCloseModal()">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="moda-body">
+                <div id="accordion" role="tablist" aria-multiselectable="true">
+                  <div class="card">
+                    <div>
+                      <div class="card-block">
+                        <div id="tocplayer"></div>
+                        <div class="durationSlider">
+                          <ion-range-slider #sliderElement type="double" min="0" [max]="duration" [from]="0" from_shadow="true" [to]="duration" (onChange)="handleChange($event)"></ion-range-slider>
+                        </div>
+                      </div>
+                      <div class="row" *ngIf="errMessage">
+                        <div class="error text-center">
+                          <p> {{errMessage}}</p>
+                        </div>
+                      </div>
+                      <form class="add-content-modal-body">
+                        <div class="form-group add-content-block">
+                          <label for="toc-content-title" class="col-sm-3">Title</label>
+                          <input class="form-control" [(ngModel)]="tocContentTitle" [ngModelOptions]="{standalone: true}" class="col-sm-8" id="toc-content-title">
+                        </div>
+                        <div class="form-group add-content-block">
+                          <label for="start-time" class="col-sm-3">Start Time</label>
+                          <input class="form-control" readonly="readonly" [(ngModel)]="tocStartTimeShow" [ngModelOptions]="{standalone: true}" class="col-sm-8" id="start-time">
+                        </div>
+                        <div class="form-group add-content-block">
+                          <label for="end-time" class="col-sm-3">End Time</label>
+                          <input class="form-control" readonly="readonly" [(ngModel)]="tocEndTimeShow" [ngModelOptions]="{standalone: true}" class="col-sm-8" id="end-time">
+                        </div>
+                        <div class="content-save-btn text-right">
+                          <button *ngIf="!tocId" class="btn btn-primary" (click)="addToc(close)">Save</button>
+                          <button *ngIf="tocId" class="btn btn-primary" (click)="updateToc(close)">Update</button>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- <div id="vimeoPlayer" class="players"></div> -->
+      <div class="container-fluid" *ngIf="this.playFlag">
+        <div class="row">
+          <div id="vimeoPlayer" class="players"></div>
+          <!-- <div *ngIf="this.videoSource === 'Vimeo'" class="col-md-12"> -->
+          <!-- <div id="vimeoPlayer" class="players"></div> -->
+          <!-- </div> -->
+          <!-- <div *ngIf="this.videoSource === 'Youtube'" class="col-md-12"> -->
+          <div id="player" class="players"></div>
+          <!-- </div> -->
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,21 @@
+<div class="container-fluid">
+  <div class="videoSection">
+    <div *ngIf="show" class="row">
+      <div class="col-12 text-right">
+        <div *ngxPermissionsOnly="permissions; else elseBlock; then thenBlock"></div>
+        <ng-template #elseBlock>
+          <a class="btn btn-outline-info backButton" [routerLink]="['/', urlPrefix, 'topic-playlist-details', subTopicId]" [queryParams]="{'tab' : 'Videos'}"><i aria-hidden="true" class="fa fa-arrow-circle-o-left"></i>Back
+    			</a>
+        </ng-template>
+        <ng-template #thenBlock>
+ <a class="btn btn-outline-info backButton" [routerLink]="['/', urlPrefix, 'courses', courseId, 'topics', topicId, 'subtopics', subTopicId]" [queryParams]="{'tab' : 'videos'}"><i class="fa fa-arrow-circle-o-left" aria-hidden="true"></i>Back
+    </a>
+        </ng-template>
+      </div>
+      <div class="col-md-12">
+        <app-play-video [inputVideoId]="video.videoId" [playFlag]="playFlag" [videoData]="video" [videos]="videos" [videoSource]="video.source"></app-play-video>
+      </div>
+    </div>
+  </div>
+</div>
+

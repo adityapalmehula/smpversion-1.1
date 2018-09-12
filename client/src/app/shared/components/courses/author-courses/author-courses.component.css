@@ -1,0 +1,14 @@
+.card-img-top {
+	width: 270px;
+}
+.total-topic {
+	font-size: 12px;
+}
+select {
+  background-image: none;
+  background: white;
+  height: 28px;
+}
+.course-action div {
+  display: inline;
+}

@@ -1,0 +1,62 @@
+<!-- Preview flow means contents is being shown on course preview page before user buy the course -->
+<!-- Start Preview Section -->
+<li *ngIf="flow === 'preview'" class="list-group-item list-data">
+  <div class="d-flex w-100 justify-content-between" data-toggle="collapse" [attr.data-target]='"#subTopic-"+index' aria-expanded="false">
+    <h5 class="mb-1 topicHeading">{{subTopiTitile}}</h5>
+  </div>
+</li>
+<!-- End Preview Section -->
+<!-- Assign flow means contents is being shown on assigned course details page before user view the course contents-->
+<!-- Start Assign Section -->
+<li *ngIf="flow === 'assign'" class="list-group-item list-data" [class.error-border]="subTopic.isInvalid">
+  <div (click)="rotate('subTopic'+index)" class="d-flex w-100 justify-content-between" data-toggle="collapse" [attr.data-target]='"#subTopic-"+index' aria-expanded="false">
+    <h5 class="mb-1 topicHeading">
+      <i class="fa fa-check-circle fa-2x grey" title="{{subTopic?.status}}" *ngIf="role!==CONFIG.USER_STUDENT"></i>
+      <i class="fa fa-check-circle fa-2x grey" title="{{subTopic?.status}}" *ngIf="subTopic?.status==learningProgressStatus[0]"></i>
+      <i class="fa fa-check-circle fa-2x orange" title="{{subTopic?.status}}" *ngIf="subTopic?.status==learningProgressStatus[1]"></i>
+      <i class="fa fa-check-circle fa-2x green" title="{{subTopic?.status}}" *ngIf="subTopic?.status==learningProgressStatus[2]"></i>
+      <span class="pl-2 s-title" [class.error-warning]="subTopic.isInvalid">{{subTopiTitile}}</span></h5>
+      <span >
+        <i id="subTopic{{index}}" class="fa fa-chevron-down rotate-down"></i>
+      </span>
+    </div>
+ <!--  <div>
+    <small class="pL10">{{subTopic?.totalVideos}} Videos, </small>
+    <small class="pL10">{{subTopic?.totalNotes}} Notes, </small>
+    <small class="pL10">{{subTopic?.totalKeyPoints}} Keypoints, </small>
+    <small class="pL10">{{subTopic?.totalMedia}} Media files, </small>
+    <small class="pL10">{{subTopic?.totalReferences}} References, </small>
+  </div> -->
+  <div class="w-100 collapse pL20" [attr.id]='"subTopic-"+index'>
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="stepper-container vertical">
+          <div class="stepper pt-2">
+            <div class="step-content" *ngIf="learningPaths?.length === 0">
+              <p class="mainContent-title">No learning path available. </p>
+            </div>
+            <div *ngIf="learningPaths?.length !== 0">
+              <div class="step active" *ngFor=" let learningPath of learningPaths">
+                <div class="step-inner">
+                  <div  *ngIf="learningPath.status === learningProgressStatus[2]">
+                    <span><i class="fa fa-check-circle fa-2x green" title="{{learningPath.status}}"></i></span>
+                  </div>
+                  <div *ngIf="learningPath.status === learningProgressStatus[0]">
+                    <span><i class="fa fa-check-circle fa-2x grey" title="{{learningPath.status}}"></i></span>
+                  </div>
+                  <div *ngIf="role!==CONFIG.USER_STUDENT">
+                    <span><i class="fa fa-check-circle fa-2x grey" title="{{learningPath.status}}"></i></span>
+                  </div>
+                </div>
+                <div class="step-content" (click)="openContent()">
+                  <p class="mb-0">{{learningPath.title}}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</li>
+<!-- End Assign Section -->

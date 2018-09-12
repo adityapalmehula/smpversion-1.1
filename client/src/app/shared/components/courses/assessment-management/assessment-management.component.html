@@ -1,0 +1,85 @@
+  <div class="row pb-4">
+    <div class="col-md-1 pl-0 pr-0"></div>
+    <div class="col-md-11 mt-3 base">
+      <div class="row col-md-12 pb-1">
+        <div class="col-md-6">
+         <div *ngIf="isLoadAssessmentForm">
+          <h1 *ngIf="formType=='add'" class="flow-h1">Add Assessment</h1>
+          <h1 *ngIf="formType=='edit'" class="flow-h1">Update Assessment</h1>
+        </div>
+        <div *ngIf="!isLoadAssessmentForm">
+          <h1 class="flow-h1">Assessments</h1>
+        </div>
+      </div>
+      <div class="col-md-6 text-right">
+        <a *ngIf="!isLoadAssessmentForm" class="btn btn-outline-info add-new text-right" href="javascript:void(0)" (click)="addNewAssessment()"><i class="fa fa-plus-circle"></i> Add</a>
+
+        <a *ngIf="isLoadAssessmentForm" class="btn btn-outline-info add-new text-right" href="javascript:void(0)" (click)="showAssessments()"><i class="fa fa-arrow-circle-o-left"></i> Back</a>
+      </div>
+    </div>
+    <hr class="w-100">
+
+
+
+    <div *ngIf="!isLoadAssessmentForm" class="cust-panel pt-2">
+      <app-assessments [assessmentConfig]="assessmentConfig" (updateAssessment)= "updateAssessment($event)" (resetFilters)= "resetFilters($event)"></app-assessments>
+    </div>
+
+    <div *ngIf="isLoadAssessmentForm">
+      <!-- filter div starts here -->
+      <div class="">
+        <div class="row col-md-12 filter-panel p-3 ">
+          <div class="col-lg-3 col-md-3 pr-0 filter">
+            <h4>Class</h4>
+            <select class="form-control  pl-2" (change)="selectedStandard($event.target.value)">
+              <option [selected]="!subCatId" disabled hidden>Select Class </option>
+              <option [selected]="subCatId==stnd?._id" value="{{stnd?._id}}" *ngFor="let stnd of standards">{{stnd?.name}}</option>
+            </select>
+          </div>
+
+          <div class="col-lg-3 col-md-3 pr-0 filter mx-4">
+            <h4>Course<span class="mendatoryField">*</span></h4>
+            <select class="form-control pl-2" (change)="getTopics($event.target.value)" >
+              <option [selected]="!courseId" disabled hidden>Select course </option>
+              <option [selected]="courseId==course?.courseId" value="{{course?.courseId}}" *ngFor="let course of courseList">{{course.title}}</option>
+            </select>
+          </div>
+          <div class="col-md-4  pr-0 filter">
+            <h4>Visibility<span class="mendatoryField">*</span></h4>
+            <div class="row col-md-10 radio-btn rd px-2">
+              <label class="form-check-label pl-3">
+                <input type="radio" class="form-check-input checkbox-custom" (change)="setVisibility()" name="visibility"  [(ngModel)]="visibility" [value]="questionStatus.PUBLIC">
+                Public
+              </label>
+              <label class="form-check-label ml-4">
+                <input type="radio" class="form-check-input checkbox-custom"
+                name="visibility" [(ngModel)]="visibility" (change)="setVisibility()" [value]="questionStatus.PRIVATE"> 
+                Private
+              </label>
+            </div>
+          </div>
+
+        <!-- <div class="col-lg-3 col-md-3 pr-0 filter">
+          <h4>Topic</h4>
+          <select class="form-control pl-2" (change)="getSubtopics($event.target.value)" >
+            <option [selected]="!topicId" disabled hidden>Select topic </option>
+            <option [selected]="topicId==topic?.topicId" value="{{topic?.topicId}}" *ngFor="let topic of topicList">{{topic.title}}</option>
+          </select>
+        </div> 
+
+        <div class="col-lg-3 col-md-3 pr-0 filter">
+          <h4>Subtopic</h4>
+          <select class="form-control pl-2" (change)="setSubtopic($event.target.value)" >
+            <option [selected]="!subtopicId" disabled hidden>Select subtopic </option>
+            <option [selected]="subtopicId==subtopic?.subtopicId" value="{{subtopic?.subtopicId}}" *ngFor="let subtopic of subtopicList">{{subtopic.title}}</option>
+          </select>
+        </div> -->
+      </div>
+    </div>
+    <!-- filter div ends here -->
+    <app-manage-assessments [assessmentConfig]="assessmentConfig" (showAssessments)="showAssessments($event)" (setAssessmentInfo)="setAssessmentDetails($event)"></app-manage-assessments>
+  </div>
+
+</div>
+
+</div>

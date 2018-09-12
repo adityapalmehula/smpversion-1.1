@@ -1,0 +1,19 @@
+input[name=daterangeInput] {    
+  height: 50px;
+  padding-left: 10px;
+} 
+.search-d {
+  display: flex;
+}
+.search-d input {
+  height: 27px;
+}
+.fa-times-circle {
+  font-size: 1.3em;
+  padding-left: 2px;
+}
+input[type="checkbox"]{
+  width: 22px; 
+  height: 22px;
+  vertical-align: middle;
+}

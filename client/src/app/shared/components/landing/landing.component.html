@@ -1,0 +1,46 @@
+<div class="row">
+  <div class="col-12 text-center errMessage" *ngIf="errorMessage">
+    <h6>{{errorMessage}}</h6>
+  </div>
+</div>
+<!-- Modal to take class from user-->
+<div class="container-fluid ">
+  <div class="modal fade" id="selectClass" tabindex="-1" role="dialog" aria-labelledby="selectClassLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title modal-heding" id="selectClassLabel">Select Your Board And Class</h5>
+        </div>
+        <div class="modal-body mx-auto">
+          <form [formGroup]="updateClassForm">
+            <div class="row">
+              <div class="col-md-12">
+                <div class="form-field">
+                  <div class="input-group">
+                    <select class="form-control" formControlName="board" (click)="getCourseBasisCategoryValue()" [(ngModel)]="selectedBoardId">
+                      <option value="" selected>Select Board </option>
+                      <option value="{{item._id}}" *ngFor="let item of categoryDetails">{{item.name}}</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="form-field">
+                  <div class="input-group">
+                    <select class="form-control" formControlName="class" (click)="getCategory()" [(ngModel)]="selectedClassName">
+                      <option value="" selected>Select Class </option>
+                      <option value="{{item.name}}" *ngFor="let item of subCategories">{{item.name}}</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" (click)="UpdateClassInfo()">Save</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <button type="button" id="selectClassByModal" [hidden]="true" class="btn btn-primary" data-toggle="modal" data-target="#selectClass">
+  </button>
+</div>

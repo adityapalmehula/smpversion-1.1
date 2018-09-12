@@ -1,0 +1,258 @@
+<div class="container-section">
+  <div class="row">
+    <div class="col-md-1 pl-0 pr-0">
+      <!-- <div id="sidebarContent" class="sidebar-container">
+        <app-sidebar></app-sidebar>
+      </div> -->
+    </div>
+    <div class="col-md-11">
+      <div *ngIf="!isSubscribed" class="row add-new-container subscription-section">
+        <div class="col-md-2 card-section text-center pt15"><i class="fa fa-credit-card fa-fw fa-2x"></i></div>
+        <!-- <div *ngIf="subscriptionEndDate; else elseBlock; then thenBlock"></div>
+        <ng-template #thenBlock>
+          <div class="col-md-8 pt15"><span class="subscription-text">Your free subscription through facebook ends on 
+           <strong>{{subscriptionEndDate}}</strong></span>
+         </div>
+         <div class="col-md-2 pt15 text-center">
+          <button (click)="shareWithFb('Upgraded')" class="btn btn-default btn-view">UPGRADE</button>
+        </div>
+      </ng-template>
+      <ng-template #elseBlock>
+        <div class="col-md-8 pt15"><span class="subscription-text">Not subscribed Yet! Share on facebook and be our subscribed member. 
+        </span>
+      </div>
+      <div class="col-md-2 pt15 text-center">
+        <button (click)="shareWithFb('Subscribed')" class="btn btn-default btn-view">SUBSCRIBE</button>
+      </div>
+    </ng-template> -->
+    <div class="col-md-8 pt15"><span class="subscription-text">Not subscribed Yet! Subscribe our Youtube channel and get free access to courses.
+    </span>
+  </div>
+  <div class="col-md-2 pt15 text-center">
+    <button (click)="youtubeOauth()" class="btn btn-default btn-view">Subscribe Youtube Channel</button>
+  </div>
+    <!-- <div class="col-md-8 pt15"><span class="subscription-text">Not subscribed Yet! Subscribe our Youtube channel and get free access to courses. 
+     </div>
+     <div class="col-md-2 pt15 text-center">
+      <button (click)="youtubeOauth()" class="btn btn-default btn-view">Subscribe Youtube Channel</button>
+    </div> -->
+   <!--  <div class="col-md-2 pt15 text-center">
+        <button (click)=" youtubeOauth()" class="btn btn-default btn-view">Youtube Login</button>
+    </div>
+    <div class="col-md-2 pt15 text-center">
+        <button (click)=" subscribeYoutubeChannel()" class="btn btn-default btn-view">Subscribe Youtube Channel</button>
+      </div> -->
+    </div>
+    <div class="row add-new-container">
+      <!-- Start of My Courses Section -->
+      <div class="col-md-12 col-sm-12 mb10">
+        <ul *ngIf="courses?.length === 0" class="list-group">
+          <li class="list-group-item list-heading-ht">
+            <p class="heading">My Courses</p>
+            <div class="d-flex w-100 justify-content-between">
+              <p class="mb-1 subHeading text-light">Your Recent Courses</p>
+            </div>
+          </li>
+          <li class="list-group-item justify-content-between list-item">
+            <div class="d-flex w-100 justify-content-between">
+              <a href="javascript:void(0)">No Course Found. </a>
+            </div>
+          </li>
+          <li class="list-group-item justify-content-between heading"><span></span>
+            <button class="btn btn-default btn-view" [routerLink]="['/', urlPrefix, 'allcourses']">View All Courses</button>
+          </li>
+        </ul>
+        <ul *ngIf="courses?.length !== 0" class="list-group">
+          <li class="list-group-item list-heading-ht">
+            <p class="heading">My Courses</p>
+            <div class="d-flex w-100 justify-content-between">
+              <p class="mb-1 subHeading text-light">My Recent Courses</p>
+            </div>
+          </li>
+          <li class="list-group-item justify-content-between list-item" *ngFor="let course of courses; let i=index ">
+            <div class="row">
+              <div class="col-md-8 col-sm-12" *ngIf="course">
+                <a class="courseTitle" href="javascript:void(0)" (click)="navigateCourse(course?.courseId,course?.status)">{{course?.title | titleCase }}</a>
+              </div>
+              <div class="col-md-4 col-sm-12 mt-10">
+                <div class="progress">
+                  <div class="progress-bar progress-bar-striped bg-success" role="progressbar" [style.width.%]="course?.progress" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
+              </div>
+            </div>
+          </li>
+          <li class="list-group-item justify-content-between heading"><span></span>
+            <button class="btn btn-default btn-view" [routerLink]="['/', urlPrefix, 'mycourses']">View All</button>
+          </li>
+        </ul>
+      </div>
+      <!-- End of My Courses Section -->
+
+      <!-- start of assessment performance section -->
+      <div class="col-md-12 col-sm-12 mb10">
+        <ul class="list-group">
+          <li class="list-group-item list-heading-ht">
+            <div class="col-md-4">
+             <p class="heading">Performance</p>
+             <div class="d-flex w-100 justify-content-between">
+              <p class="mb-1 subHeading text-light">Assessment Based Performance</p>
+            </div>
+          </div>
+          <div class="row col-md-8">
+            <div class="col-md-4 form-group">
+              <label class="mt-2 mb-0"><strong>Course</strong></label>
+              <select class="form-control" (change)="selectedCourse($event.target.value)">
+                <option selected value="">All Course</option>
+                <option value="{{course.courseId}}" *ngFor="let course of courseFilterData;" >{{course?.title}}</option>
+              </select>
+            </div> 
+
+            <div class="col-md-6 form-group">
+             <label class="mt-2 mb-0"><strong>Topics</strong></label>
+             <angular2-multiselect [ngModelOptions]="{standalone: true}" 
+             [data]="topicsList" 
+             [(ngModel)]="selectedTopics" [settings]="topicsConfig"
+             (onSelect)="onTopicsChange($event)"
+             (onDeSelect)="onTopicsChange($event)" 
+             (onSelectAll)="onTopicsChange($event)" 
+             (onDeSelectAll)="onTopicsChange($event)"></angular2-multiselect>
+           </div>
+
+         </div>
+       </li>
+       <li class="list-group-item justify-content-between list-item">
+        <div class="row">
+          <div class="col-md-4 col-sm-12"><strong>Title</strong></div>
+          <div class="col-md-2 col-sm-12 mt-10 text-center"><strong>Total Attampts</strong></div>
+          <div class="col-md-2 col-sm-12 mt-10 text-center"><strong>Max</strong></div>
+          <div class="col-md-2 col-sm-12 mt-10 text-center"><strong>Min</strong></div>
+          <div class="col-md-2 col-sm-12 mt-10 text-center"><strong>Avg</strong></div>
+        </div>
+      </li>
+
+      <li class="list-group-item justify-content-between list-item" *ngFor="let data of assessmentWisePerformance; let i=index ">
+        <div class="row">
+          <div class="col-md-4 col-sm-12">
+            <a class="courseTitle" href="javascript:void(0)" (click)="navigateAssessment(data?.assessmentId)">{{data?.assessment | titleCase }}</a>
+          </div>
+          <div class="col-md-2 col-sm-12 mt-10 text-center">{{data?.totalAttampts}}</div>
+          <div class="col-md-2 col-sm-12 mt-10 text-success text-center">{{data?.max}}</div>
+          <div class="col-md-2 col-sm-12 mt-10 text-danger text-center">{{data?.min}}</div>
+          <div class="col-md-2 col-sm-12 mt-10 text-primary text-center">{{data?.avg}}</div>
+        </div>
+      </li>
+      <li class="list-group-item justify-content-between heading"><span></span>
+        <button class="btn btn-default btn-view" [routerLink]="['/', urlPrefix, 'performances','assessments']">View All</button>
+      </li>
+    </ul>
+  </div>
+  <!-- end of assessment performance section -->
+
+
+  <!-- Start of My Quizzes Section -->
+        <!-- <div class="col-md-4 col-sm-12 mb10">
+      <ul *ngIf="assessmentResultDetails.length === 0" class="list-group">
+        <li class="list-group-item list-heading-ht">
+          <p class="heading">My Assessments</p>
+          <div class="d-flex w-100 justify-content-between">
+            <p class="mb-1 subHeading text-light">Your Recent Performance</p>
+          </div>
+        </li>
+        <li class="list-group-item justify-content-between list-item">
+          <div class="d-flex w-100 justify-content-between">
+            <a href="javascript:void(0)">No Assessment Result Found. </a>
+          </div>
+        </li>
+      </ul>
+      <ul *ngIf="assessmentResultDetails.length !== 0" class="list-group">
+        <li class="list-group-item list-heading-ht">
+          <p class="heading">My Assessments</p>
+          <div class="d-flex w-100 justify-content-between">
+            <p class="mb-1 subHeading text-light">Your Recent Performance</p>
+          </div>
+        </li>
+        <li class="list-group-item justify-content-between list-item" *ngFor="let assessmentResult of assessmentResultDetails;">
+          <div class="d-flex w-100 justify-content-between">
+            <a href="javascript:void(0)" [routerLink]="['/', urlPrefix, 'course-details', assessmentResult?.assessmentId?.courseId,'assessments','result',assessmentResult?.assessmentId?._id]">{{assessmentResult?.assessment}}</a>
+          </div>
+          <small>Total Attempts: <a href="javascript:void(0)" class="course-title">{{assessmentResult?.totalAttempt}}</a></small>
+          
+        </li>
+        <li class="list-group-item justify-content-between heading">
+          <button class="btn btn-primary btn-view btn-result">Go To results</button>
+        </li>
+      </ul>
+    </div> -->
+    <!-- End of My Quizzes Section -->
+    <!-- Start of My Recent Activity Section -->
+        <!-- <div class="col-md-4 col-sm-12 mb10">
+          <ul *ngIf="activities.length === 0" class="list-group">
+            <li class="list-group-item list-heading-ht">
+              <p class="heading">My Recent Activities</p>
+              <div class="d-flex w-100 justify-content-between">
+                <p class="mb-1 subHeading text-light">Your Recent Activities</p>
+              </div>
+            </li>
+            <li class="list-group-item justify-content-between list-item">
+              <div class="d-flex w-100 justify-content-between">
+                <a href="javascript:void(0)">No Recent Activity Found. </a>
+              </div>
+            </li>
+          </ul>
+          <ul *ngIf="activities.length !== 0" class="list-group">
+            <li class="list-group-item list-heading-ht">
+              <p class="heading">My Recent Activity</p>
+            </li>
+            <li class="list-group-item justify-content-between list-item" *ngFor="let activity of activities;">
+              <div class="d-flex w-100 justify-content-between">
+                <a href="javascript:void(0)">{{activity?.title}}</a>
+                <a href="javascript:void(0)" class="course-title">{{activity?.value}}</a>
+              </div>
+            </li>
+             <li class="list-group-item justify-content-between heading">
+          <button class="btn btn-primary btn-view btn-result">More Activities</button>
+        </li>
+          </ul>
+        </div> -->
+        <!-- End of My Recent Activity Section -->
+      </div>
+      <div class="row add-new-container ">
+        <!-- Start of Forums Activities Section -->
+        <!-- <div class="col-md-4 col-sm-12 pb-50">
+      <ul *ngIf="forums.length === 0" class="list-group">
+        <li class="list-group-item list-heading-ht">
+          <p class="heading">Forums Activities</p>
+          <div class="d-flex w-100 justify-content-between">
+            <p class="mb-1 subHeading text-light">Forums Recent Activities</p>
+          </div>
+        </li>
+        <li class="list-group-item justify-content-between list-item">
+          <div class="d-flex w-100 justify-content-between">
+            <a href="javascript:void(0)">No Forum Activity Found. </a>
+          </div>
+        </li>
+      </ul>
+      <ul *ngIf="forums.length !== 0" class="list-group">
+        <li class="list-group-item list-heading-ht">
+          <p class="heading">Forums Activities</p>
+          <div class="d-flex w-100 justify-content-between">
+          </div>
+        </li>
+        <li class="list-group-item justify-content-between list-item" *ngFor="let forum of forums;">
+          <div class="d-flex w-100 justify-content-between">
+            <a href="javascript:void(0)">{{forum?.title}}</a>
+            <small class="text-light">{{forum?.time}} hr ago</small>
+          </div>
+          <small>Topic: <a href="javascript:void(0)"> {{forum?.course}}</a>&nbsp;&nbsp;&nbsp; By: <a href="javascript:void(0)">{{forum?.by}}</a></small>
+          <small></small>
+        </li>
+        <li class="list-group-item justify-content-between heading">
+          <button class="btn btn-primary btn-view btn-result">More Forums</button>
+        </li>
+      </ul>
+    </div> -->
+    <!-- End of Forums Activities Section -->
+  </div>
+</div>
+</div>
+</div>

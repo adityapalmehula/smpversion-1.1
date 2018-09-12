@@ -1,0 +1,190 @@
+<div class="container-section">
+  <div class="row">
+    <div class="col-md-1 pl-0 pr-0">
+    </div>
+    <div class="col-md-11">
+      <div class="container-fluid">
+        <div class="row breadcrumb">
+          <div class="col-8 text-left mt-2 mb-1 ">
+            <h3 class="page-heading">Teachers</h3>
+            <div *ngxPermissionsOnly="permissions; else elseBlock; then thenBlock"></div>
+            <ng-template #elseBlock>
+              <div></div>
+            </ng-template>
+            <ng-template #thenBlock>
+              <a class="btn btn-outline-info add-new" [routerLink]="['/', urlPrefix, 'teachers', 'add']" ><i class="fa fa-plus-circle"> </i> Add</a>
+            </ng-template>
+          </div>
+          <div class="col-4 text-right">
+            <a class="btn btn-outline-info back" [routerLink]="['/', urlPrefix]"><i class="fa fa-arrow-circle-o-left" aria-hidden="true"></i> Back
+            </a>
+          </div>
+        </div>
+
+        <div class="row col-md-12">
+          <div class="form-group col-md-3">
+            <label for="type">Date range: </label>
+            <input type="text" name="daterangeInput" daterangepicker [options]="options" (selected)="selectedDate($event, daterange)"/>
+            <i (click)="clearDateFilter()" class="fa fa-times-circle mt-1" aria-hidden="true" title="Clear"></i>
+          </div>
+          <div class="form-group col-md-3">
+            <label for="type">Status: </label>
+            <angular2-multiselect [ngModelOptions]="{standalone: true}" [data]="statusList" [(ngModel)]="selectedStatus" [settings]="statusConfig" (onSelect)="onStatusChange($event)" (onDeSelect)="onStatusChange($event)" (onSelectAll)="onStatusChange($event)" (onDeSelectAll)="onStatusChange($event)"></angular2-multiselect>
+          </div>
+          <div class="form-group col-3"></div>
+          <div class="form-group col-3 search-d mt-4">
+            <input class="ml-5" type="text" [(ngModel)]="searchText" placeholder="Search.." (keydown)="searchUser($event)" (input)="searchInputChange()">
+            <i (click)="clearSearch()" class="fa fa-times-circle mt-1" aria-hidden="true" title="Clear"></i>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-2 mt-1">
+            <input type="checkbox" [(ngModel)]='selectAllCheckbox' (change)="selectAllTeacher($event)"> Select All
+          </div>
+          <div class="col-8"></div>
+          <div class="col-2 mt-1 pl-0">
+            <select class="form-control" (change)="setStatus($event)">
+             <option value="">Set Status</option>
+             <option *ngFor="let status of configStatus">{{status}}</option>
+           </select>
+         </div>
+       </div>
+       <div class="row">
+        <div class="col-md-12 mt-4 table-responsive">
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th scope="col"></th>
+                <th scope="col">Name</th>
+                <th scope="col">Email</th>
+                <th scope="col">Mobile</th>
+                <th scope="col">Address</th>
+                <th scope="col">City</th>
+                <th scope="col">Status</th>
+                <th scope="col">Send Mail</th>
+                <th>&nbsp;&nbsp;Action</th>
+                <th>&nbsp;&nbsp;Assign Class</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor=" let teacher of teachers; let i= index; ">
+                <td scope="row">
+                  <input type="checkbox" [checked]="teacher.selected"  (change)="selectTeacher($event, teacher)"></td>
+                  <td>
+                    <a href="javascript:void(0)" (click)="getTeacherDetails(teacher._id,i)" data-toggle="modal" data-target="#sch-details">{{teacher.name}}</a>
+                  </td>
+                  <td>{{teacher.email}}</td>
+                  <td>{{teacher.mobile}}</td>
+                  <td>{{teacher.address.address}}</td>
+                  <td>{{teacher.address.city}}</td>
+                  <td>{{teacher.status}}</td>
+                  <td>
+                    <button *ngIf="!teacher.isMailSend" class="btn btn-success btn-sm" (click)="sendWelcomeMail(teacher)">Welcome Mail</button>
+                    <button *ngIf="teacher.isMailSend" class="btn btn-info btn-sm" (click)="sendWelcomeMail(teacher)">Resend Mail</button>
+                  </td>
+                  <td><button class="btn btn-default btn-sm"><a href="javascript:void(0)" [routerLink]="['/', urlPrefix, 'teachers', 'edit', teacher._id]"><i class="fa fa-pencil" title="Edit Teacher"></i></a></button>&nbsp;&nbsp;&nbsp;&nbsp;
+                    <button class="btn btn-default btn-sm" (click)="delete(teacher._id)"><a href="javascript:void(0)" > <i class="fa fa-trash" title="Delete Teacher"></i></a></button></td>
+                    <td><button class="btn btn-sm btn-info" href="javascript:void(0)" (click)="setTeacherId(teacher?._id)" data-toggle="modal" data-target="#assign-subcat">Assign Class</button></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="sch-details" tabindex="-1" role="dialog"  
+  aria-labelledby="title" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="title">Teacher Details</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" #close>
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div id="accordion" role="tablist" aria-multiselectable="true">
+          <div class="card-block row">
+          <!-- <div class="col-xl-4 col-lg-12 col-md-12 col-sm-12">
+        </div> -->
+        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+          <table class="table">
+            <tbody>
+              <tr>
+                <td>teacher Name</td>
+                <td>{{teacherDetails.name}}</td>
+              </tr>
+              <tr>
+                <td>Email</td>
+                <td>{{teacherDetails.email}}</td>
+              </tr>
+              <tr>
+                <td>Mob. No.</td>
+                <td>{{teacherDetails.mobile}}</td>
+              </tr> 
+              <tr>
+                <td>Gender</td>
+                <td>{{teacherDetails.gender}}</td>
+              </tr>
+              <tr>
+                <td>Address</td>
+                <td>{{teacherDetails.address}}</td>
+              </tr>
+              <tr>
+                <td>City</td>
+                <td>{{teacherDetails.city}}</td>
+              </tr>
+              <tr>
+                <td>State</td>
+                <td>{{teacherDetails.state}}</td>
+              </tr> 
+              <tr>
+                <td>Zip Code</td>
+                <td>{{teacherDetails.zipCode}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+</div>
+
+<div class="modal fade" id="assign-subcat" tabindex="-1" role="dialog" aria-labelledby="title" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="title">Assign Class</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" #closeModal>
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div id="accordion" role="tablist" aria-multiselectable="true">
+          <div class="card-block row">
+            <div class="row col-xl-12 col-lg-12 col-md-12 col-sm-12">
+              <div class="form-group col-md-8 mx-auto">
+                <label for="type">Board</label>
+                <angular2-multiselect [ngModelOptions]="{standalone: true}" [data]="categories" [(ngModel)]="selectedCategories" [settings]="categoriesConfig" (onSelect)="onCategoriesFilterChange($event)" (onSelectAll)="onCategoriesFilterChange($event)" (onDeSelectAll)="onCategoryDeSelectAll($event)"></angular2-multiselect>
+              </div>
+
+              <div class="form-group col-md-8 mx-auto">
+                <label for="type">Classes</label>
+                <angular2-multiselect [ngModelOptions]="{standalone: true}" [data]="subCategories" [(ngModel)]="selectedSubCategories" [settings]="subCategoriesConfig"></angular2-multiselect>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" (click)="clearAssignClassFilters()" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-info" (click)="assignClass()">Assign</button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,145 @@
+<div *ngxPermissionsOnly="permissions; else elseBlock; then thenBlock"></div>
+<ng-template #elseBlock>
+  <div></div>
+</ng-template>
+<ng-template #thenBlock>
+  <div class="row" *ngIf="CONFIG.ADMIN.indexOf(role) > -1 || keyPointsOwnerUserId == userId">
+    <div class="col-12 text-right pB5" *ngIf="cStatus===CONFIG.CONTENT_STATUS[3] || cStatus=== CONFIG.CONTENT_STATUS[5]">
+      <a class="btn btn-outline-info add-new" data-toggle="modal" data-target=".addKeyPointsModal" data-backdrop="static" data-keyboard="false"><i class="fa fa-plus-circle"> </i> Add</a>
+    </div>
+  </div>
+</ng-template>
+<!-- Start keypoints list -->
+<div class="row">
+  <div class="col-12 text-center" *ngIf="subTopicKeyPointsData?.length==0">
+   There is no keyPoints available
+ </div>
+</div>
+<div class="row">
+  <div class="col-12 middle-section container-section">
+    <ul class="list-group">
+     <li class="list-group-item d-flex justify-content-between" *ngFor="let keyPoints of subTopicKeyPointsData; let i=index;">
+       <div class="row w-100">
+        <div class="col-9 text-left p-0">
+          <div class="row">
+            <a data-toggle="collapse" data-parent="#keyPointsAccordion" href="{{'#collapsekeyPoints'+i}}" [attr.aria-expanded]="true" [attr.aria-controls]="'collapsekeyPoints'+i" class="anchor-link">
+              <h5 class="mb-1 pt-1 subtitle"> {{keyPoints.title | titlecase}}
+              </h5>
+            </a>
+          </div>
+        </div>
+
+        <div class="col-3 text-right p-0"*ngIf="CONFIG.ADMIN.indexOf(role) > -1 || keyPointsOwnerUserId == userId" >
+          <div *ngxPermissionsOnly="permissions; else elseBlock; then thenBlock"></div>
+          <ng-template #elseBlock>
+          </ng-template>
+          <ng-template #thenBlock >
+            <div *ngIf="cStatus===CONFIG.CONTENT_STATUS[3] || cStatus=== CONFIG.CONTENT_STATUS[5]">
+             <button type="button" class="btn btn-light btn-sm" title="Edit keyPoints" (click)="editkeyPoints(keyPoints._id)" data-toggle="modal" data-target=".addKeyPointsModal" >
+               <span class="fa fa-pencil"></span>
+             </button>
+             <button type="button" class="btn btn-light btn-sm" (click)="deleltekeyPoints(keyPoints._id)" title="Delete keyPoints"><span class="fa fa-trash"></span>
+             </button>
+           </div>
+         </ng-template>
+       </div>
+       
+       <div id="{{'collapsekeyPoints'+i}}" class="collapse" role="tabpanel" [attr.aria-labelledby]="'collapsekeyPoints'+i">
+        <div class="p-0">
+          <div class="row">
+            <div class="col-12 mt-3 description-text" [innerHtml]="keyPoints.description"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </li>
+</ul>
+<div class="col-12 custom-pgn" *ngIf="totalItems>itemsPerPage">
+  <pagination class="pagination" [totalItems]="totalItems" [itemsPerPage]="itemsPerPage" [(ngModel)]="currentPage" (pageChanged)="pageChanged($event)"></pagination>
+</div>
+</div>
+
+<!-- Add and edit model for keyPoints -->
+<div class="modal fade addKeyPointsModal" tabindex="-1" role="dialog" aria-labelledby="keyPointsModal" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <!-- Modal Header -->
+      <div class="modal-header text-center">
+        <h4 aria-hidden="true ">KeyPoints</h4>
+        <span class="sr-only">KeyPoints</span>
+        <button type="button" class="close" data-dismiss="modal"  #close title="Close" (click)="closeModal()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <!-- Modal Body -->
+    <!--   <div *ngIf="errorMessage">
+        <div class="errorMessage">
+          {{errorMessage}}
+        </div>
+      </div> -->
+      <div *ngIf="backendErrorMsg">
+        <ul>
+          <li class="backend-errors" *ngFor="let msg of backendErrorMsg.slice().reverse() ">{{msg}}</li>
+        </ul>
+      </div>
+      <form class="form-horizontal" role="form" [formGroup]="formKeyPoints">
+        <div class="modal-body">
+          <div class="row form-group">
+            <label class="col-sm-2 control-label" for="KeyPoints Title">Title : </label>
+            <div class="col-sm-10">
+              <input type="text" class="form-control" placeholder="" formControlName="title" />
+              <div *ngIf="formKeyPoints.get('title').touched && formKeyPoints.get('title').errors">
+               <div class="error">
+                <div *ngIf="formKeyPoints.get('title').errors.minlength">
+                  {{Config.title.minlength[1]}}
+                </div>
+                <div *ngIf="formKeyPoints.get('title').errors.maxlength">
+                  {{Config.title.maxlength[1]}}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row form-group">
+          <label class="col-sm-2 control-label" for="KeyPoints Description">Description : </label>
+          <div class="col-sm-10">
+            <ckeditor class="form-control" [(ngModel)]="descriptionValue" debounce="500" [ngModelOptions]="{standalone: true}">
+            </ckeditor>
+              <div>
+                <div class="error" *ngIf="descriptionError">
+                 {{descriptionError}}
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row form-group ">
+            <label class="col-sm-2 control-label" for="Topic status">Status : </label>
+            <div class="col-sm-3 col-md-12 col-lg-3">
+              <div class="form-check form-check-inline">
+                <label class="form-check-label">
+                  <input class="form-check-input" type="radio" name="status" [value]="status.ACTIVE" checked formControlName="status"> Active
+                </label>
+              </div>
+              <div class="form-check form-check-inline">
+                <label class="form-check-label">
+                  <input class="form-check-input" type="radio" name="status" [value]="status.INACTIVE" formControlName="status"> Inactive
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-cancel" data-dismiss="modal" title="Cancel" (click)="closeModal()">
+            Cancel
+          </button>
+          <button type="button" class="btn btn-save" *ngIf="!keyPointsId" title="Save" [disabled]="!formKeyPoints.valid" (click)="saveKeyPoints(formKeyPoints)" [ngStyle]="{'cursor':formKeyPoints.valid ? 'pointer' : 'not-allowed' }">
+            Save
+          </button>
+          <button type="button" class="btn btn-update" *ngIf="keyPointsId" title="Update" data-dismiss="modal" [disabled]="!formKeyPoints.valid" (click)="updateKeyPoints(formKeyPoints)" [ngStyle]="{'cursor':formKeyPoints.valid ? 'pointer' : 'not-allowed' }">
+            Update
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

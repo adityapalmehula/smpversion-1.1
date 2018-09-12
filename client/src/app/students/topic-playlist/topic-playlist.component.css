@@ -1,0 +1,646 @@
+.mid-section {
+  margin-top: 12px;
+}
+.active {
+  background-color:#F8F8F8;
+  border:#F8F8F8;
+}
+.course-rating {
+ display: inline-block;
+}   
+.headingTitle {
+  color: #384047 !important;
+  margin-bottom: 0px;
+  font-weight: 300 !important;
+  font-size: 16px !important;
+}
+
+
+.sub-header {
+  /*background-color: #00897b;*/
+  color: #000;
+  border-color: #00695C;
+  font-size: 1.2rem;
+  height: 58.5px;
+  padding: .75rem;
+}
+
+@media(min-width: 768px) {
+  .mid-component-border {
+    border: 1px solid;
+    border-color: rgba(0, 0, 0, 0.125);
+    background-color: #fff;
+  }
+}
+
+@media(max-width: 568px) {
+  .mid-head {
+    padding: 12px;
+  }
+  .mid-component-border {
+    margin: 15px;
+    border: 1px solid;
+    border-color: rgba(0, 0, 0, 0.125);
+    background-color: #fff;
+  }
+  .mid-head {
+    padding: 0px;
+  }
+}
+
+@media(min-width: 768px) {
+  .footer button {
+    font-size: 12px;
+    padding-left: 0px;
+  }
+}
+
+.mid-component-border {
+  padding-left: 0px;
+  padding-right: 0px;
+  margin-bottom: 15px;
+  background-color: #fff;
+}
+
+.playListHeader {
+  margin-top: 20px;
+}
+
+.playlistSection {
+  margin-bottom: 20px;
+}
+
+.card-text {
+  font-weight: normal;
+}
+
+p {
+  font-weight: normal;
+}
+.long-description{
+  font-size: .95rem;
+}
+.short-description {
+  font-size: 1rem;
+}
+
+
+/* Rotating card styles*/
+
+@import url('https://fonts.googleapis.com/css?family=Arima+Madurai:100,200,300,400,500,700,800,900');
+body {
+  /*margin-top: 60px;*/
+  font-size: 14px;
+  font-family: 'Arima Madurai', cursive;
+  background-color: #E5E9ED;
+}
+
+.btn:hover,
+.btn:focus,
+.btn:active {
+  outline: 0 !important;
+}
+
+
+/* entire container, keeps perspective */
+
+.card-container {
+  -webkit-perspective: 800px;
+  -moz-perspective: 800px;
+  -o-perspective: 800px;
+  perspective: 800px;
+  margin-bottom: 30px;
+}
+
+
+/* flip the pane when hovered */
+
+.card-container:not(.manual-flip):hover .card-content,
+.card-container.hover.manual-flip .card-content {
+  -webkit-transform: rotateY( 180deg);
+  -moz-transform: rotateY( 180deg);
+  -o-transform: rotateY( 180deg);
+  transform: rotateY( 180deg);
+}
+
+
+.card-container.static:hover .card-content,
+.card-container.static.hover .card-content {
+  -webkit-transform: none;
+  -moz-transform: none;
+  -o-transform: none;
+  transform: none;
+}
+
+
+/* flip speed goes here */
+
+.card-content {
+  -webkit-transition: -webkit-transform .8s;
+  -moz-transition: -moz-transform .8s;
+  -o-transition: -o-transform .8s;
+  transition: transform .8s;
+  -webkit-transform-style: preserve-3d;
+  -moz-transform-style: preserve-3d;
+  -o-transform-style: preserve-3d;
+  transform-style: preserve-3d;
+  position: relative;
+}
+
+
+/* hide back of pane during swap */
+
+.front,
+.back {
+  -webkit-backface-visibility: hidden;
+  -moz-backface-visibility: hidden;
+  -o-backface-visibility: hidden;
+  backface-visibility: hidden;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: #FFF;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.14);
+}
+
+
+/* front pane, placed above back */
+
+.front {
+  z-index: 2;
+}
+
+
+/* back, initially hidden pane */
+
+.back {
+  -webkit-transform: rotateY( 180deg);
+  -moz-transform: rotateY( 180deg);
+  -o-transform: rotateY( 180deg);
+  transform: rotateY( 180deg);
+  z-index: 3;
+}
+
+.back .btn-simple {
+  position: absolute;
+  left: 0;
+  bottom: 4px;
+}
+
+.btn-simple {
+  padding: 0px;
+}
+
+
+/*        Style       */
+
+.card-content {
+  background: none repeat scroll 0 0 #FFFFFF;
+  border-radius: 4px;
+  color: #444444;
+}
+
+.card-container,
+.front,
+.back {
+  width: 100%;
+  height: 350px;
+  border-radius: 4px;
+  -webkit-box-shadow: 0px 0px 19px 0px rgba(0, 0, 0, 0.16);
+  -moz-box-shadow: 0px 0px 19px 0px rgba(0, 0, 0, 0.16);
+  box-shadow: 0px 0px 19px 0px rgba(0, 0, 0, 0.16);
+}
+
+.card-content .cover {
+  height: 150px;
+  overflow: hidden;
+  border-radius: 4px 4px 0 0;
+}
+
+.card-content .cover img {
+  width: 100%;
+}
+
+.back[_ngcontent-c4] .btn-simple[_ngcontent-c4] {
+  position: absolute;
+  left: 0;
+  bottom: 4px;
+  margin-bottom: 20px;
+}
+
+.card-content .user {
+  border-radius: 50%;
+  display: block;
+  height: 120px;
+  margin: -55px auto 0;
+  overflow: hidden;
+  width: 120px;
+}
+
+.card-content .user img {
+  background: none repeat scroll 0 0 #FFFFFF;
+  border: 4px solid #FFFFFF;
+  width: 100%;
+}
+
+.card-content .content {
+  background-color: rgba(0, 0, 0, 0);
+  box-shadow: none;
+  padding: 10px 20px 0px;
+}
+
+.card-content .content {
+  min-height: 190px;
+}
+
+.card-content .back .content {
+  height: 270px;
+}
+
+.main {
+  height: 200px;
+}
+
+.description {
+  height: 210px;
+}
+
+.description p {
+  font-weight: 100;
+}
+
+.card-content .name {
+  font-family: 'Arima Madurai', cursive;
+  font-size: 22px;
+  line-height: 28px;
+  margin: 10px 0 0;
+  text-align: center;
+  text-transform: capitalize;
+}
+
+.card-content h5 {
+  margin: 5px 0;
+  font-weight: 400;
+  line-height: 20px;
+}
+
+.card .profession {
+  color: #999999;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.card-content .footer {
+  /*border-top: 1px solid #EEEEEE;*/
+  color: #999999;
+  margin: 5px 0 0;
+  text-align: center;
+}
+
+.card-content h5 {
+  margin-top: 24px;
+}
+
+.card-content .footer .social-links {
+  font-size: 18px;
+}
+
+.card-content .footer .social-links a {
+  margin: 0 7px;
+}
+
+.card-content .header {
+  padding: 15px 20px;
+  height: 80px;
+}
+
+.card-content .motto {
+  font-family: 'Arima Madurai', cursive;
+  border-bottom: 1px solid #EEEEEE;
+  color: #999999;
+  font-size: 18px;
+  font-weight: 400;
+  padding-bottom: 22px;
+  text-align: center;
+}
+
+.card-content .stats-container {
+  width: 100%;
+  margin-right: 0px;
+  margin-left: 0px;
+}
+
+.status-container {
+  margin-top: 50px;
+}
+
+.playListItem {
+  padding-top: 30px;
+}
+
+.playListItem h4 {
+  font-size: 14px;
+}
+
+.card-content .stats {
+  display: block;
+  float: left;
+  width: 20%;
+  text-align: center;
+}
+
+.card .stats h4 {
+  font-family: 'Arima Madurai', cursive;
+  font-weight: 300;
+  margin-bottom: 5px;
+}
+
+.card-content .stats p {
+  color: #777777;
+}
+
+.title {
+  color: #506A85;
+  text-align: center;
+  font-weight: 300;
+  font-size: 44px;
+  margin-bottom: 90px;
+  line-height: 90%;
+}
+
+.title small {
+  font-size: 17px;
+  color: #999;
+  text-transform: uppercase;
+  margin: 0;
+}
+
+.space-30 {
+  height: 30px;
+  display: block;
+}
+
+.space-50 {
+  height: 50px;
+  display: block;
+}
+
+.space-200 {
+  height: 200px;
+  display: block;
+}
+
+.white-board {
+  background-color: #FFFFFF;
+  min-height: 200px;
+  padding: 60px 60px 20px;
+}
+
+.ct-heart {
+  color: #F74933;
+}
+
+pre.prettyprint {
+  background-color: #ffffff;
+  border: 1px solid #999;
+  margin-top: 20px;
+  padding: 20px;
+  text-align: left;
+}
+
+.atv,
+.str {
+  color: #05AE0E;
+}
+
+.tag,
+.pln,
+.kwd {
+  color: #3472F7;
+}
+
+.atn {
+  color: #2C93FF;
+}
+
+.pln {
+  color: #333;
+}
+
+.com {
+  color: #999;
+}
+
+.btn-simple {
+  opacity: .8;
+  color: #666666;
+  background-color: transparent;
+}
+
+.btn-simple:hover,
+.btn-simple:focus {
+  background-color: transparent;
+  box-shadow: none;
+  opacity: 1;
+}
+
+.btn-simple i {
+  font-size: 16px;
+}
+
+
+
+/*       Fix bug for IE      */
+
+@media screen and (-ms-high-contrast: active),
+(-ms-high-contrast: none) {
+  .front,
+  .back {
+    -ms-backface-visibility: visible;
+    backface-visibility: visible;
+  }
+
+  .back {
+    visibility: hidden;
+    -ms-transition: all 0.2s cubic-bezier(.92, .01, .83, .67);
+  }
+  .front {
+    z-index: 4;
+  }
+  .card-container:not(.manual-flip):hover .back,
+  .card-container.manual-flip.hover .back {
+    z-index: 5;
+    visibility: visible;
+  }
+}
+
+.footer-body {
+  margin: 0px;
+  text-align: center;
+}
+
+.btn {
+  cursor: pointer;
+}
+
+.fa {
+  opacity: 0.7;
+}
+
+.quiz-th {
+  background-color: #66BB6A;
+  color: #fff;
+}
+
+.no-data {
+  background-color: #eff0f1;
+  height: 38px;
+  padding: 4px;
+  font-weight: 300;
+}
+
+tbody {
+  font-weight: 300;
+}
+
+.list-group {
+  margin-bottom: 6px;
+}
+
+.list-group li {
+  text-align: left;
+}
+
+@media(min-width: 768px) and (max-width: 992px) {
+  .no-data {
+    font-size: 11px;
+  }
+}
+
+a {
+  cursor: pointer;
+}
+
+/*Start here css add by Rohit*/
+.back-button {
+  margin-left: 10px;
+  color: #4f6f8f;
+  border: none;
+  font-size: 19px;
+  text-align: right;
+  padding-bottom: 5px;
+}
+
+.back-button:hover {
+  color: #fff !important;
+  background-color: #4f6f8f;
+  border: #4f6f8f;
+}
+
+.card-content[_ngcontent-c4] .stats[_ngcontent-c4] {
+  display: block;
+  float: left;
+  width: 19.333%;
+  text-align: center;
+}
+
+.list {
+  color: #000 !important;
+  /*font-size: 14px;*/
+  text-decoration: none;
+  font-size: 13px;
+  line-height: 16px;
+}
+
+.table {
+  background-color: #fff;
+}
+
+tr {
+  cursor: pointer;
+}
+td:hover {
+  background-color:#F8F8F8;
+}
+
+th {
+  color: #384047;
+  font-size: 14px;
+  font-weight: 400;
+}
+
+.heading {
+ padding: .75rem;
+ vertical-align: top;
+ font-size:22px;
+}
+
+
+@media(max-width: 768px) {
+  .back-button {
+    color: #4f6f8f;
+    border: none;
+    font-size: 12px;
+    text-align: left;
+    padding-right: 5px;
+    padding-left: 5px;
+  }
+  .icon-title {
+    font-size: 12px;
+  }
+}
+
+select {
+  background-position-y: -2px;
+}
+.card-header {
+  padding: .5rem 0rem 0rem .1rem;
+}
+a {
+  text-decoration: none;
+}
+.dropdown-menu {
+  right: 0px;
+  left: -90px;
+}
+
+/*End here css add by Rohit*/
+
+.bg-clr {
+  background-color: #fff;
+  margin-bottom: 10px;
+}
+.rating-custm {
+  padding: 7px;
+}
+
+.pending {
+  color: #dc3545;
+  float: right;
+}
+.in-progress {
+  color: #ffc107;
+  float: right;
+}
+.complete {
+  color: #28a745;
+  float: right;
+}
+
+
+/* Start here new css for course detail page by Rohit*/
+.topicHeading {
+		color: #384047;
+    font-weight: 700;
+    /*text-indent: -16px;*/
+    font-size: 12px;
+}
+.pL20pT5fW300 {
+	padding-left: 20px;
+	padding-top:5px;
+	font-weight: 300;
+}
+.pL10 {
+  padding-left: 10px;
+}
+/* End here new css for course detail page by Rohit*/

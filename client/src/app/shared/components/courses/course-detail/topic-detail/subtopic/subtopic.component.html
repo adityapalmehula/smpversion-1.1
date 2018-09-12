@@ -1,0 +1,100 @@
+<div class="container-section">
+  <div class="row">
+    <div class="col-md-1 pl-0 pr-0">
+    </div>
+    <div class="col-md-11">
+      <div class="container-fluid">
+        <div class="row breadcrumb">
+          <div class="col-8 text-left mt-2 mb-1 ">
+            <a class="page-heading" [routerLink]="['/', urlPrefix, 'courses']"><i class="fa fa-home" aria-hidden="true"></i> courses</a> /
+            <a class="page-heading" [routerLink]="['/', urlPrefix, 'courses',courseId]"><i class="fa fa-home" aria-hidden="true"></i> Topics</a> /
+            <a class="page-heading" [routerLink]="['/', urlPrefix, 'courses',courseId,'topics',topicId]"><i class="fa fa-home" aria-hidden="true"></i> Subtopics</a> /
+            <span *ngIf="!subtopicId" class="breadcrumb-active">Add a new subtopic</span>
+            <span *ngIf="subtopicId" class="breadcrumb-active">Update subtopic</span>
+          </div>
+          <div class="col-4 text-right">
+            <a class="btn btn-outline-info back" [routerLink]="['/', urlPrefix, 'courses',courseId,'topics',topicId]"><i class="fa fa-arrow-circle-o-left" aria-hidden="true"></i> Back
+            </a>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12 pt-4">
+            <h2 *ngIf="!subtopicId" class="legend">Add a new subtopic</h2>
+            <h2 *ngIf="subtopicId" class="legend">Update subtopic</h2>
+          </div>
+        </div>
+        <div *ngIf="backendErrorMsg">
+          <ul>
+            <li class="backend-errors" *ngFor="let msg of backendErrorMsg.slice().reverse() ">{{msg}}</li>
+          </ul>
+        </div>
+        <form class="form-horizontal" role="form" [formGroup]="formSubTopic">
+          <div class="row">
+            <div class="col-12 pb-4">
+              <div class="form-group ">
+                <div class="row">
+                  <label for="title" class="col-sm-2 text-center form-label">
+                    <span class="form_required">*</span> Title
+                  </label>
+                  <div class="col-sm-8">
+                    <input type="text" class="form-control" formControlName="subTopicTitle" />
+                    <div *ngIf="formSubTopic.get('subTopicTitle').touched && formSubTopic.get('subTopicTitle').errors">
+                     <div class="error">
+                      <div *ngIf="formSubTopic.get('subTopicTitle').errors.minlength">
+                        {{Config.title.minlength[1]}}
+                      </div>
+                      <div *ngIf="formSubTopic.get('subTopicTitle').errors.maxlength">
+                        {{Config.title.maxlength[1]}}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row pt-4">
+                <label for="description" class="col-sm-2 text-center form-label">
+                  <span class="form_required">*</span> Description
+                </label>
+                <div class="col-sm-8">
+                  <ckeditor class="form-control" [(ngModel)]="subTopicDescription" debounce="500" [ngModelOptions]="{standalone: true}">
+                  </ckeditor>
+                </div>
+              </div>
+              <div class="row pt-4" *ngIf="subtopicId">
+                <label for="description" class="col-sm-2 text-center form-label">
+                  <span class="form_required">*</span> Status
+                </label>
+                <div class="col-sm-8">
+                  <div class="form-check form-check-inline">
+                    <label class="form-check-label">
+                      <input class="form-check-input" type="radio" name="statusCheck" [value]="status.ACTIVE" checked formControlName="statusCheck"> Active
+                    </label>
+                  </div>
+                  <div class="form-check form-check-inline">
+                    <label class="form-check-label">
+                      <input class="form-check-input" type="radio" name="statusCheck" [value]="status.INACTIVE" formControlName="statusCheck"> Inactive
+                    </label>
+                  </div>
+                </div>
+              </div>
+              <div class="row pt-4 text-center">
+                <div class="col-sm-2"></div>
+                <div class="col-sm-8">
+                  <button type="button" class="btn btn-default" (click)="intializeForm()">
+                    Reset
+                  </button>
+                  <button type="button" class="btn btn-save" *ngIf="!subtopicId" title="Save" [disabled]="!formSubTopic.valid" (click)="saveSubTopic(formSubTopic)" [ngStyle]="{'cursor':formSubTopic.valid ? 'pointer' : 'not-allowed' }">
+                    Save
+                  </button>
+                  <button type="button" class="btn btn-save" *ngIf="subtopicId" title="Update" [disabled]="!formSubTopic.valid" (click)="updateSubTopic(formSubTopic)" [ngStyle]="{'cursor':formSubTopic.valid ? 'pointer' : 'not-allowed' }">
+                    Update
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+</div>

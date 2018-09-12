@@ -1,0 +1,52 @@
+.base {
+  font-family: RobotoDraft, 'Helvetica Neue', Helvetica, Arial;
+}
+
+.base > h4 {
+  font-weight: 500;
+  font-size: 22px;
+}
+
+.filter > h4, label {
+  font-weight: 500;
+  font-size: 15px;
+}
+
+.fliter-btn {
+ line-height: 4.90rem;
+ vertical-align: middle;
+}
+
+.flow-h1 {
+  font-size: 1.3rem;
+  font-weight: 500;
+  margin-bottom: 0px !important;
+}
+.filter-panel {
+  background-color: #fff !important;
+  border-left-color: rgba(0, 0, 0, 0.125);
+  border-right-color: rgba(0, 0, 0, 0.125);
+  border-bottom-color: rgba(0, 0, 0, 0.125);
+  border-left-width: 1px;
+  border-right-width: 1px;
+  border-bottom-width: 1px;
+  border-top-color: #fff;
+  box-sizing: border-box;
+  border-style: solid;
+}
+.mendatoryField {
+  color:red;
+}
+.rd label {
+  font-weight: 500;
+  line-height: 1.84rem;
+  color: #757575;
+}
+
+.rd input {
+  vertical-align: sub;
+}
+input[type="checkbox"], input[type="radio"] {
+  width: 21px; 
+  height: 21px;
+}

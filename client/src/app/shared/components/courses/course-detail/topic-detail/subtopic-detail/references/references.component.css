@@ -1,0 +1,34 @@
+.form-group {
+	padding-top: 10px;
+}
+.references {
+	margin-bottom: 1%;
+}
+a {
+	text-decoration: none;
+	color: inherit;
+}
+
+.description {
+	color:#808080;
+}
+
+.addButton {
+	margin-bottom: 2%;
+}
+
+.headingTitle {
+  color: #384047 !important;
+  margin-bottom: 0px;
+  font-weight: 300 !important;
+  font-size: 16px !important;
+}
+.referrence-url:hover {
+  text-decoration-line: underline;
+}
+.referrence-url {
+  color: #0099FF !important;
+}
+.add-new {
+	padding-bottom: 5px;
+}

@@ -1,0 +1,29 @@
+const validationForm=function(data){
+  let ifError = false;
+  let emailError =false;
+  Object.keys(data).filter(function(d){
+   if(data[d] === ''|| data[d] === null) {
+    ifError = true;
+    }
+         
+});
+   Object.keys(data).filter(function(data){
+   if(data === 'email') {
+     ifError = true;
+    emailError = true;
+    }
+       
+});
+
+  return ifError;
+
+}
+
+module.exports={
+  validationForm: validationForm,
+  // isValidEmail: isValidEmail,
+  // isNumber: isNumber,
+  // isOnlyAlpahabetic: isOnlyAlpahabetic,
+  // isValidMobNo: isValidMobNo,
+  // formValidation: formValidation,
+}	

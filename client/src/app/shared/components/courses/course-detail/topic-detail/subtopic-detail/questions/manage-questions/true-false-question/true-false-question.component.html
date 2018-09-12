@@ -1,0 +1,90 @@
+<div class="col-md-12 qus-form-container">
+ <form class="row form-horizontal qus-form" [formGroup]="questionForm" >
+  <div class="form-group col-md-6">
+    <label for="level">Level<span class="mendatoryField">*</span></label><br>
+    <select class="form-control" formControlName="level">
+      <option value="" disabled selected hidden>Select level </option>
+      <option *ngFor="let level of levels" [attr.value]="level"> {{level}}</option>
+    </select>
+    <div *ngIf="questionForm.get('level').touched && questionForm.get('level').errors">
+     <div class="error-msg ml-4" *ngIf="questionForm.get('level').errors.required">
+       Level is required
+     </div>
+   </div>
+ </div>
+
+ <div class="form-group col-md-6">
+  <label for="status">Status<span class="mendatoryField">*</span></label>
+  <div class="row col-md-12 radio-btn">
+    <label class="form-check-label2">
+      <input type="radio" class="form-check-input checkbox-custom" name="status" formControlName="status" [value] = 'status.ACTIVE' >
+      Active
+    </label>
+    <label class="form-check-label">
+      <input type="radio" class="form-check-input checkbox-custom"
+      name="status" formControlName="status" [value]='status.INACTIVE'>
+      In Active
+    </label>
+  </div>
+</div>
+
+<div class="form-group col-md-12 full">
+  <label for="status">Question<span class="mendatoryField">*</span></label>
+  <textarea formControlName="question" ></textarea> <!-- <i class="fa fa-image" (click)="openImgPopup(0)" title="Upload image"></i> -->
+  <div *ngIf="questionForm.get('question').touched && questionForm.get('question').errors">
+   <div class="error-msg ml-4" *ngIf="questionForm.get('question').errors.required">Question is required</div>
+ </div>
+</div>
+
+<div class="row col-md-12 options" formArrayName="options">
+  <div class="form-group col-md-6" *ngFor="let prop of questionForm.get('options')?.controls;
+  let i = index"  >
+  <!--  <label>Option{{i+1}}</label> -->
+  <div class="rd">
+    <input type="radio" name="answer" [value]="i" [checked]="isTrue(i)">
+    <label for="{{i}}"><input type="text" [formControlName]="i" readonly></label>
+  </div>
+</div>
+</div>
+
+<div class="form-group col-md-12 full">
+  <label for="solution">Solution</label>
+  <textarea formControlName="solution"></textarea>
+  <div *ngIf="questionForm.get('solution').touched && questionForm.get('solution').errors">
+  </div>
+</div>
+<!-- question pannel div end  here -->
+<!-- button div starts from here -->
+<div class=" col-12  form-actions">
+ <button *ngIf="formType=='add'" type="submit" [disabled]="questionForm.invalid" class="btn btn-primary" (click)="addQuestion()">Submit</button>
+ <button *ngIf="formType=='edit'" type="submit" class="btn btn-primary"  [disabled]="questionForm.invalid" (click)="update()">Update</button>
+ <button type="button" class="btn btn-default" [routerLink]="['/', urlPrefix, 'courses', courseId,'topics',topicId,'subtopics',subTopicId]"   [queryParams]="{'tab':'questions'}">Cancel</button>
+</div>
+</form>
+</div>
+
+<button style="display: none;" data-toggle="modal"  data-target="#imgUploadModal" #imgUpload></button>
+
+<!-- image upload modal start here  -->
+<div class="modal fade" id="imgUploadModal" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static" data-keyboard="false" #imgUploadModal>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header modalColor">
+        <h6 class="modal-title">Upload Picture</h6>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="closeModal()">
+          <span aria-hidden="true" >&times;</span>
+        </button>
+      </div>
+      <!-- <div class="error text-center" *ngIf="imgError">{{imgError}}</div> -->
+     <!--  <div class="modal-body text-center">
+        <img class="card-img-top profilepic img-fluid" [src]="imgPath">
+      </div> -->
+      <div class="modal-footer">
+        <input type="file" id="file" class="form-control uploadFile" accept=".jpg,.jpeg,.png" #imgInput>
+        <div class="col-sm-3">
+          <button type="button" class="btn btn-secondary upload" (click)="uploadFile()">Upload</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

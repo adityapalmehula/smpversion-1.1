@@ -1,0 +1,156 @@
+<div class="container-section">
+  <div class="row">
+    <div class="col-md-1 pl-0 pr-0">
+    </div>
+    <div class="col-md-11">
+      <div class="container-fluid">
+        <div class="row breadcrumb">
+          <div class="col-8 text-left mt-2 mb-1 ">
+            <h3 class="page-heading">Schools</h3>
+            <div *ngxPermissionsOnly="permissions; else elseBlock; then thenBlock"></div>
+            <ng-template #elseBlock>
+              <div></div>
+            </ng-template>
+            <ng-template #thenBlock>
+              <a class="btn btn-outline-info add-new" [routerLink]="['/', urlPrefix, 'schools', 'add']"><i class="fa fa-plus-circle"> </i> Add</a>
+            </ng-template>
+          </div>
+          <div class="col-4 text-right">
+            <a class="btn btn-outline-info back" [routerLink]="['/', urlPrefix]"><i class="fa fa-arrow-circle-o-left" aria-hidden="true"></i> Back
+						</a>
+          </div>
+        </div>
+        <div class="row col-md-12">
+          <div class="form-group col-md-3">
+            <label for="type">Date Range: </label>
+            <input type="text" name="daterangeInput" daterangepicker [options]="options" (selected)="selectedDate($event, daterange)" />
+            <i (click)="clearDateFilter()" class="fa fa-times-circle mt-1" aria-hidden="true" title="Clear"></i>
+          </div>
+          <div class="form-group col-md-3">
+            <label for="type">Status: </label>
+            <angular2-multiselect [ngModelOptions]="{standalone: true}" [data]="statusList" [(ngModel)]="selectedStatus" [settings]="statusConfig" (onSelect)="onStatusChange($event)" (onDeSelect)="onStatusChange($event)" (onSelectAll)="onStatusChange($event)" (onDeSelectAll)="onStatusChange($event)"></angular2-multiselect>
+          </div>
+          <div class="form-group col-3"></div>
+          <div class="form-group col-md-3">
+            <input class="mt-5 p-3" type="text" [(ngModel)]="searchText" placeholder="Search.." (keydown)="searchUser($event)" (input)="searchInputChange()">
+            <i (click)="clearSearch()" class="fa fa-times-circle mt-1" aria-hidden="true" title="Clear"></i>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-2 mt-1">
+            <input type="checkbox" [(ngModel)]='selectAllCheckbox' (change)="selectAllSchool($event)"> Select All
+          </div>
+          <div class="col-8"></div>
+          <div class="col-2 mt-1 pl-0">
+            <select class="form-control" (change)="setStatus($event)">
+              <option value="">Set Status</option>
+              <option *ngFor="let status of configStatus">{{status}}</option>
+            </select>
+          </div>
+        </div>
+        <div class="row cust-table">
+          <div class="col-md-12 mt-4 cust-table px-2">
+            <div class="table-panel">
+              <div class="table-responsive bg-white">
+                <table class="table v-middle">
+                  <thead class="">
+                    <tr class="col-md-12">
+                      <th></th>
+                      <th>Name</th>
+                      <th>Email</th>
+                      <th>Mobile</th>
+                      <th>Address</th>
+                      <th>City</th>
+                      <th>Status</th>
+                      <th>Send Mail</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let school of schools; let i= index; ">
+                      <td scope="row">
+                        <input type="checkbox" [checked]="school.selected" (change)="selectSchool($event, school)">
+                      </td>
+                      <td>
+                        <a href="javascript:void(0)" (click)="getSchoolDetails(school._id,i)" data-toggle="modal" data-target="#sch-details">{{school.name}}</a>
+                      </td>
+                      <td>{{school.email}}</td>
+                      <td>{{school.mobile}}</td>
+                      <td>{{school.address.address}}</td>
+                      <td>{{school.address.city}}</td>
+                      <td>{{school.status}}</td>
+                      <td>
+                        <button *ngIf="!school.isMailSend" class="btn btn-success btn-sm" (click)="sendWelcomeMail(school)">Welcome Mail</button>
+                        <button *ngIf="school.isMailSend" class="btn btn-info btn-sm" (click)="sendWelcomeMail(school)">Resend Mail</button>
+                      </td>
+                      <td>
+                        <button class="btn edt-btn btn-sm"><a href="javascript:void(0)" [routerLink]="['/', urlPrefix, 'schools', 'edit', school._id]"><i class="fa fa-pencil" title="Edit School"></i></a></button>
+                        <button class="btn del-btn btn-sm mr-1" (click)="delete(school._id)"><a href="javascript:void(0)"> <i class="fa fa-trash" title="Delete School"></i></a></button>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal fade" id="sch-details" tabindex="-1" role="dialog" aria-labelledby="title" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="title">School Details</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" #close>
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div id="accordion" role="tablist" aria-multiselectable="true">
+          <div class="card-block row">
+            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+              <table class="table">
+                <tbody>
+                  <tr>
+                    <td>School Name</td>
+                    <td>{{schDetails.name}}</td>
+                  </tr>
+                  <tr>
+                    <td>Email</td>
+                    <td>{{schDetails.email}}</td>
+                  </tr>
+                  <tr>
+                    <td>Mob. No.</td>
+                    <td>{{schDetails.mobile}}</td>
+                  </tr>
+                  <tr>
+                    <td>Address</td>
+                    <td>{{schDetails.address}}</td>
+                  </tr>
+                  <tr>
+                    <td>City</td>
+                    <td>{{schDetails.city}}</td>
+                  </tr>
+                  <tr>
+                    <td>State</td>
+                    <td>{{schDetails.state}}</td>
+                  </tr>
+                  <tr>
+                    <td>Zip Code</td>
+                    <td>{{schDetails.zipCode}}</td>
+                  </tr>
+                  <tr *ngIf="schDetails.website">
+                    <td>Website</td>
+                    <td><a href="javascript:void(0)" (click)="redirectToWebsite(schDetails.website)">{{schDetails.website}}</a></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

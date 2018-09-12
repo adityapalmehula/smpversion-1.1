@@ -1,0 +1,156 @@
+.reg-form-container{
+  padding: 17px;
+}
+.img-size {
+  height: 60px;
+  max-width: 60px;
+  border-radius: 50%;
+}
+.btn-modify{
+	background-color: #4f6f8f !important;
+	border-color: #4f6f8f !important;
+	color: white;
+}
+.reg-form {
+  height: 210px;
+  height: 100%;
+  background: #fff;
+  position: relative;
+  padding: 5px;
+  border-radius: 10px;
+  padding-top: 20px;
+}
+.reg-form input, textarea {
+  border: none;
+  border-bottom: 1px solid rgb(210, 210, 210);
+  color: #333333;
+  font-size: 17px;
+  font-weight: normal;
+  line-height: 16px;
+  outline: none;
+  width: 90%;
+  padding-top: 10px;
+  padding-left: 4px;
+  padding-right: 20px;
+  margin-top: 6px;
+}
+.mendatoryField{
+  color:red;
+}
+.flow-h1 {
+  margin-top: 45px;
+  margin-bottom: 30px;
+  font-size: 36px;
+  line-height: 40px;
+  text-align: center;
+  font-weight: lighter;
+}
+.reg-form select {
+  padding: 1px;
+  border: none;
+  margin-top: 13px;
+  border-bottom: 1px solid rgb(210, 210, 210);
+  margin-left: -2px;
+  width: 92%;
+  display: inline;
+  /*color: rgb(210, 210, 210);*/
+  font-weight: 500;
+
+}
+.fst-opt {
+ color: rgb(210, 210, 210);
+}
+.form-actions {
+  margin-top: 30px;
+  text-align: center;
+  margin-bottom: 30px;
+}
+.cust{
+  padding-left: 25px;
+  padding-right: 25px;
+}
+.back-button {
+  padding-top: 10px;
+}
+.page-heading {
+  font-size: 22px;
+}
+.form-check-input {
+  width: 20% !important;
+  margin-left: 0px;
+}
+.reg-form select  {
+  margin-top: 0px !important;
+}
+.reg-form input  {
+  margin-top: 0px !important;
+}
+@media(max-width: 568px) {
+ .img-size {
+  font-size: 12px;
+}
+}
+@media(max-width: 768px) {
+  label {
+   font-size: 15px;
+ }
+}
+
+/*drag and drop*/
+div.scroll-list {
+  overflow: auto;
+  max-height: 70vh;
+}
+
+.drag-over {
+  border: #ff525b dashed 2px;
+}
+
+.drag-hint {
+  border: #ffc100 dashed 2px;
+  /*transition: all .2s ease-in-out;*/
+  /*transform: scale(1.05);*/
+}
+
+.drag-target-border {
+  border: #00bfff dashed 2px;
+}
+.learning-section {
+  margin-top: 10px;
+  padding-top: 10px;
+}
+.card-primary {
+  background-color: #4f6f8f;
+  border-color: #4f6f8f;
+  color: #fff;
+}
+.fa-chevron-down {
+  font-size: 10px;
+}
+.add-learning-path {
+  padding: 20px;
+}
+.form-control {
+  margin-bottom: 10px;
+}
+
+.content-list {
+  font-size: 15px;
+  cursor: pointer;
+}
+.justify-content-between {
+  cursor: pointer;
+}
+.error-msg {
+  position:initial;
+  margin-top: 0px;
+  padding-bottom: 10px;
+}
+.learningData {
+  cursor: pointer;
+}
+@media (min-width: 768px) {
+.stepper-content {
+  width: 230px;
+}
+}

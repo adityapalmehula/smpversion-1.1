@@ -1,0 +1,250 @@
+
+<div class="container-section">
+
+	<div class="row">
+		<div class="col-md-1 pl-0 pr-0">
+      <!-- <div class="sidebar-container">
+        <app-sidebar></app-sidebar>
+      </div> -->
+    </div>
+    <div class="col-md-11 pr-0">
+    <!--   <div class="row add-new-container">
+    <div class="col-md-3 ">
+      <h3 class="page-heading">My Courses</h3>
+    </div>
+    <div class="col-md-6">
+      <div class="row">
+        <div class="col-12 text-right">
+          <input  type="text" class="form-control" placeholder="Enter text to search ..." [(ngModel)]="searchText" name="">
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3 text-right">
+      <a class="btn btn-outline-info back" [routerLink]="['/', urlPrefix]"><i class="fa fa-arrow-circle-o-left" aria-hidden="true"></i> Back
+      </a>
+    </div>
+  </div>
+-->
+ <!--  <div *ngIf="errorMessage" class="alert alert-danger danger-alert text-center" role="alert">
+    <strong>{{errorMessage}}</strong>
+  </div>
+-->
+
+<div class="row">
+	<div class="col-md-9 col-sm-12 pb-1 leftContent">
+		<div class="row add-new-container">
+			<div class="col-md-6 pb-4">
+				<h3 class="page-heading">My Courses</h3>
+			</div>
+			<div class="col-md-6 pl-0 pb-4">
+				<div class="row">
+					<div class="col-12 text-right pt-2">
+						<input  type="text" class="form-control" placeholder="Enter text to search ..." [(ngModel)]="searchText" (keyup)="onSearching($event.target.value)" name="">
+					</div>
+				</div>
+			</div>
+  <!--     <div class="col-md-3 text-right">
+        <a class="btn btn-outline-info back back-button" [routerLink]="['/', urlPrefix]"><i class="fa fa-arrow-circle-o-left" aria-hidden="true"></i> Back
+        </a>
+      </div> -->
+      <div class="text-center" *ngIf="courseStatus">
+      <p>There is no course assigned to you. Please go to all courses and assign course yourself.</p>
+      </div>
+      <div class="row content" *ngFor="let course of courses; let i=index; " data-z="0.5">
+      	<div class="col-md-3 pT10 text-center">
+
+      		<img *ngIf="course.icon" class="card-img-top img-fluid" [attr.src]="courseImgPath+course.icon" [attr.alt]="course?.name">
+      		<div *ngIf="!course.icon">
+      			<div *ngIf="i%2===0; else oddImg; then evenImg"></div>
+      			<ng-template #evenImg>
+      				<img class="card-img-top img-fluid" src="{{imgPath}}/course-default.jpg" [attr.alt]="course.title">
+      			</ng-template>
+      			<ng-template #oddImg>
+      				<img class="card-img-top img-fluid" src="{{imgPath}}/course-default2.jpeg" [attr.alt]="course.title">
+      			</ng-template>
+      		</div>
+      	</div>
+      	<div class="col-md-9 pT10">
+      		<div class="row mB10">
+      			<div class="col-12 pl-0">
+      				<a class="text-display-1" href="javascript:void(0)" [routerLink]="['/', urlPrefix, 'course-details', course?.courseId]">{{course?.title | slice:0:40}}<span *ngIf="course?.title?.length>40">..</span></a>
+      			</div>
+           <!--  <div class="col-6 text-right">
+            <span> Status : {{course.status}}</span>
+          </div> -->
+          <div class="mB10 shortDescription">
+          	<span class="ins-title" [innerHtml]="course?.shortDescription | slice:0:100">
+          		<span *ngIf="course?.shortDescription?.length>100">..</span></span>
+          	</div>
+          </div>
+         <!--  <div class="mB10">
+          <star-rating-comp class="rating" [readOnly]="true" [starType]="'svg'" [rating]="course.course.rating"></star-rating-comp>
+          <span class="m-1">{{course.course.rating}}</span>
+          <span class="m-1">({{course.course.totalUserRatings}} Ratings)</span>
+        </div> -->
+        
+
+        <hr>
+        <div class="row pT10">
+        	<div class="col-6 text-left pL0" >
+        		<h6 class="totalTopics">Total Topics : {{course?.totalTopics}}</h6>
+        	</div>
+        	<div class="col-6 text-right mB10 panel-body">
+        		<button *ngIf="course.status!='In Progress'" class="btn btn-primary btn-view btn-result" [routerLink]="['/', urlPrefix, 'course-details', course?.courseId]">view</button>
+        	<button *ngIf="course.status=='In Progress'" class="btn btn-success btn-view btn-result" [routerLink]="['/', urlPrefix, 'course-details', course?.courseId,'play-contents']">Resume</button>
+        	</div>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="totalItems && totalItems==0 " class="text-center">
+    	<h2>There is no course</h2>
+    </div>
+  </div>
+  <!-- pagination start here -->
+  <div class="col-12 custom-pgn" *ngIf="totalItems && totalItems>itemsPerPage">
+  	<pagination class="pagination" [totalItems]="totalItems" [itemsPerPage]="itemsPerPage" [(ngModel)]="currentPage" (pageChanged)="pageChanged($event)"></pagination>
+  </div>
+  <!-- pagination end here -->
+</div>
+
+<div class="col-md-3 col-sm-12 leftContent rightBar">
+    <ul class="list-group">
+            <li *ngIf="currentApp === apps[0]" class="list-group-item section-heading rightContent-heading  border-0">Board</li>
+            <li *ngIf="currentApp === apps[1]" class="list-group-item section-heading rightContent-heading  border-0">Categories</li>
+            <li *ngIf="currentApp === apps[2]" class="list-group-item section-heading rightContent-heading  border-0">Board</li>
+            <div class="btn-group">
+              <button *ngIf="!textSelected" type="button" class="btn btn-info dropdown-toggle button-size" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Select Your Board 
+              </button>
+              <button *ngIf="textSelected" type="button" class="btn btn-info dropdown-toggle button-size" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                {{textSelected}}
+              </button>
+              <div class="dropdown-menu button-size" *ngFor="let item of categoryDetailsdata">
+                <button class="dropdown-item menu-item" (click)="getCourseBasisCategory(item._id,item.name)">{{item.name}}</button>
+              </div>
+            </div>
+             <!-- <li class="list-group-item  border-0 active" id="category"><a href="javascript:void(0)" (click)="loadAllData()">All Categories</a></li>
+            <li class="list-group-item border-0" [attr.id]="item._id" *ngFor="let item of categoryDetails"><a href="javascript:void(0)" class="category-item" (click)="getCourseBasisCategory(item._id)">{{item.name}}</a></li> -->
+          </ul>
+          <ul class="list-group sidebar-modify pb-2">
+            <li *ngIf="currentApp === apps[0]" class="list-group-item section-heading rightContent-heading  border-0">Select Class</li>
+            <li *ngIf="currentApp === apps[1]" class="list-group-item section-heading rightContent-heading  border-0">Subcategories</li>
+            <li *ngIf="currentApp === apps[2]" class="list-group-item section-heading rightContent-heading  border-0">Select Class</li>
+            <div class="dropdown">
+              <button *ngIf="!classSelected" class="btn btn-info dropdown-toggle button-size" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Select Your Class
+              </button>
+               <button *ngIf="classSelected" class="btn btn-info dropdown-toggle button-size" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                {{classSelected}}
+              </button>
+              <div class="dropdown-menu menu-fixed button-size" aria-labelledby="dropdownMenuButton" *ngFor="let item of selectedSubcategory">
+                <a class="dropdown-item menu-item" (click)="getCategory(item)">{{item}}</a>
+              </div>
+            </div>
+            
+          </ul>
+         <!--  <div class="btn-group ml-2" role="group" aria-label="Basic example" *ngFor="let item of subCategories">
+            <button type="button" class="btn btn-secondary btn-modify" (click)="getCategory(item.name)">{{item.name}}</button>
+          </div> -->
+
+   <!--  <ul class="list-group">
+      <li class="list-group-item section-heading rightContent-heading">Categories</li>
+      <li class="list-group-item list-content" (click)="loadAllData()"><a href="javascript:void(0)">All Categories</a></li>
+      <li class="list-group-item list-item list-content" *ngFor="let item of categoryDetails"><a href="javascript:void(0)" (click)="getCourseBasisCategory(item._id)">{{item.name}}</a></li>
+    </ul> -->
+   <!--  <ul class="list-group">
+    	<li class="list-group-item section-heading rightContent-heading  border-0">Categories</li>
+    	<li class="list-group-item  border-0 active" id="category"><a href="javascript:void(0)" (click)="loadAllData()">All Categories</a></li>
+    	<li class="list-group-item border-0" [attr.id]="item._id" *ngFor="let item of categoryDetails" ><a href="javascript:void(0)" class="category-item" (click)="getCourseBasisCategory(item._id)">{{item.name}}</a></li>
+    </ul> -->
+  </div>
+
+
+
+
+
+
+
+<!-- <div class="row content">
+  <div class="col-lg-2 col-md-3 col-sm-12 content-list" *ngFor="let data of courses; let i=index;">
+    <div class="card card-custom">
+
+      <div *ngIf="i%2===0; else oddImg; then evenImg"></div>
+      <ng-template #evenImg>
+        <img class="card-img-top card-img-custom" src="{{imgPath}}/course-default.jpg" alt="Card image cap">
+      </ng-template>
+      <ng-template #oddImg>
+        <img class="card-img-top card-img-custom" src="{{imgPath}}/course-default2.jpeg" alt="Card image cap">
+      </ng-template>
+
+      <div class="card-body">
+        <p class="card-text title-cust">{{data.title}}<br/><span class="ins-title">{{data.shortDescription}} </span></p>
+        <span class="ins-title" *ngIf="data.createdByName">Created by: {{data.createdByName}}</span><br/>
+        <span class="row ins-title">
+          <star-rating-comp [readOnly]="true" [starType]="'svg'" [rating]="data.rating"></star-rating-comp>
+          <span class="m-1">{{data.rating}}</span> <span *ngIf="data.userRatings"
+          class="m-1">({{data.userRatings?.length}})</span>
+        </span><br/>
+        <span class="prc-box">
+
+          <button *ngIf="data.isPaid" type="button" class="btn btn-primary btn-sm btn-course" (click)="takeCourse(data._id)">Take Course</button>
+
+          <button *ngIf="data.isPaid && data.activationMethod=='Paid'" type="button" class="btn btn-primary btn-sm btn-course" (click)="buyCourse(data._id)">Buy Now</button>
+
+           <button *ngIf="data.isPaid && data.activationMethod=='Promotion'" type="button" class="btn btn-primary btn-sm btn-course" (click)="subscribeCourse(data.activationMethod,data._id,share)" data-toggle="modal">Subscribe</button>
+
+             <button *ngIf="data.isPaid && data.activationMethod=='Promotion'" type="button" class="btn btn-primary btn-sm btn-course"  [routerLink]="['/', urlPrefix, 'courses','course-preview', data._id]" data-toggle="modal">Subscribe</button>
+
+          <span>
+            <span class="act-prc-box"></span>
+            <span class="act-prc"><i class="fa fa-inr"></i>{{data.price?.actual}}</span>
+            <span><i class="fa fa-inr"></i>{{data.price?.offered}}</span>
+          </span>
+
+        </span>
+      </div>
+    </div>
+  </div> -->
+</div>
+</div>
+</div>
+
+<!-- <button  data-toggle="modal" class="btn btn-primary share-button" data-target="#shareModal" #share></button> -->
+<!-- Modal div start here -->
+<!-- <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="shareModal" aria-hidden="true" data-backdrop="static" data-keyboard="false" id="shareModal">
+  <div class="modal-dialog">
+  	<div class="modal-content"> -->
+  		<!-- Modal Header -->
+     <!--  <div class="modal-header">
+        <h4 aria-hidden="true" class="modal-heading"><strong>Interested? Share to Friends, Get Free Access & Let the World Know
+         Benefits of Sharing:</strong></h4>
+         <button type="button" class="close" data-dismiss="modal" title="Close" (click)="closeModal()" aria-label="Close" #close>
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div> -->
+      <!-- Modal Body -->
+    <!--   <div class="modal-body row">
+        <div clas="col-xl-8 col-lg-8 col-md-12 col-sm-12" style="margin-left: 15px !important;">
+          <ul class="ml-20">
+            <li><strong>Free access</strong> to the course for 1 month.</li>
+            <li><strong>Free videos</strong> in the playlists</li>
+            <li><strong>Free Assessments </strong></li>
+            <li><strong>Free Notes + Keypoints </strong></li>
+            <li>No restrictions on any material given in the course </li>
+            <li>Friends can also get the access of the course</li>
+            <li>Community contributions to make the learning better</li>
+          </ul> 
+          Wait no more! Hit the “share” button and get started now…
+        </div>
+        <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 text-center">
+          <img  src="{{imgPath}}/offer.jpeg" alt="Card image cap">
+        </div>
+      </div>
+      <div class="modal-footer">
+       <a href="javascript:void(0)" class="btn btn-primary fb-btn" (click)=socialMediaShare()><span class="fa fa-facebook fa-1x"></span>&nbsp;&nbsp;Share</a>
+     </div> -->
+     <!-- Modal Footer -->
+ <!--   </div>
+ </div>
+</div> -->
+<!-- Modal div end here -->

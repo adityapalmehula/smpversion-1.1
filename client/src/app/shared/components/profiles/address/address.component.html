@@ -1,0 +1,156 @@
+<div class="container-fluid ">
+  <div class="tab-content tab-resize">
+    <form [formGroup]="profileAddressForm">
+      <div class="row">
+        <!-- country name fields  -->
+        <div class="col-md-12 pb-3">
+          <div class="form-field">
+            <div class="row">
+              <div class="col-md-3 padding-0">
+                <label class="label-modify"><span class="form_required">*</span>Country</label>
+              </div>
+              <div class="col-md-7 padding-0">
+                <div class="input-group">
+                  <span class="input-group-addon"><i class="fa fa-flag fa-1x"></i></span>
+                  <select class="form-control" formControlName="country" (change)="getStates()" [(ngModel)]="selectedCountry">
+                    <option value="" selected="true">Select Your Country </option>
+                    <option value="{{countryObj.country}}" *ngFor="let countryObj of countries" >{{ countryObj.country }}</option>
+                  </select>
+                </div>
+                <div *ngIf="profileAddressForm.get('country').touched && profileAddressForm.get('country').errors">
+                  <div class="error-msg" *ngIf="profileAddressForm.get('country').errors.required">
+                    Country is required
+                  </div>
+                  <div class="error-msg" *ngIf="profileAddressForm.get('country').errors.pattern || profileAddressForm.get('country').errors.maxlength">
+                    Please enter Country Name
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- state fields -->
+        <div class="col-md-12 pb-3">
+          <div class="form-field">
+            <div class="row">
+              <div class="col-md-3 padding-0">
+                <label class="label-modify"><span class="form_required">*</span>State</label>
+              </div>
+              <div class="col-md-7 padding-0">
+                <div class="input-group">
+                  <span class="input-group-addon"><i class="fa fa-location-arrow fa-1x"></i></span>
+                  <select class="form-control" formControlName="state" [(ngModel)]="selectedState"  (change)="getCities()">
+                    <option value="" selected="true" >Select State </option>
+                    <option value="{{stateData.state}}" *ngFor="let stateData of states">{{ stateData.state }}</option>
+                  </select>
+                </div>
+                <div *ngIf="profileAddressForm.get('state').touched && profileAddressForm.get('state').errors">
+                  <div class="error-msg" *ngIf="profileAddressForm.get('state').errors.required">
+                    State is required
+                  </div>
+                  <div class="error-msg" *ngIf="profileAddressForm.get('state').errors.minlength || profileAddressForm.get('state').errors.maxlength">
+                    Please enter valid State Name
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+         <!-- city fields -->
+        <div class="col-md-12 pb-3">
+          <div class="form-field">
+            <div class="row">
+              <div class="col-md-3 padding-0">
+                <label class="label-modify"><span class="form_required">*</span>City</label>
+              </div>
+              <div class="col-md-7 padding-0">
+                <div class="input-group">
+                  <span class="input-group-addon"><i class="fa fa-home fa-1x"></i></span>
+                  <select class="form-control" formControlName="city" [(ngModel)]="selectedCity">
+                    <option value='' selected="true" >Select City </option>
+                    <option  value="{{cityInfo.city}}" *ngFor="let cityInfo of cities">{{ cityInfo.city}}</option>
+                  </select>
+                </div>
+                <div *ngIf="profileAddressForm.get('city').touched && profileAddressForm.get('city').errors">
+                  <div class="error-msg" *ngIf="profileAddressForm.get('city').errors.required">
+                    City is required
+                  </div>
+                  <div class="error-msg" *ngIf="profileAddressForm.get('city').errors.minlength || profileAddressForm.get('city').errors.maxlength">
+                    Please enter valid City Name
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- pin code fields -->
+        <div class="col-md-12 pb-3">
+          <div class="form-field">
+            <div class="row">
+              <div class="col-md-3 padding-0">
+                <label class="label-modify"><span class="form_required">*</span>Pin Code</label>
+              </div>
+              <div class="col-md-7 padding-0">
+                <div class="form-control-material">
+                  <div class="input-group">
+                    <span class="input-group-addon"><i class="fa fa-map-pin fa-1x"></i></span>
+                    <input type="text" class="form-control" name="" formControlName="pincode">
+                  </div>
+                  <div *ngIf="profileAddressForm.get('pincode').touched && profileAddressForm.get('pincode').errors">
+                    <div class="error-msg" *ngIf="profileAddressForm.get('pincode').errors.required">
+                      Pin Code number is required
+                    </div>
+                    <div class="error-msg" *ngIf="profileAddressForm.get('pincode').errors.pattern || profileAddressForm.get('pincode').errors.maxlength">
+                      Please enter valid Pin Code Number
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- address 1 fields -->
+        <div class="col-md-12 pb-3">
+          <div class="form-field">
+            <div class="row">
+              <div class="col-md-3 padding-0">
+                <label class="label-modify"><span class="form_required">*</span>Address-:1</label>
+              </div>
+              <div class="col-md-7 padding-0">
+                <textarea type="text" name="" class="form-control" rows="2" cols="20" formControlName="address1"></textarea>
+                <div *ngIf="profileAddressForm.get('address1').touched && profileAddressForm.get('address1').errors">
+                  <div class="error-msg" *ngIf="profileAddressForm.get('address1').errors.required">
+                    Address is required
+                  </div>
+                  <div class="error-msg" *ngIf="profileAddressForm.get('address1').errors.minlength || profileAddressForm.get('address1').errors.maxlength">
+                    Please enter valid Address
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- address2 fields  -->
+        <div class="col-md-12 pb-3">
+          <div class="form-field">
+            <div class="row">
+              <div class="col-md-3 padding-0">
+                <label class="label-modify">Address-:2</label>
+              </div>
+              <div class="col-md-7 padding-0">
+                <textarea type="text" name="" class="form-control" rows="2" cols="20" formControlName="address2"></textarea>
+                <div class="form-field  update-button pt-4 padding-0">
+                  <input type="button" class="btn btn-success" value="Update" [disabled]="profileAddressForm.invalid" [ngStyle]="{'cursor':profileAddressForm.valid ? 'pointer' : 'not-allowed' }" (click)="profileAddress(profileAddressForm)">
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+        <!-- row close-->
+      </div>
+      <!-- Form close -->
+    </form>
+  </div>
+  <!-- Close container -->
+</div>

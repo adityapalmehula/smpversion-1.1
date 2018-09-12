@@ -1,0 +1,1721 @@
+[
+
+	{
+		"courseName" :"MongoDB",
+		"courseDuration": "68 Hours",
+		"courseDescription":"NoSQL databases have received a lot of attention in past few years, and MongoDB is currently the most popular one. The course covers a range of NoSQL and mongoDB topics such as CRUD Operations, Schema Design and Data Modelling, Scalability etc. By going through this MongoDB training you would become job ready by mastering data modelling, ingestion, query and Sharding, Data Replication with MongoDB along with installing, updating and maintaining MongoDB environment.",
+		"courseOutcomes": {
+			"description":"On completing this MongoDB training course, you will have gained the skills and confidence to manage database.",
+			"outcomes":[
+				{
+					"outcome":"Introduction to MongoDB and its various features"
+				},
+				{
+					"outcome":"Understand and comprehend NoSql with MongoDB"
+				},
+				{
+					"outcome":"Learn basic functions for performing CRUD operations"
+				},
+				{
+					"outcome":"Install MongoDB, create database, work with collections, documents and understand aggregation framework"
+				},
+				{
+					"outcome":"Learn how to build schema design and indexing"
+				},
+				{
+					"outcome":"Understand scalability and availability in MongoDB using advanced production concepts like replication and sharding"
+				},
+				{
+					"outcome":"Setting up a sharding environment"
+				},
+				{
+					"outcome":"Integrate MongoDB with Java"
+				},
+				{
+					"outcome":"Understand backup and recovery strategies"
+				},
+				{
+					"outcome":"Learn MongoDB administration functions like monitoring, performance tuning, security etc"
+				},
+				{
+					"outcome":"Integration of MongoDB with GUI Tool Robomongo"
+				},
+				{
+					"outcome":"Run applications with MongoDB "
+				}
+			]
+		},
+		"coursePlan":[
+			{
+				"module":"MODULE 1 – Introduction to NoSQL, JSON and BSON",
+				"topics":[
+					{
+						"topic":"NoSQL Databases and their Benefits"
+					},
+					{
+						"topic":"ACID and BASE Properties"
+					},
+					{
+						"topic":"JSON and BSON documents"
+					}
+				]
+			},
+			{
+				"module":"MODULE 2 –  MongoDB Introduction",
+				"topics":[
+					{
+						"topic":"Introduction to MongoDB and its Features"
+					},
+					{
+						"topic":"Database, Collection and Documents"
+					},
+					{
+						"topic":"Various Data Types in MongoDB"
+					}
+				]
+			},
+			{
+				"module":"MODULE 3 –  CRUD Operations",
+				"topics":[
+					{
+						"topic":"CRUD Operations"
+					},
+					{
+						"topic":"Database Operations"
+					},
+					{
+						"topic":"Read and Write Operations"
+					}
+				]
+			},
+			{
+				"module":"MODULE 4 – Data Modeling",
+				"topics":[
+					{
+						"topic":"Data Model Design"
+					},
+					{
+						"topic":"GridFS"
+					},
+					{
+						"topic":"Data Modeling Types"
+					}
+				]
+			},
+			{
+				"module":"MODULE 5 – Designing Applications",
+				"topics":[
+					{
+						"topic":"Indexes and their Types"
+					},
+					{
+						"topic":"Capped and TTL Collection"
+					},
+					{
+						"topic":"Aggregation Framework and Pipeline"
+					}
+				]
+			},
+			{
+				"module":"MODULE 6 – Replication",
+				"topics":[
+					{
+						"topic":"Replication Concept"
+					},
+					{
+						"topic":"Components of Replication"
+					},
+					{
+						"topic":"Administration"
+					}
+				]
+			},
+			{
+				"module":"MODULE 7 – Sharding",
+				"topics":[
+					{
+						"topic":"Sharding Architecture"
+					},
+					{
+						"topic":"Choosing Shard keys and Auto-sharding"
+					},
+					{
+						"topic":"Sharding with Replication"
+					}
+				]
+			},
+			{
+				"module":"MODULE 8 – Administration and Security",
+				"topics":[
+					{
+						"topic":"Seeing what your application is doing"
+					},
+					{
+						"topic":"Monitoring for MongoDB"
+					},
+					{
+						"topic":"Backup and SecuritySharding Architecture"
+					}
+				]
+			}
+		],
+		"prerequisites":[
+			{
+				"prerequisite":"Fundamental knowledge of any programming language"
+			},
+			{
+				"prerequisite":"Basic understanding of any database, SQL, and query language for databases Working"
+			}
+		]
+	}
+],
+[
+
+	{
+		"courseName" :"ExpressJS",
+		"courseDuration": "68 Hours",
+		"courseDescription":"Express JS is the pre-built Node JS framework that can help developers build faster and smarter websites and web apps. While NodeJS is a brilliant server-side technology, it can now be extended to building complete web apps using Express. 
+This course will teach you the concepts of the Express js while walking you through building of a sample application. You’ll learn about Node Package Manager(NPM), middlewares, routing and template engine.",
+		"courseOutcomes": {
+			"description":"On completing this Express.js training course, your knowledge and skills will allow you to code and manage your own web application. Learning outcomes include knowledge:",
+			"outcomes":[
+				{
+					"outcome":"Installing and working Node.js"
+				},
+				{
+					"outcome":"Node Package Manager – NPM"
+				},
+				{
+					"outcome":"Installing Express JS"
+				},
+				{
+					"outcome":"Create server using express JS"
+				},
+				{
+					"outcome":"Basic route and Server Static files"
+				},
+				{
+					"outcome":"Create routes and route handlers"
+				},
+				{
+					"outcome":"Creating and using middlewares"
+				},
+				{
+					"outcome":"Using template engines with Express"
+				},
+				{
+					"outcome":"Debugging and error handling"
+				},
+				{
+					"outcome":"Database integration with MongoDB"
+				},
+				{
+					"outcome":"Authentication using JWT"
+				},
+				{
+					"outcome":"Unit Testing"
+				}
+			]
+		},
+		"coursePlan":[
+			{
+				"module":"MODULE 1 – Introduction to Node.js & Node Package Manager(NPM)",
+				"topics":[
+					{
+						"topic":"NWhat is node.js?"
+					},
+					{
+						"topic":"What is NPM?"
+					},
+					{
+						"topic":"How to install node and NPM?"
+					},
+					{
+						"topic":"How to use npm to install node packages?"
+					}
+				]
+			},
+			{
+				"module":"MODULE 2 –  Introduction to Express JS",
+				"topics":[
+					{
+						"topic":"Introduction to Express JS"
+					},
+					{
+						"topic":"Installing Express JS and up and running with “Hello World”"
+					}
+				]
+			},
+			{
+				"module":"MODULE 3 –  Basic Routing and Serving Static Files",
+				"topics":[
+					{
+						"topic":"Introduction to routes"
+					},
+					{
+						"topic":"Create basic route"
+					},
+					{
+						"topic":"Use static middleware to serve to static files"
+					}
+				]
+			},
+			{
+				"module":"MODULE 4 – Route, Route Handlers and Body-Parser Module",
+				"topics":[
+					{
+						"topic":"Routing Concepts"
+					},
+					{
+						"topic":"Route Methods"
+					},
+					{
+						"topic":"Route Paths"
+					},
+					{
+						"topic":"Route Parameters"
+					},
+					{
+						"topic":"Route Handlers"
+					},
+					{
+						"topic":"Response Methods"
+					},
+					{
+						"topic":"app.route()"
+					},
+					{
+						"topic":"express.Router"
+					},
+					{
+						"topic":"Introduction to Body-Parser Module"
+					},
+					{
+						"topic":"Using Body-Parser Module"
+					}
+				]
+			},
+			{
+				"module":"MODULE 5 – Introduction to Middleware",
+				"topics":[
+					{
+						"topic":"Creating and Using Middleware for Routes"
+					}
+				]
+			},
+			{
+				"module":"MODULE 6 – Introduction to Template Engine",
+				"topics":[
+					{
+						"topic":"What is Template engine?"
+					},
+					{
+						"topic":"Use template engine with Express JS"
+					}				
+				]
+			},
+			{
+				"module":"MODULE 7 – Debugging and Error handling",
+				"topics":[
+					{
+						"topic":"Introduction to debug module in express js"
+					},
+					{
+						"topic":"Error Handling Mechanism"
+					}
+				]
+			},
+			{
+				"module":"MODULE 8 – Database Integration with MongoDB",
+				"topics":[
+					{
+						"topic":"Introduction to Mongoose JS"
+					},
+					{
+						"topic":"Connect to MongoDB using Mongoose with Express"
+					},
+					{
+						"topic":"CRUD operation"
+					}
+				]
+			},
+			{
+				"module":"MODULE 9 – Authentication using JWT",
+				"topics":[
+					{
+						"topic":"Introduction to JWT"
+					},
+					{
+						"topic":"Authentication using JWT"
+					},
+					{
+						"topic":"Route protection using JWT"
+					}
+				]
+			},
+			{
+				"module":"MODULE 10 – Unit Testing",
+				"topics":[
+					{
+						"topic":"Mocha"
+					},
+					{
+						"topic":"Chai"
+					},
+					{
+						"topic":"Supertest"
+					}
+				]
+			}
+		],
+		"prerequisites":[
+			{
+				"prerequisite":"Working knowledge of JavaScript"
+			},
+			{
+				"prerequisite":"Working knowledge of Node.js"
+			},
+			{
+				"prerequisite":"Working knowledge of Browser developer Tools"
+			}
+		]
+	}
+],
+[
+
+	{
+		"courseName" :"NodeJS",
+		"courseDuration": "68 Hours",
+		"courseDescription":"Node.js Training Course is designed to enable aspiring programmers and working professionals get a hold of one of the most popular JavaScript platforms these days to build highly scalable and quick web based applications, APIs and streaming applications. This course will teach you the concepts of the NodeJS while walking you through building of a sample application. You’ll learn about Node Package Manager (NPM), Implementing JavaScript advance concepts like asynchronous programming, callback and closures.",
+		"courseOutcomes": {
+			"description":"On completing this Node.js training course, you will have gained the skills and confidence to manage and promote your own NodeJs application. Learning outcomes include knowledge:",
+			"outcomes":[
+				{
+					"outcome":"Installing and working Node.js"
+				},
+				{
+					"outcome":"Node.js design fundamentals including event loop"
+				},
+				{
+					"outcome":"Asynchronous programming"
+				},
+				{
+					"outcome":"Master key Node.js Concepts including Events and Streams"
+				},
+				{
+					"outcome":"Create and Control your HTTP web server and handle requests and responses"
+				},
+				{
+					"outcome":"Spawn child processes using Node.js Child Process framework"
+				},
+				{
+					"outcome":"Handle TCP and UDP communication using Node.js"
+				},
+				{
+					"outcome":"Test & Debug in Node.js"
+				},
+				{
+					"outcome":"Node Package Manager – NPM"
+				}
+			]
+		},
+		"coursePlan":[
+			{
+				"module":"MODULE 1 – Node Package Manager – NPM",
+				"topics":[
+					{
+						"topic":"What is Node.js?"
+					},
+					{
+						"topic":"What is NPM?"
+					},
+					{
+						"topic":"How To Install NPM And Node?"
+					},
+					{
+						"topic":"How to use npm to install node packages?"
+					},
+					{
+						"topic":"Node.js Event loop"
+					},
+					{
+						"topic":"The Node.js process"
+					}
+				]
+			},
+			{
+				"module":"MODULE 2 – Events and Streams",
+				"topics":[
+					{
+						"topic":"Event Emitter class"
+					},
+					{
+						"topic":"Reading and writing streams"
+					},
+					{
+						"topic":"Cashing and Object Creation"
+					},
+					{
+						"topic":"Using Pipe()"
+					},
+					{
+						"topic":"Duplex stream"
+					}
+				]
+			},
+			{
+				"module":"MODULE 3 – File System",
+				"topics":[
+					{
+						"topic":"The FS Module"
+					},
+					{
+						"topic":"Reading Directories"
+					},
+					{
+						"topic":"Reading Files"
+					},
+					{
+						"topic":"Streams"
+					}
+				]
+			},
+			{
+				"module":"MODULE 4 – Building servers",
+				"topics":[
+					{
+						"topic":"Creating servers with HTTP"
+					},
+					{
+						"topic":"Receiving data"
+					},
+					{
+						"topic":"HTTP streaming"
+					},
+					{
+						"topic":"Working with TCP"
+					}
+				]
+			},
+			{
+				"module":"MODULE 5 – Processes & Clusters",
+				"topics":[
+					{
+						"topic":"Child Process Module"
+					},
+					{
+						"topic":"Why clusters"
+					},
+					{
+						"topic":"The cluster object"
+					},
+					{
+						"topic":"The Worker object"
+					}
+
+				]
+			},
+			{
+				"module":"MODULE 6 – Unit Testing",
+				"topics":[
+					{
+						"topic":"Decouple Code"
+					},
+					{
+						"topic":"Writing tests"
+					},
+					{
+						"topic":"Supertests"
+					},
+					{
+						"topic":"Helpers"
+					}
+				]
+			}
+		],
+		"prerequisites":[
+			{
+				"prerequisite":"Working knowledge of JavaScript"
+			},
+			{
+				"prerequisite":"Working knowledge of Browser developer Tools"
+			}
+		]
+	}
+],
+[
+
+	{
+		"courseName" :"AngularJS",
+		"courseDuration": "68 Hours",
+		"courseDescription":"AngularJS2 aims to simplify development and testing of web apps. It lets you use HTML as your template language and lets you extend HTML's syntax to express your application's components. Angular’s data binding and dependency injection eliminate much of the code you currently have to write. Angular 2 is the next big thing. It's one of the leading frameworks for building modern, scalable, cross-platform apps. If you want to establish yourself as a front-end or a full-stack developer, you need to learn Angular 2.
+This course provides the basics you need to get started building an Angular 2 application. First, you'll learn how to set up your environment, learning about components, templates, and data binding and how they work together. Next, you'll discover how to build clean components with strongly-typed code, as well as building nested components and how to use dependency injection to inject the services you build. Finally, you'll cover how to retrieve data using HTTP, navigation and routing.",
+		"courseOutcomes": {
+			"description":"On completing this Angular2 training course, you shall be able to code and manage your own web application using the skill set of Angular. Learning outcomes include knowledge:",
+			"outcomes":[
+				{
+					"outcome":"Knowledge about Angular2"
+				},
+				{
+					"outcome":"Introduction to TypeScript"
+				},
+				{
+					"outcome":"Components"
+				},
+				{
+					"outcome":"Styles"
+				},
+				{
+					"outcome":"Services"
+				},
+				{
+					"outcome":"State Management"
+				},
+				{
+					"outcome":"Testing"
+				},
+				{
+					"outcome":"Routing"
+				},
+				{
+					"outcome":"Authentication"
+				},
+				{
+					"outcome":"HTTP"
+				},
+				{
+					"outcome":"Templating"
+				},
+				{
+					"outcome":"Build forms with client-side validation"
+				},
+				{
+					"outcome":"Dirty tracking"
+				},
+				{
+					"outcome":"Master / detail views"
+				},
+				{
+					"outcome":"Use dependency injection to write loosely-coupled, testable code"
+				},
+				{
+					"outcome":"CRUD operations against a backend API "
+				},
+				{
+					"outcome":"Implement navigation"
+				},
+				{
+					"outcome":"Format data using pipes "
+				},
+				{
+					"outcome":"Build re-usable components"
+				},
+				{
+					"outcome":"Render tabular lists with filtering, sorting and pagination "
+				},
+				{
+					"outcome":"Build real-world single page applications (SPA) with Angular"
+				},
+				{
+					"outcome":"Troubleshoot common runtime errors"
+				},
+				{
+					"outcome":"Write cleaner, more maintainable code"
+				},
+				{
+					"outcome":"Loading Content Dynamically"
+				}
+			]
+		},
+		"coursePlan":[
+			{
+				"module":"MODULE 1 – Introduction to Angular 2",
+				"topics":[
+					{
+						"topic":"Setting up Angular Development Environment"
+					},
+					{
+						"topic":"Understanding Angular Framework Angular Architecture"
+					},
+					{
+						"topic":"Angular modularity"
+					},
+					{
+						"topic":"Component Structure - Decorators"
+					},
+					{
+						"topic":"Selector"
+					},
+					{
+						"topic":"Template"
+					},
+					{
+						"topic":"Style and Component Class"
+					}
+				]
+			},
+			{
+				"module":"MODULE 2 – Bootstrapping Process",
+				"topics":[
+					{
+						"topic":"Understanding Angular Bootstrap process"
+					},
+					{
+						"topic":"Understanding system configuration"
+					},
+					{
+						"topic":"Understanding the implementation of NgModule"
+					},
+					{
+						"topic":"Building the first App – ' Hello Angular Js 2'"
+					}
+				]
+			},
+			{
+				"module":"MODULE 3 – Introduction to Typescript",
+				"topics":[
+					{
+						"topic":"Introduction Typescript"
+					},
+					{
+						"topic":"Configuring Typescript transpilar"
+					}
+				]
+			},
+			{
+				"module":"MODULE 4 – Developing an application with data binding and directives",
+				"topics":[
+					{
+						"topic":"Components"
+					},
+					{
+						"topic":"Attribute directives"
+					},
+					{
+						"topic":"Structural directives – ngIf, ngFor, ngSwitch and ngSwitchCase"
+					},
+					{
+						"topic":"Implement data transformation using Pipes"
+					}
+				]
+			},
+			{
+				"module":"MODULE 5 – Form inputs and Events",
+				"topics":[
+					{
+						"topic":"Two-way data binding in Angular 2"
+					},
+					{
+						"topic":"Tracking control interaction and validating input"
+					},
+					{
+						"topic":"Controls"
+					},
+					{
+						"topic":"Implement Data Binding"
+					},
+					{
+						"topic":"Implement one-way and two-way data binding"
+					},
+					{
+						"topic":"Implement Event handling"
+					},
+					{
+						"topic":"Implement Error handling"
+					}
+
+				]
+			},
+			{
+				"module":"MODULE 6 – Animating components with angular 2",
+				"topics":[
+					{
+						"topic":"Creating animations with plain vanilla CSS"
+					},
+					{
+						"topic":"Animating components with the AnimationBuilder"
+					},
+					{
+						"topic":"Developing custom animation directives"
+					},
+					{
+						"topic":"Looking into the future with ngAnimate 2.0"
+					}
+				]
+			},
+			{
+				"module":"MODULE 7 – Dependency Injection",
+				"topics":[
+					{
+						"topic":"Introduction to Dependency Injection"
+					},
+					{
+						"topic":"Implementing Dependency Injection to consume a component"
+					},
+					{
+						"topic":"Implementing Promise pattern"
+					}
+				]
+			},
+			{
+				"module":"MODULE 8 – Implementing Routes",
+				"topics":[
+					{
+						"topic":"Setting up the router service"
+					},
+					{
+						"topic":"Handling route parameters"
+					},				
+					{
+						"topic":"Defining child routers"
+					}
+				]
+			},
+			{
+				"module":"MODULE 9- Implement HTTP request for get and post operations on RestFul API",
+				"topics":[
+					{
+						"topic":"HTTP client overview"
+					},
+					{
+						"topic":"Implement RxJS module for HTTP request and Responses"
+					},
+					{
+						"topic":"Fetch data with http.get"
+					},
+					{
+						"topic":"Post data with http.post,"
+					},
+					{
+						"topic":"Processing JSON data"
+					},
+					{
+						"topic":"Error handling"
+					},
+					{
+						"topic":"Understand Promise vs. Observables"
+					}
+				]
+			},
+			{
+				"module":"MODULE 10 – Implement test environment in Angular",
+				"topics":[
+					{
+						"topic":"Install Jasmine"
+					},
+					{
+						"topic":"Configure jasmine and  Create test cases"
+					}
+				]
+			}
+		],
+		"prerequisites":[
+			{
+				"prerequisite":"Working knowledge of HTML"
+			},
+			{
+				"prerequisite":"Working knowledge of CSS"
+			},
+			{
+				"prerequisite":"Working knowledge of JavaScript"
+			},
+			{
+				"prerequisite":"Working knowledge of Node.js"
+			},
+			{
+				"prerequisite":"Working knowledge of Browser developer Tools"
+			}
+		]
+	}
+],
+[
+
+	{
+		"courseName" :"ReactJS",
+		"courseDuration": "68 Hours",
+		"courseDescription":"React.js is a an open-source JavaScript library for creating user interfaces. React adopts  a component based approach in developing applications. Every react app can be considered as a component or a collection of components which can be re-usable. React.js is designed to make the process of building modular, reusable user interface components simple and intuitive. With React you can design simple views for each state of an application. You can also use React to efficiently update and render components when your data changes. 
+This course will teach you the concepts of the ReactJS while walking you through the building of a sample application. You’ll learn about JSX, ES6, Components, State, Props, Rendering Elements and Node Package Manager – NPM, Webpack, knowledge of core concepts will be covered in the course along with implementation on varied industry use-cases. ",
+		"courseOutcomes": {
+			"description":"On completing this React.js training course, you will have gained the skills and confidence to manage and promote your own Reactjs application. Learning outcomes include knowledge:",
+			"outcomes":[
+				{
+					"outcome":"Knowledge about React.js."
+				},
+				{
+					"outcome":"Installing and working React.Js"
+				},
+				{
+					"outcome":"Adding and accessing React Library"
+				},
+				{
+					"outcome":"Adding and accessing React DOM Library"
+				},
+				{
+					"outcome":"Adding and accessing Babel compiler"
+				},
+				{
+					"outcome":"Use JSX and ES6 syntax"
+				},
+				{
+					"outcome":"Virtual DOM"
+				},
+				{
+					"outcome":"Creating a React component"
+				},
+				{
+					"outcome":"React.js Components and Life Cycle of Components"
+				},
+				{
+					"outcome":"Using props"
+				},
+				{
+					"outcome":"Prop Types"
+				},
+				{
+					"outcome":"Using props with children"
+				},
+				{
+					"outcome":"Working with state"
+				},
+				{
+					"outcome":"Handling events"
+				},
+				{
+					"outcome":"Using Refs"
+				},
+				{
+					"outcome":"Mounting components"
+				},
+				{
+					"outcome":"Un-Mounting Components"
+				},
+				{
+					"outcome":"Updating Components"
+				},
+				{
+					"outcome":"Building single page applications with React.js"
+				},
+				{
+					"outcome":"Manage the state and use a server API with React"
+				},
+				{
+					"outcome":"Handle Events in React.js"
+				},
+				{
+					"outcome":"Test & Debug in React.js"
+				},
+				{
+					"outcome":"Node Package Manager – NPM"
+				},
+				{
+					"outcome":"Configuring Webpack"
+				}
+			]
+		},
+		"coursePlan":[			
+			{
+				"module":"MODULE 1 – Introduction to node.js & Node Package Manager(NPM)",
+				"topics":[
+					{
+						"topic":"What is node.js?"
+					},
+					{
+						"topic":"What is NPM?"
+					},
+					{
+						"topic":"How to install node and npm?"
+					},
+					{
+						"topic":"How to use npm to install node packages?"
+					}
+				]
+			},
+			{
+				"module":"MODULE 2 – Introduction & Installing REACT.JS",
+				"topics":[
+					{
+						"topic":"What is reactjs?"
+					},
+					{
+						"topic":"Where to use reactjs?"
+					},
+					{
+						"topic":"How to use Reactjs?"
+					},
+					{
+						"topic":"Install React js using Yarn and NPM"
+					},
+					{
+						"topic":"Using Reactjs CDNs"
+					}
+				]
+			},
+			{
+				"module":"MODULE 3 – Introduction to JSX and ES6",
+				"topics":[
+					{
+						"topic":"Introduction to JSX"
+					},
+					{
+						"topic":"Embedding expression in JSX"
+					},
+					{
+						"topic":"Specify attributes and children in JSX"
+					},
+					{
+						"topic":"Introduction to ES6 and its basic syntax like arrow functions"
+					}
+				]
+			},
+			{
+				"module":"MODULE 4 –React Elements, Virtual DOM and Components",
+				"topics":[
+					{
+						"topic":"What is react element?"
+					},
+					{
+						"topic":"How to render react Element?"
+					},
+					{
+						"topic":"Updating React Element"
+					},
+					{
+						"topic":"Introduction to virtual DOM in React"
+					},
+					{
+						"topic":"What are components in React?"
+					},
+					{
+						"topic":"Compose, render and extract react components"
+					},
+					{
+						"topic":"Props, State and Life cycle of a component"
+					}
+				]
+			},
+			{
+				"module":"MODULE 5 – Event Handling and Conditional Rendering in ReactJS",
+				"topics":[
+					{
+						"topic":"How to handle events in ReactJS?"
+					},
+					{
+						"topic":"How to implement conditional rendering in ReactJS?"
+					},
+					{
+						"topic":"Lists and Keys in ReactJS"
+					}
+				]
+			},
+			{
+				"module":"MODULE 6 – Forms in ReactJS and Refs with DOM",
+				"topics":[
+					{
+						"topic":"How to create and handle form elements in React?"
+					},					
+					{
+						"topic":"Refs and DOM"
+					}
+				]
+			},
+			{
+				"module":"MODULE 7 – Advance concepts in Components",
+				"topics":[
+					
+					{
+						"topic":"Uncontrolled components"
+					},
+					{
+						"topic":"Web Components and Higher Order Components"
+					}
+				]
+			},
+			{
+				"module":"MODULE 8 – Introduction to React API, React.Component and ReactDOM",
+				"topics":[
+					{
+						"topic":"React.createElement()"
+					},
+					{
+						"topic":"React.createFactory()"
+					},
+					{
+						"topic":"React.cloneElement()"
+					},
+					{
+						"topic":"React.Component abstract class"
+					},
+					{
+						"topic":"Component life cycle method like constructor()"
+					},
+					{
+						"topic":"ComponentWillMount()"
+					},
+					{
+						"topic":"Render()"
+					},
+					{
+						"topic":"ComponentDidMoiunt()"
+					},
+					{
+						"topic":"props"
+					},
+					{
+						"topic":"state"
+					},
+					{
+						"topic":"setState()"
+					},
+					{
+						"topic":"ReactDOM.render()"
+					},
+					{
+						"topic":"ReactDOM.unmountComponentAtNode() and React.findDOMNode()"
+					}
+				]
+			},
+			{
+				"module":"MODULE 9- React Routing",
+				"topics":[
+					{
+						"topic":"Introduction to react-router"
+					},
+					{
+						"topic":"<Redirect>"
+					},
+					{
+						"topic":"<Route>"
+					},
+					{
+						"topic":"<Router>"
+					},
+					{
+						"topic":"<StaticRouter>"
+					},
+					{
+						"topic":"history"
+					},
+					{
+						"topic":"location"
+					}
+				]
+			},
+			{
+				"module":"MODULE 10 – Testing React app using Jest",
+				"topics":[
+					{
+						"topic":"Introduction to Jest"
+					},
+					{
+						"topic":"setup,"
+					},
+					{
+						"topic":"snapshot testing"
+					},
+					{
+						"topic":"DOM testing"
+					}
+				]
+			},
+			{
+				"module":"MODULE 11 – Introduction to Webpack",
+				"topics":[
+					{
+						"topic":"Introduction to webapck and its usage in modern app"
+					},					
+					{
+						"topic":"Webpack configuration for React.js based app"
+					}
+				]
+			}
+		],
+		"prerequisites":[
+			{
+				"prerequisite":"Working knowledge of HTML"
+			},
+			{
+				"prerequisite":"Working knowledge of CSS"
+			},
+			{
+				"prerequisite":"Working knowledge of JavaScript"
+			},
+			{
+				"prerequisite":"Working knowledge of Node.js"
+			},
+			{
+				"prerequisite":"Working knowledge of Browser developer Tools"
+			}
+		]
+	}
+],
+[
+
+	{
+		"courseName" :"Spring",
+		"courseDuration": "68 Hours",
+		"courseDescription":"An introduction to the widely-used Java Spring framework. Discover how to wire together your Java objects using Spring and dependency injection. You'll learn how to set up your system for Spring development, how to work with databases using Spring and Hibernate and how to create web applications with Spring MVC. We'll also look at managing user accounts with Spring Security, working with web forms, aspect-oriented programming (AOP), inversion-of-control (IOC), spring bean and bean wiring.",
+		"courseOutcomes": {
+			"description":"On completing this Spring training course, you shall have gained the skills and confidence to manage and promote your own spring web application. Learning outcomes include knowledge:",
+			"outcomes":[
+				{
+					"outcome":"Introduction to J2EE"
+				},
+				{
+					"outcome":"Knowledge about Spring framework"
+				},
+				{
+					"outcome":"Introduction to Dependency Injection (DI)"
+				},
+				{
+					"outcome":"Spring Bean and wiring"
+				},
+				{
+					"outcome":"Spring MVC"
+				},
+				{
+					"outcome":"Spring AOP"
+				},
+				{
+					"outcome":"Spring IOC"
+				},
+				{
+					"outcome":"Spring Security"
+				},
+				{
+					"outcome":"Spring with ORM"
+				},
+				{
+					"outcome":"REST services with spring"
+				}
+			]
+		},
+		"coursePlan":[
+			{
+				"module":"MODULE 1 – Introduction to J2EE",
+				"topics":[
+					{
+						"topic":"Tiered model architectures – principles and goals"
+					},
+					{
+						"topic":"J2EE definition and characteristics"
+					},
+					{
+						"topic":" J2EE technologies in a multi-tier architecture"
+					}	
+				]
+			},
+			{
+				"module":"MODULE 2 – Spring Framework Introduction",
+				"topics":[
+					{
+						"topic":"What is Spring & Why use Spring"
+					},
+					{
+						"topic":"Concepts of Spring & its Architecture"
+					},
+					{
+						"topic":"Introduction to Spring modules"
+					},
+					{
+						"topic":"Spring Environment Setup"
+					}
+				]
+			},
+			{
+				"module":"MODULE 3 – Getting Started with Spring",
+				"topics":[
+					{
+						"topic":"Spring Bean Definition"
+					},
+					{
+						"topic":"Lifecycle of Bean"
+					},
+					{
+						"topic":"Bean Scopes"
+					},
+					{
+						"topic":"Inner Bean"
+					},
+					{
+						"topic":"Collection Bean"
+					},
+					{
+						"topic":"Bean Reference"
+					},
+					{
+						"topic":"Dependency Injection (DI) & Inversion of Control (IoC)"
+					}
+				]
+			},
+			{
+				"module":"MODULE 4 – Spring IoC - Dependencies Injection",
+				"topics":[
+					{
+						"topic":"Dependency Injection in Spring"
+					},
+					{
+						"topic":"Spring Setter Injection and Spring Constructor Injection"
+					},
+					{
+						"topic":"Spring Auto Wiring"
+					},
+					{
+						"topic":"Autowiring By Type"
+					},
+					{
+						"topic":"Autowiring By Name"
+					},
+					{
+						"topic":"Autowiring By Constructor"
+					},
+					{
+						"topic":"Autowiring By AutoDetect"
+					}
+				]
+			},
+			{
+				"module":"MODULE 5 – Spring AOP",
+				"topics":[
+					{
+						"topic":"Aspect Oriented Programming Overview"
+					},
+					{
+						"topic":"The Real Problem and Solutions through AOP"
+					},
+					{
+						"topic":"Spring AOP Terminology"
+					},
+					{
+						"topic":"AOP Advice Types"
+					}
+				]
+			},
+			{
+				"module":"MODULE 6 – Spring Annotation",
+				"topics":[
+					{
+						"topic":"Introduction to Spring Annotation"
+					}
+				]
+			},
+			{
+				"module":"MODULE 7 – Spring 3 Web MVC",
+				"topics":[
+					{
+						"topic":"Introduction to Spring 3.0 MVC framework & Configuration"
+					},
+					{
+						"topic":"Spring Annotation Based Controllers"
+					},
+					{
+						"topic":"Creating an Application in Spring 3.0 MVC"
+					},
+					{
+						"topic":"Handling Forms in Spring 3.0 MVC"
+					},
+					{
+						"topic":"Spring Validation Framework"
+					},
+					{
+						"topic":"Spring Interceptors"
+					}
+				]
+			},
+			{
+				"module":"MODULE 8 – Spring with ORM",
+				"topics":[
+					{
+						"topic":"Integrating Spring with Hibernate"
+					}
+				]
+			},
+			{
+				"module":"MODULE 9 - Spring Security ",
+				"topics":[
+					{
+						"topic":"Acquiring and Integrating Spring Security"
+					},
+					{
+						"topic":"Basic Configuration"
+					},
+					{
+						"topic":"How It Works"
+					}
+				]
+			},
+			{
+				"module":"MODULE 10 – REST services with Spring",
+				"topics":[
+					{
+						"topic":"Introduction to REST services"
+					},
+					{
+						"topic":"Resource controller"
+					},
+					{
+						"topic":"end-points"
+					}
+				]
+			}
+		],
+		"prerequisites":[
+			{
+				"prerequisite":"Working knowledge of Core Java"
+			},
+			{
+				"prerequisite":"Working knowledge of J2EE"
+			},
+			{
+				"prerequisite":"Working knowledge of Hibernate"
+			},
+			{
+				"prerequisite":"Working knowledge of Database concepts"
+			}
+		]
+	}
+],
+[
+
+	{
+		"courseName" :"HTML",
+		"courseDuration": "",
+		"courseDescription":"",
+		"courseOutcomes": {
+			"description":"",
+			"outcomes":[
+				{
+					"outcome":""
+				},
+				{
+					"outcome":""
+				},
+				{
+					"outcome":""
+				},
+				{
+					"outcome":""
+				},
+				{
+					"outcome":""
+				},
+				{
+					"outcome":""
+				},
+				{
+					"outcome":""
+				},
+				{
+					"outcome":""
+				},
+				{
+					"outcome":""
+				},
+				{
+					"outcome":""
+				}
+			]
+		},
+		"coursePlan":[
+			{
+				"module":"",
+				"topics":[
+					{
+						"topic":""
+					},
+					{
+						"topic":""
+					},
+					{
+						"topic":""
+					}
+				]
+			},
+			{
+				"module":"",
+				"topics":[
+					{
+						"topic":""
+					},
+					{
+						"topic":""
+					},
+					{
+						"topic":""
+					}
+				]
+			},
+			{
+				"module":"",
+				"topics":[
+					{
+						"topic":""
+					},
+					{
+						"topic":""
+					},
+					{
+						"topic":""
+					}
+				]
+			},
+			{
+				"module":"",
+				"topics":[
+					{
+						"topic":""
+					},
+					{
+						"topic":""
+					},
+					{
+						"topic":""
+					}
+				]
+			}
+		],
+		"prerequisites":[
+			{
+				"prerequisite":""
+			},
+			{
+				"prerequisite":""
+			},
+			{
+				"prerequisite":""
+			},
+			{
+				"prerequisite":""
+			}
+		]
+	}
+],
+[
+
+	{
+		"courseName" :"CSS",
+		"courseDuration": "",
+		"courseDescription":"",
+		"courseOutcomes": {
+			"description":"",
+			"outcomes":[
+				{
+					"outcome":""
+				},
+				{
+					"outcome":""
+				},
+				{
+					"outcome":""
+				},
+				{
+					"outcome":""
+				},
+				{
+					"outcome":""
+				},
+				{
+					"outcome":""
+				},
+				{
+					"outcome":""
+				},
+				{
+					"outcome":""
+				},
+				{
+					"outcome":""
+				},
+				{
+					"outcome":""
+				}
+			]
+		},
+		"coursePlan":[
+			{
+				"module":"",
+				"topics":[
+					{
+						"topic":""
+					},
+					{
+						"topic":""
+					},
+					{
+						"topic":""
+					}
+				]
+			},
+			{
+				"module":"",
+				"topics":[
+					{
+						"topic":""
+					},
+					{
+						"topic":""
+					},
+					{
+						"topic":""
+					}
+				]
+			},
+			{
+				"module":"",
+				"topics":[
+					{
+						"topic":""
+					},
+					{
+						"topic":""
+					},
+					{
+						"topic":""
+					}
+				]
+			},
+			{
+				"module":"",
+				"topics":[
+					{
+						"topic":""
+					},
+					{
+						"topic":""
+					},
+					{
+						"topic":""
+					}
+				]
+			}
+		],
+		"prerequisites":[
+			{
+				"prerequisite":""
+			},
+			{
+				"prerequisite":""
+			},
+			{
+				"prerequisite":""
+			},
+			{
+				"prerequisite":""
+			}
+		]
+	}
+],
+[
+
+	{
+		"courseName" :"Bootstrap",
+		"courseDuration": "",
+		"courseDescription":"",
+		"courseOutcomes": {
+			"description":"",
+			"outcomes":[
+				{
+					"outcome":""
+				},
+				{
+					"outcome":""
+				},
+				{
+					"outcome":""
+				},
+				{
+					"outcome":""
+				},
+				{
+					"outcome":""
+				},
+				{
+					"outcome":""
+				},
+				{
+					"outcome":""
+				},
+				{
+					"outcome":""
+				},
+				{
+					"outcome":""
+				},
+				{
+					"outcome":""
+				}
+			]
+		},
+		"coursePlan":[
+			{
+				"module":"",
+				"topics":[
+					{
+						"topic":""
+					},
+					{
+						"topic":""
+					},
+					{
+						"topic":""
+					}
+				]
+			},
+			{
+				"module":"",
+				"topics":[
+					{
+						"topic":""
+					},
+					{
+						"topic":""
+					},
+					{
+						"topic":""
+					}
+				]
+			},
+			{
+				"module":"",
+				"topics":[
+					{
+						"topic":""
+					},
+					{
+						"topic":""
+					},
+					{
+						"topic":""
+					}
+				]
+			},
+			{
+				"module":"",
+				"topics":[
+					{
+						"topic":""
+					},
+					{
+						"topic":""
+					},
+					{
+						"topic":""
+					}
+				]
+			}
+		],
+		"prerequisites":[
+			{
+				"prerequisite":""
+			},
+			{
+				"prerequisite":""
+			},
+			{
+				"prerequisite":""
+			},
+			{
+				"prerequisite":""
+			}
+		]
+	}
+]

@@ -1,0 +1,107 @@
+.view-container {
+  padding: 17px;
+  padding-top: 5px;
+  padding-left: 0px;
+  clear: both;
+}
+.heading {
+  font-weight: 500;
+  background-color: #B2DFDB;
+}
+.heading h3 {
+  padding:12px;
+}
+.heading button {
+  margin-top: 12px;
+}
+.user-card {
+  margin-top: 10px;
+}
+.profile-img {
+  height: 85px;
+  /*background-color: #5bc0de;*/
+}
+.profile-img2 {
+  height: 155px;
+}
+.profile-img img {
+  height: 100%;
+  padding: 3px;
+}
+.profile-img2 img {
+  height: 100%;
+  padding: 3px;
+}
+.user-info {
+  padding-left: 15px;
+  text-align: left;
+  padding-bottom: 16px;
+}
+.uname {
+  margin-top: 10px;
+}
+.custom-pgn {
+  margin-top: 20px;
+  text-align: center;
+  margin-bottom: 45px;
+}
+@media (min-width: 768px and ) {
+  .user-info i{
+    font-size: 12px;
+  }
+  .table > tbody > tr > td {
+    padding-left: 50px;
+    font-size: 13px;
+  }
+}
+@media (min-width: 576px) and (max-width: 768px) {
+  .heading h3{
+    font-size: 18px;
+  }
+  .heading h3{
+    margin-top: 12px;
+  }
+  .table > tbody > tr > td {
+    font-size: 13px;
+  }
+}
+.table > tbody > tr:first-child > td {
+  border: none;
+  margin-top: 10px;
+}
+.headingTitle {
+  color: #384047;
+  padding-top: 5px;
+  word-wrap: break-word;
+}
+.word {
+  word-wrap: break-word;
+}
+label {
+  font-size: 14px;
+  font-weight: 500;
+  font-family: RobotoDraft;
+  color: #42a5f5;
+  display: block !important;
+  margin-bottom: 0px !important;
+  padding-bottom: 3px;
+}
+input[name=daterangeInput] {    
+  height: 50px;
+  padding-left: 10px;
+} 
+.search-d {
+  display: flex;
+}
+.search-d input {
+  height: 27px;
+}
+.fa-times-circle {
+  font-size: 1.3em;
+  padding-left: 2px;
+}
+input[type="checkbox"]{
+  width: 22px; 
+  height: 22px;
+  vertical-align: middle;
+}

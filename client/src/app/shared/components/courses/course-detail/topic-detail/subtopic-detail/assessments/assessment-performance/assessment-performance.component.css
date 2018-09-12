@@ -1,0 +1,28 @@
+.report thead {
+  color: #FFFF;
+  background-color: #14485f;
+}
+
+.report tbody {
+  background-color: #FFFF;
+}
+
+.no-data {
+  background-color: #eff0f1;
+  height: 38px;
+  font-weight: 300;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  color: #53585F;
+}
+.table-scroll tbody {
+  position: absolute;
+  overflow-y: auto !important;
+ /* height: 250px;*/
+  padding-bottom: 30px;
+}
+.table-scroll tr {
+  width: 100%;
+  table-layout: fixed;
+  display: inline-table;
+}

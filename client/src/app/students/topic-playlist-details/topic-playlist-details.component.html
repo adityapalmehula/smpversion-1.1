@@ -1,0 +1,136 @@
+<div class="container-section">
+  <div class="row col-md-12 add-new-container">
+    <div class="col-9 text-left">
+      <h3 class="page-heading">{{playlistDetails?.title}}</h3>
+    </div>
+    <div class="col-3 text-right">
+      <a class="btn btn-outline-info back" [routerLink]="['/',urlPrefix,'topic-playlist',courseId]"><i class="fa fa-arrow-circle-o-left" aria-hidden="true"></i> Back
+    </a>
+    </div>
+  </div>
+   <div class="row">
+    <div class="col-12">
+      <p class="description text-left">{{ playlistDetails?.description}}</p>
+    </div>
+  </div>
+  <hr>
+<br>
+  <div class="row">
+<div class="col-sm-12 col-md-2">
+    <table class="table table-bordered table-hover">
+      <thead>
+        <tr class="text-center">
+          <th>Contents</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr [ngClass]="{'active': contentType ===type}" *ngFor=" let type of types;  let i=index ">
+          <td class="list" (click)="getContent(i, $event)">{{type}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <!-- content section start here -->
+  <div class="col-sm-12 col-md-10">
+    <div class="content-info">
+      <!-- note div start here -->
+      <div *ngIf="contentType==='Notes'">
+        <div class="row mid-head"><span class="col-md-12 text-center heading">Notes</span></div>
+        <div class="col-12 text-center no-data" *ngIf="notes.length===0">No data avaliable</div>
+        <div class="card" *ngFor="let note of notes; let i=index ">
+          <a data-toggle="collapse" data-parent="#textaccordion" href="{{'#collapsetext'+i}}" [attr.aria-expanded]="true" [attr.aria-controls]="'collapsetext'+i">
+            <div class="card-header text-center" role="tab" id="{{'note'+i}}">
+              <h5 class="headingTitle mb-0">
+                {{note.title}}
+              </h5>
+            </div>
+          </a>
+          <div id="{{'collapsetext'+i}}" class="collapse" role="tabpanel" [attr.aria-labelledby]="'text'+i">
+            <div class="card-block description-text">
+              <div [innerHtml]="note.description"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- note div ends here-->
+      <!-- video div starts from here -->
+      <div *ngIf="contentType==='Videos'" class="row ">
+        <div class="row col-12 mid-head"><span class="col-md-12 text-center heading">Videos</span></div>
+        <div class="col-12 text-center no-data" *ngIf="videos.length===0">No data avaliable</div>
+        <div class="col-md-3 col-sm-12 videoContainer" *ngFor="let video of videos;">
+          <a [routerLink]="['/', urlPrefix, 'courses', 'topics', 'playlists', 'videos', 'play-video']" [queryParams]="{'videoId':video.videoId, 'playListId':playListId, 'videoSource':video.source}">
+            <div class="image">
+              <img class="img-thumbnail" [src]="video.thumbnail" [alt]="video.title">
+            </div>
+            <div class="videoDescription">
+              <a class="videoTitle" [title]="video.title">{{video.title}}</a>
+            </div>
+          </a>
+        </div>
+      </div>
+      <!-- video div end here -->
+      <!-- reference div start from here -->
+      <div *ngIf="contentType==='References'">
+        <div class="row mid-head"><span class="col-md-12 text-center heading">References</span></div>
+        <div class="col-12 text-center no-data" *ngIf="references.length===0">No data avaliable</div>
+        <div class="card" *ngFor="let reference of references; let i=index">
+          <a data-toggle="collapse" data-parent="#urlaccordion" href="{{'#collapseurl'+i}}" [attr.aria-expanded]="true" [attr.aria-controls]="'collapseurl'+i">
+            <div class="card-header text-center" role="tab" id="{{'url'+i}}">
+              <h5 class="headingTitle mb-0">
+                {{reference.title}}
+              </h5>
+            </div>
+          </a>
+          <div id="{{'collapseurl'+i}}" class="collapse" role="tabpanel" [attr.aria-labelledby]="'url'+i">
+            <div class="card-block">
+              <p class="description-text"> {{reference.description}} </p>
+              <p><a href={{reference.url}} target="_blank">{{reference.url}}</a></p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- reference div end from here -->
+      <!-- key points div start from here -->
+      <div *ngIf="contentType==='Keypoints'">
+        <div class="row mid-head"><span class="col-md-12 text-center heading">KeyPoints</span></div>
+        <div class="col-12 text-center no-data" *ngIf="keyPoints.length===0">No data avaliable</div>
+        <div class="card" *ngFor="let keyPoint of keyPoints; let i=index">
+          <a data-toggle="collapse" data-parent="#urlaccordion" href="{{'#collapseurl'+i}}" [attr.aria-expanded]="true" [attr.aria-controls]="'collapseurl'+i">
+            <div class="card-header text-center" role="tab" id="{{'url'+i}}">
+              <h5 class="headingTitle mb-0">
+                {{keyPoint.title}}
+              </h5>
+            </div>
+          </a>
+          <div id="{{'collapseurl'+i}}" class="collapse" role="tabpanel" [attr.aria-labelledby]="'url'+i">
+            <div class="card-block description-text">
+              <div [innerHtml]="keyPoint.description"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- key points div end here -->
+      <!-- media file div start from here -->
+      <div *ngIf="contentType==='Media'">
+        <div class="row mid-head"><span class="col-md-12 text-center heading">Media</span></div>
+        <div class="col-12 text-center no-data" *ngIf="mediaFiles.length===0">No data avaliable</div>
+        <div class="row text-center card-section">
+          <div class="col-md-2 col-sm-12 file-card" *ngFor="let mediaFile of mediaFiles; let i=index">
+            <div class="file-img">
+              <img class="card-img-top mediaImage" *ngIf="excel.indexOf(mediaFile.extension.toLowerCase())!=defaultValue" src="./assets/images/contents/xls.jpeg" [alt]="mediaFile.title">
+              <img class="card-img-top mediaImage" *ngIf="pdf.indexOf(mediaFile.extension.toLowerCase())!=defaultValue" src="./assets/images/contents/pdf.jpg" [alt]="mediaFile.title">
+              <img class="card-img-top mediaImage" *ngIf="image.indexOf(mediaFile.extension.toLowerCase())!=defaultValue" src="./assets/images/contents/image.jpeg" [alt]="mediaFile.title">
+              <img class="card-img-top mediaImage" *ngIf="docx.indexOf(mediaFile.extension.toLowerCase())!=defaultValue" src="./assets/images/contents/docx.jpeg" [alt]="mediaFile.title">
+              <div class="text-center f-name"><a target="_blank" [href]="mediaFile.path"> {{mediaFile.title}}</a></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- media file div end here -->
+    </div>
+  </div>
+  <!-- content section end here -->
+  <!-- content type section start here-->
+  </div>
+  <!-- content type section ends here-->
+</div>

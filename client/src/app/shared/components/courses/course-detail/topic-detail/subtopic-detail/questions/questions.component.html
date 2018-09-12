@@ -1,0 +1,160 @@
+    <div class="row bg-white qus-filter">
+      <hr class="w-100" *ngIf="!nestedComp">
+      <div class="col-md-12 card-section qus-list mt-0 pt-3" >
+        <div class="row">
+        
+         <div class="col-md-3 pr-0">
+           <div class="col-lg-12 col-md-3 p-0 filter">
+            <h4>Question Category</h4>
+            <angular2-multiselect [ngModelOptions]="{standalone: true}" [data]="qusCategoriesList" [(ngModel)]="qusCategories" [settings]="qusCategoriesConfig"></angular2-multiselect>
+          </div>
+        </div>
+
+        <div class="col-lg-3 col-md-3 pr-0 filter">
+          <h4>Difficulty Level</h4>
+          <select class="form-control pl-2" (change)="selectedLevel($event.target.value)">
+            <option [selected]="!level" value="">All Level </option>
+            <option [selected]="level==data" value="{{data}}" *ngFor="let data of levels">{{data}}</option>
+          </select>
+        </div>
+
+        <div class="col-lg-3 col-md-3 pr-0 filter">
+          <h4>Question type</h4>
+          <select class="form-control pl-2" (change)="selectedQusType($event.target.value)" >
+            <option value="" [selected]="!questionType">All type </option>
+            <option [selected]="questionType==typ" value="{{typ}}" *ngFor="let typ of questionTypes">{{typ}}</option>
+          </select>
+        </div>
+
+        <div class="col-lg-3 col-md-3 fliter-btn text-center">
+          <button class="btn btn-md btn-success" (click)="applyFilter()">Apply</button>
+          <button class="btn btn-md btn-info ml-1" (click)="resetFilter()">Reset</button>
+        </div>
+      </div>
+      <div class="table-panel">
+        <div class="table-responsive bg-white">
+          <table class="table v-middle">
+           <thead class="">
+            <tr class="col-md-12">
+              <th>Question</th>
+              <th>Level</th>
+              <th>Type</th>
+              <th>&nbsp;&nbsp;Action&nbsp;&nbsp; </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let data of questions; let i=index; ">
+              <td title="Click for details">
+                <a href="javascript:void(0)">
+
+                  <div *ngIf="data?.question" data-toggle="modal" data-target="#qus-details" (click)="setQuestionDetails(data._id)" class="qus cursor-pointer" [innerHTML]="data.question"></div>
+
+                  <img class="card-img-top img-fluid" data-toggle="modal" data-target="#qus-details" (click)="setQuestionDetails(data._id)" *ngIf="data?.qusIcon" [attr.src]="basePath+data?.qusIcon" title="Click to view image">
+                </a>
+              </td>
+              <td>{{data.level}}</td>
+              <td>{{data.qusType}}</td>
+              <td class="pl-0" *ngIf="CONFIG.ADMIN.indexOf(role) > -1 || data?.createdBy?.id == userId || userId == data?.schoolId">
+                <button type="button" class="btn edt-btn btn-sm" (click)=editQuestion(data._id,data.qusType) title="Edit Question"><span class="fa fa-pencil"></span></button>
+                <button type="button" class="btn del-btn btn-sm mr-1" (click)=deleteQuestion(data._id) title="Delete Question"><span class="fa fa-trash"></span></button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="col-12 text-center no-data" *ngIf="questions.length===0">No data avaliable</div>
+      </div>
+    </div>
+
+    <div class="row col-md-12 view-container">
+      <div class="col-12 custom-pgn" *ngIf="totalItems>itemsPerPage">
+        <pagination class="pagination" [totalItems]="totalItems" [itemsPerPage]="itemsPerPage" [(ngModel)]="currentPage" (pageChanged)="pageChanged($event)"></pagination>
+      </div>
+    </div>
+  </div> 
+</div> 
+
+
+<div class="modal fade" id="qus-details" tabindex="-1" role="dialog"
+aria-labelledby="title" aria-hidden="true"> <!-- data-backdrop="static" -->
+<div class="modal-dialog modal-lg" role="document">
+  <div class="modal-content">
+    <div class="modal-header">
+     <h4>Question Details</h4>
+     <button type="button" class="close" data-dismiss="modal" aria-label="Close" #close>
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body p-0">
+    <div id="accordion" role="tablist" aria-multiselectable="true">
+      <div class="card-blocks row">
+        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+          <table class="table">
+            <tbody *ngIf="qusDetails">
+              <tr>
+                <td><strong>Question: </strong></td>
+                <td>
+                  <div *ngIf="qusDetails.question" class="qus" [innerHTML]="qusDetails.question"></div>
+
+                  <img class="card-img-top img-fluid" *ngIf="qusDetails?.qusIcon" [attr.src]="basePath+qusDetails?.qusIcon" title="Click to view image" (click)="viewImage(basePath+qusDetails?.qusIcon)">
+                </td>
+              </tr>
+              <tr>
+                <td><strong>Level: </strong></td>
+                <td>{{qusDetails.level}}</td>
+              </tr>
+              <tr>
+                <td><strong>Type: </strong></td>
+                <td>{{qusDetails.qusType}}</td>
+              </tr>
+              <tr>
+                <td><strong>Categories: </strong></td>
+                <td>{{qusDetails.qusCategories}}</td>
+              </tr>
+              <tr>
+                <td><strong>Options: </strong></td>
+                <td><ul class="row col-md-12">
+                  <li class="col-md-6 p-0" *ngFor="let opt of qusDetails?.options; let i=index; " [class.mt-3]="i!=0 && i!=1">
+                    <div *ngIf="opt?.text" class="op-text" [innerHTML]="opt?.text"></div>
+
+                    <img  *ngIf="opt?.icon" title="Click to view image" class="card-img-top img-fluid" [attr.src]="basePath+opt?.icon" (click)="viewImage(basePath+opt?.icon)">
+                  </li>
+                </ul></td>
+              </tr>
+
+              <tr>
+                <td><strong>Answer</strong></td>
+                <td><ul class="p-0">
+                  <li *ngFor="let ans of qusDetails?.answers; let i=index; " [class.mt-3]="i!=0">
+
+                    <div *ngIf="qusDetails?.options[ans?.id]?.text" class="op-text" [innerHTML]="qusDetails?.options[ans?.id]?.text"></div>
+
+                    <img *ngIf="qusDetails?.options[ans?.id]?.icon" title="Click to view image" class="card-img-top img-fluid" [attr.src]="basePath+qusDetails?.options[ans?.id]?.icon" (click)="viewImage(basePath+qusDetails?.options[ans?.id]?.icon)">
+                  </li>
+                </ul></td>
+              </tr>
+
+              <tr *ngIf="qusDetails.solution">
+                <td><strong>Solution:</strong></td>
+                <td><div  *ngIf="qusDetails.solution" class="qus" [innerHTML]="qusDetails.solution"></div>
+
+                  <img  *ngIf="qusDetails?.solutionIcon" class="card-img-top img-fluid" [attr.src]="basePath+qusDetails?.solutionIcon" title="Click to view image" (click)="viewImage(basePath+qusDetails?.solutionIcon)">
+                </td>
+              </tr>
+
+              <tr *ngIf="qusDetails.hint">
+                <td><strong>Hint:</strong></td>
+                <td>
+                  <div *ngIf="qusDetails.hint?.text" class="qus" [innerHTML]="qusDetails.hint?.text"></div>
+
+                  <img *ngIf="qusDetails.hint?.icon" class="card-img-top img-fluid" [attr.src]="basePath+qusDetails.hint?.icon" title="Click to view image" (click)="viewImage(basePath+qusDetails.hint?.icon)">
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+</div>

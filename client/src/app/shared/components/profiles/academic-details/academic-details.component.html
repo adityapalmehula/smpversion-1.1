@@ -1,0 +1,175 @@
+<div class="container-fluid ">
+  <div class="tab-content tab-resize">
+    <form [formGroup]="academicForm">
+      <div class="row">
+        <!-- class/degree field  -->
+        <div class="col-md-12 pb-3">
+          <div class="form-field">
+            <div class="row">
+              <div class="col-md-3 padding-0">
+                <label *ngIf="currentApp === apps[0] || currentApp === apps[2]" class="label-modify"><span class="form_required">*</span>Class</label>
+                <label *ngIf="currentApp === apps[1]" class="label-modify"><span class="form_required">*</span>Degree</label>
+              </div>
+              <div class="col-md-7 padding-0">
+                <div class="input-group">
+                  <select *ngIf="currentApp === apps[0] || currentApp === apps[2]" class="form-control" formControlName="qualification">
+                    <option value="" disabled selected hidden>Select Class </option>
+                    <option value="{{class}}" *ngFor="let class of classes">{{ class }}</option>
+                  </select>
+                  <select *ngIf="currentApp === apps[1]" class="form-control" formControlName="qualification">
+                    <option value="" disabled selected hidden>Select Degree </option>
+                    <option value="{{degre}}" *ngFor="let degre of degree">{{ degre }}</option>
+                  </select>
+                </div>
+                <div *ngIf="academicForm.get('qualification').touched && academicForm.get('qualification').errors">
+                  <div class="error-msg" *ngIf="academicForm.get('qualification').errors.required">
+                    <div *ngIf="currentApp === apps[0]">class is required</div>
+                    <div *ngIf="currentApp === apps[1]">Degree is required</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- school/college name value -->
+        <div class="col-md-12 pb-3">
+          <div class="form-field">
+            <div class="row">
+              <div class="col-md-3 padding-0">
+                <label *ngIf="currentApp === apps[0] || currentApp === apps[2]" class="label-modify"><span class="form_required">*</span>School Name</label>
+                <label *ngIf="currentApp === apps[1]" class="label-modify"><span class="form_required">*</span>College Name</label>
+              </div>
+              <div class="col-md-7 padding-0">
+                <div class="input-group">
+                  <span class="input-group-addon"><i class="fa fa-university fa-1x"></i></span>
+                  <input type="text" class="form-control" name="" formControlName="instituteName" >
+                </div>
+                <div *ngIf="academicForm.get('instituteName').touched && academicForm.get('instituteName').errors">
+                  <div class="error-msg" *ngIf="academicForm.get('instituteName').errors.required">
+                    <div *ngIf="currentApp === apps[0]">School Name is required</div>
+                    <div *ngIf="currentApp === apps[1]">College Name is required</div>
+                  </div>
+                  <div class="error-msg" *ngIf="academicForm.get('instituteName').errors.minlength || academicForm.get('instituteName').errors.maxlength">
+                    <div *ngIf="currentApp === apps[0]">Please enter valid School Name</div>
+                    <div *ngIf="currentApp === apps[1]">Please enter valid College Name</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- school/college address -->
+        <div class="col-md-12 pb-3">
+          <div class="form-field">
+            <div class="row">
+              <div class="col-md-3 padding-0 ">
+                <label *ngIf="currentApp === apps[0] || currentApp === apps[2]" class="label-modify"><span class="form_required">*</span>School Address</label>
+                <label *ngIf="currentApp === apps[1]" class="label-modify"><span class="form_required">*</span>College Address</label>
+              </div>
+              <div class="col-md-7 padding-0 ">
+                <div class="input-group">
+                	<span class="input-group-addon"><i class="fa fa-address-book fa-1x"></i></span>
+                  <textarea type="text" id="address" name="" formControlName="instituteAddress" class="form-control" rows="2" cols="20"></textarea>
+                </div>
+                <div *ngIf="academicForm.get('instituteAddress').touched && academicForm.get('instituteAddress').errors">
+                  <div class="error-msg" *ngIf="academicForm.get('instituteAddress').errors.required">
+                    Addres is required
+                  </div>
+                  <div class="error-msg" *ngIf="academicForm.get('instituteAddress').errors.minlength || academicForm.get('instituteAddress').errors.maxlength">
+                    Please enter valid Address
+                  </div>
+                </div>
+                <div class="form-field  update-button pt-4 padding-0">
+                  <input type="button" class="btn btn-success" value="Update" [disabled]="academicForm.invalid" [ngStyle]="{'cursor':academicForm.valid ? 'pointer' : 'not-allowed' }" (click)="academicDetails(academicForm)">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- <div class="col-md-12 pb-3">
+          <div class="form-field">
+            <div class="row">
+              <div class="col-md-3  padding-0">
+                <label class="label-modify"><span class="form_required">*</span>Date Attended</label>
+              </div>
+              <div class="col-md-7 ">
+                <div class="row">
+                  <div class="col-md-5 mr-0 pr-0">
+                    <label class="label-modify pr-1">Start</label>
+                    <input type="date" id="start" class="form-control ng-valid ng-touched ng-dirty" formControlName="startDate" value="1990-07-22" min="1960-01-01" max="2018-12-31" />
+                  </div>
+                  <div class="col-md-5 mr-0 pr-0">
+                    <label class="label-modify pr-2">End</label>
+                    <input type="date" id="start" class="form-control ng-valid ng-touched ng-dirty" formControlName="endDate" value="2018-07-22" min="1960-01-01" max="2018-12-31" />
+                  </div>
+                </div>
+                <div *ngIf="academicForm.get('startDate').touched && academicForm.get('startDate').errors">
+                  <div class="error-msg" *ngIf="academicForm.get('startDate').errors.required">
+                    Start Date is required
+                  </div>
+                </div>
+                <div *ngIf="academicForm.get('endDate').touched && academicForm.get('endDate').errors">
+                  <div class="error-msg" *ngIf="academicForm.get('endDate').errors.required">
+                    End Date is required
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div> -->
+        <!-- <div class="col-md-12 pb-3">
+          <div class="form-field">
+            <div class="row">
+              <div class="col-md-3  padding-0">
+                <label class="label-modify"><span class="form_required">*</span>Field of Study</label>
+              </div>
+              <div class="col-md-7 padding-0">
+                <div class="form-control-material">
+                  <div class="input-group">
+                    <span class="input-group-addon"><i class="fa fa-book fa-1x"></i></span>
+                    <input type="text" class="form-control" name="" formControlName="fieldStudy" placeholder="Please Enter Your Field Of Study">
+                  </div>
+                  <div *ngIf="academicForm.get('fieldStudy').touched && academicForm.get('fieldStudy').errors">
+                    <div class="error-msg" *ngIf="academicForm.get('fieldStudy').errors.required">
+                      Field of Study is required.
+                    </div>
+                    <div class="error-msg" *ngIf="academicForm.get('fieldStudy').errors.minlength || academicForm.get('fieldStudy').errors.maxlength">
+                      Please enter valid Field of Study.
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div> -->
+        <!-- <div class="col-md-12 pb-3">
+          <div class="form-field">
+            <div class="row">
+              <div class="col-md-3 padding-0">
+                <label class="label-modify"><span class="form_required">*</span>Description</label>
+              </div>
+              <div class="col-md-7 padding-0">
+                <textarea type="text" name="" class="form-control" rows="2" cols="20" formControlName="description" placeholder="Please Enter Your Description"></textarea>
+                <div *ngIf="academicForm.get('description').touched && academicForm.get('description').errors">
+                  <div class="error-msg" *ngIf="academicForm.get('description').errors.required">
+                    Description is required.
+                  </div>
+                  <div class="error-msg" *ngIf="academicForm.get('description').errors.minlength || academicForm.get('description').errors.maxlength">
+                    Please enter valid Description.
+                  </div>
+                </div>
+                <div class="form-field  update-button pt-4 padding-0">
+                  <input type="button" class="btn btn-success" value="Update" [disabled]="academicForm.invalid" [ngStyle]="{'cursor':academicForm.valid ? 'pointer' : 'not-allowed' }" (click)="academicDetails(academicForm)">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div> -->
+        <!-- main row close -->
+      </div>
+      <!-- Form close -->
+    </form>
+    <!-- Tabe container close -->
+  </div>
+  <!-- Close container -->
+</div>

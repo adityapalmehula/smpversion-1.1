@@ -1,0 +1,201 @@
+<div class="container-section">
+	<div class="row">
+		<div class="col-md-1 pl-0 pr-0">
+		</div>
+		<div class="col-md-11">
+			<div class="container-fluid">
+				<div class="row breadcrumb">
+					<div class="col-8 text-left mt-2 mb-1 ">
+						<a class="page-heading" [routerLink]="['/', urlPrefix, 'teachers']"><i class="fa fa-home" aria-hidden="true"></i> Teachers</a> / <span class="breadcrumb-active" *ngIf="formType!='edit'">Add a new teacher</span>
+						<span class="breadcrumb-active" *ngIf="formType=='edit'">Update teacher</span>
+					</div>
+					<div class="col-4 text-right">
+						<a class="btn btn-outline-info back" [routerLink]="['/', urlPrefix, 'teachers']"><i class="fa fa-arrow-circle-o-left" aria-hidden="true"></i> Back
+						</a>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-12 pt-4">
+						<!--  <h2 class="legend">Add a new teacher</h2> -->
+						<h2 class="legend" *ngIf="formType!='edit'">Add A New Teacher</h2>
+						<h2 class="legend" *ngIf="formType=='edit'">Update Teacher</h2>
+					</div>
+				</div>
+				<div class="row  add-new-container">
+					<div class="row">
+					</div>
+					<div class=" col-xl-10 col-lg-8 col-md-10 col-sm-12 reg-form">
+						<form [formGroup]="teacherForm">
+							<div class="row">
+								<div class="col-md-1"></div>
+								<div class="form-group col-md-5">
+									<label for="title" class="text-center form-label" class="label label-primary">
+										<span class="form_required">*</span>Name
+									</label>
+									<input type="text" formControlName="name" class="inputModify" class="label label-default">
+									<div *ngIf="teacherForm.get('name').touched && teacherForm.get('name').errors">
+										<div class="error" *ngIf="teacherForm.get('name').errors.required">
+											Name is required.
+										</div>
+									</div>
+								</div>
+								<div class="form-group col-md-5">
+									<label for="title" class="text-center form-label">
+										<span class="form_required">*</span>Email
+									</label>
+									<input type="email" formControlName="email">
+									<div *ngIf="teacherForm.get('email').touched && teacherForm.get('email').errors">
+										<div class="error" *ngIf="teacherForm.get('email').errors.required">
+											Email is required.
+										</div>
+										<div class="error" *ngIf="teacherForm.get('email').errors.pattern">
+											Enter valid email
+										</div>
+									</div>
+								</div>
+								<div class="col-md-1"></div>
+							</div>
+							<div class="row">
+								<div class="col-md-1"></div>
+								<div class="form-group col-md-5">
+									<label for="title" class="text-center form-label">
+										<span class="form_required">*</span>Mobile
+									</label>
+									<input type="text" formControlName="mobile">
+									<div *ngIf="teacherForm.get('mobile').touched && teacherForm.get('mobile').errors">
+										<div class="error" *ngIf="teacherForm.get('mobile').errors.required">
+											Mobile No is required.
+										</div>
+										<div class="error" *ngIf="teacherForm.get('mobile').errors.pattern || teacherForm.get('mobile').errors.maxlength">
+											Enter valid mobile number
+										</div>
+									</div>
+								</div>
+								<div class="form-group col-md-5">
+									<label for="title" class="text-center form-label">
+										<span class="form_required">*</span>Gender
+									</label>
+									<select class="form-control" formControlName="gender">
+										<option value="" disabled selected hidden>Select gender </option>
+										<option value="{{gender}}" *ngFor="let gender of genders">{{gender}}</option>
+									</select>
+									<div *ngIf="teacherForm.get('gender').touched && teacherForm.get('gender').errors">
+										<div class="error" *ngIf="teacherForm.get('gender').errors.required">
+											Gender is required.
+										</div>
+									</div>
+								</div>
+								<div class="col-md-1"></div>
+							</div>
+							<div class="row">
+								<div class="col-md-1"></div>
+								<div class="form-group col-md-5">
+									<label for="country" class="form-label">
+										<span class="form_required">*</span>Country
+									</label>
+									<select class="form-control" formControlName="country" (change)="getStates($event.target.value)">
+										<option value="" disabled selected>Select country </option>
+										<option value="{{country}}" *ngFor="let country of countries">{{country}}</option>
+									</select>
+									<div *ngIf="teacherForm.get('country').touched && teacherForm.get('country').errors">
+										<div class="error">
+											Country is required.
+										</div>
+									</div>
+								</div>
+								<div class="form-group col-md-5">
+									<div class="row">
+										<label for="state" class="form-label">
+											<span class="form_required">*</span>State
+										</label>
+									</div>
+									<select class="form-control" formControlName="state" (change)="getCities($event.target.value)">
+										<option value="" disabled selected>Select state </option>
+										<option value="{{state}}" *ngFor="let state of states">{{state}}</option>
+									</select>
+									<div *ngIf="teacherForm.get('state').touched && teacherForm.get('state').errors">
+										<div class="error">
+											State is required.
+										</div>
+									</div>
+								</div>
+								<div class="col-md-1"></div>
+							</div>
+							<div class="row">
+								<div class="col-md-1"></div>
+								<div class="form-group col-md-5">
+									<label for="city" class="form-label">
+										<span class="form_required">*</span>City
+									</label>
+									<select class="form-control" formControlName="city">
+										<option value="" disabled selected>Select city </option>
+										<option value="{{city}}" *ngFor="let city of cities">{{city}}</option>
+									</select>
+									<div *ngIf="teacherForm.get('city').touched && teacherForm.get('city').errors">
+										<div class="error" *ngIf="teacherForm.get('city').errors.required">
+											City is required.
+										</div>
+										<div class="error" *ngIf="teacherForm.get('city').errors.pattern">
+											Enter valid city name
+										</div>
+									</div>
+								</div>
+								<div class="form-group col-md-5">
+									<label for="title" class="text-center form-label">
+										<span class="form_required">*</span>Pin Code
+									</label>
+									<input type="text" formControlName="pincode">
+									<div *ngIf="teacherForm.get('pincode').touched && teacherForm.get('pincode').errors">
+										<div class="error" *ngIf="teacherForm.get('pincode').errors.required">
+											Pin code is required.
+										</div>
+										<div class="error" *ngIf="teacherForm.get('pincode').errors.pattern || teacherForm.get('pincode').errors.maxlength">
+											Please enter valid pin code
+										</div>
+									</div>
+								</div>
+								<div class="col-md-1"></div>
+							</div>
+							<div class="row">
+								<div class="col-md-1"></div>
+								<div class="form-group col-md-5">
+									<label for="title" class="text-center form-label">
+										<span class="form_required">*</span>Address
+									</label>
+									<textarea class="form-control" formControlName="address"></textarea>
+									<div *ngIf="teacherForm.get('address').touched && teacherForm.get('address').errors">
+										<div class="error" *ngIf="teacherForm.get('address').errors.required">
+											Address is required.
+										</div>
+									</div>
+								</div>
+								<div class="form-group col-md-5 " *ngIf="role == CONFIG.USER_ADMIN">
+									<label for="title" class="text-center form-label">
+										<span class="form_required">*</span> School
+									</label>
+									<select class="form-control" formControlName="schoolId">
+										<option value="" disabled selected>Select school </option>
+										<option value="{{school._id}}" *ngFor="let school of schools">{{school.name}}</option>
+									</select>
+									<div *ngIf="teacherForm.get('schoolId').touched && teacherForm.get('schoolId').errors">
+										<div class="error" *ngIf="teacherForm.get('schoolId').errors.required">
+											School is required.
+										</div>
+									</div>
+								</div>
+								<div class="col-md-1"></div>
+							</div>
+							<div class="row pt-4 text-center">
+								<div class="col-sm-2"></div>
+								<div class="col-sm-8">
+									<button type="button" class="btn btn-cancel" [routerLink]="['/', urlPrefix, 'teachers']">Cancel</button>
+									<button type="button" *ngIf="formType=='add'" class="btn btn-save" title="Save" [disabled]="!teacherForm.valid" (click)="register()" [ngStyle]="{'cursor':teacherForm.valid ? 'pointer' : 'not-allowed' }">Save</button>
+									<button type="button" *ngIf="formType=='edit'" class="btn btn-save" title="Save" [disabled]="!teacherForm.valid" (click)="update()" [ngStyle]="{'cursor':teacherForm.valid ? 'pointer' : 'not-allowed' }">Update</button>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>

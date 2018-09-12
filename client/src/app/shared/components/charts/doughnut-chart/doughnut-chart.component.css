@@ -1,0 +1,12 @@
+.chart-container {
+  position: relative;
+}
+
+.tooltip {
+  background-color: rgb(247, 249, 246);
+  border: 1px solid #c3b8b8;
+  height: auto;
+  width: auto;
+  opacity: .7;
+  font-size: 10px;
+}

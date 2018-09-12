@@ -1,0 +1,145 @@
+<div class="container-section">
+  <div class="row pt-4 pb-4">
+    <div class="col-md-1 ">
+    </div>
+    <div class="col-md-11 pt-5 text-center">
+      <div class="container-section">
+        <!-- main heading --> 
+        <div class="row">
+          <div class="col-md-12 pt-2 text-center">
+            <h2 class="heading-level pb-3">Why Fullstack Program</h2>
+            <p class="lead text-muted pt-4 pb-3">In this Nanodegree program, you'll learn how to build and manage relational databases to store and handle application data, and build powerful server-side applications to serve that data to any type of client-side .</p>
+          </div>
+        </div>
+        <!-- main heading close -->
+        <!-- start subheading -->
+        <div class="row pt-4">
+          <div class="col-md-12 pt-5 mb-2 text-center mt-4 mb-0">
+            <h2 class="heading-level pl-1">How Fullstack Program work?</h2>
+          </div>
+          <div class="col-md-4 mt-4">
+            <div class="text-center">
+              <div class="text-center">
+                <div class="card modify-card">
+                  <div class="card-header header-modify">
+                    <!-- <img alt="programs" class="pt-3" src="/assets/images/programs.png"> -->
+                    <div class="icon text-center mb-4">
+                      <img alt="programs" class="pt-3" src="/assets/images/programs.png">
+                    </div>
+                  </div>
+                  <div class="card-block">
+                    <h3 class="modify-title">Choose Your Program</h3>
+                    <p class="card-text text-modifiy">Each program is designed to push your career forward. Visualize your perfect job and choose your path</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4 mt-4">
+            <div class="text-center">
+              <div class="card modify-card">
+                <div class="card-header header-modify">
+                  <!-- <img alt="programs" class="pt-3" src="/assets/images/programs.png"> -->
+                  <div class="icon text-center mb-4">
+                    <img alt="programs" class="pt-3" src="/assets/images/programs.png">
+                  </div>
+                </div>
+                <div class="card-block">
+                  <h3 class="modify-title">Choose Your Program</h3>
+                  <p class="card-text text-modifiy">Each program is designed to push your career forward. Visualize your perfect job and choose your path</p>
+                </div>
+              </div>
+              <!-- <div class="icon text-center mb-4">
+                <img alt="programs" class="pt-3" src="/assets/images/programs.png">
+              </div>
+              <h3 class="blue-text mb-3">Choose your Program</h3>
+              <p class="description-level mb-0">Each program is designed to push your career forward. Visualize your perfect job and choose your path</p> -->
+              <!-- new card -->
+            </div>
+          </div>
+          <div class="col-md-4 mt-4">
+            <div class="text-center">
+              <div class="text-center">
+                <div class="card modify-card">
+                  <div class="card-header header-modify">
+                    <!-- <img alt="programs" class="pt-3" src="/assets/images/programs.png"> -->
+                    <div class="icon text-center mb-4">
+                      <img alt="programs" class="pt-3" src="/assets/images/programs.png">
+                    </div>
+                  </div>
+                  <div class="card-block">
+                    <h3 class="modify-title">Choose Your Program</h3>
+                    <p class="card-text text-modifiy">Each program is designed to push your career forward. Visualize your perfect job and choose your path</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="jumbotron jumbotron-modify">
+          <div class="row ">
+            <div class="col-md-11">
+              <div class="content">
+                <h3 class="heading">Choose Your Career Path</h3>
+              </div>
+              <div class="content">
+                <p class="content text-white">Discover your path to achieve your learning and career goals</p>
+                <!-- <a class="btn btn-secondary btn-resize" href="#" role="button">Explore</a> -->
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row card-row">
+          <div class="col-md-12 pt-5 mb-4 text-center">
+            <h2 class="heading-level">Available Training Fullstack Programs</h2>
+          </div>
+          <div class="col-md-11 pr-0">
+            <div class="row">
+              <div class="col-md-4 mt-2" *ngFor="let program of lessPrograms;">
+                <!-- card start form here -->
+                <div class="card card-modify mb-4">
+                  <div class="card-modify-header">
+                  </div>
+                  <h5 class="program-heading text-center pt-4">{{program?.title}}</h5>
+                  <div class="text-center mt-2">
+                    <button type="button" class="btn btn-info btn-modify" [routerLink]="['/', urlPrefix, 'programs','program-preview', program._id]">View Details</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row fqa-back">
+          <div class="col-md-11  pt-3 mb-3 pl-4">
+            <h2 class="heading-level line-align">FAQ</h2>
+          </div>
+          <div class="col-md-11 pl-4">
+            <h4 class="fqa-modify" style="text-align: start !important;">Which Nanodegree rogram should I take?</h4>
+            <div class="answer-content pt-2">
+              <p class="text-define">Each program we offer is designed to help you achieve goals, meet objectives, and succeed in your life and career. Whether you have a specific job in mind, or want to learn specific skills, the best way to decide is to envision your desired outcome, and then select the path that will get you there. Sometimes this is easy—you want to build Android apps, you take the Android Developer program! But if you’re not sure, we can guide you in the right direction. Our blog is a great resource for career pathing, and you can always email us at india@udacity.com. We’ll learn about your interests, your goals, and your experience, and make personalized recommendations on the best ways to move forward.</p>
+            </div>
+            <div  *ngIf="more" style="text-align: start !important;" class="pb-4">
+              <button class="btn btn-info modify-btn" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample" (click)="seeMore()">
+                See more
+              </button>
+              
+            </div>
+            <div class="collapse" id="collapseExample">
+              <h4 class="fqa-modify" style="text-align: start !important;">I’ve never programmed before. Can I still take a Nanodegree program?</h4>
+              <div class="answer-content pt-2 pb-4">
+                <p class="text-define">Yes! Our goal is to provide exactly the right learning experience for every student, and we offer several beginning programs that require no programming experience whatsoever. Each of these programs will equip you with foundational skills. In addition, they will help prepare you for an eventual career in technology, and/or allow you to enroll in a more advanced career-track Nanodegree program. Just go to our catalog, and filter for beginner!</p>
+              </div>
+            </div>
+            <div *ngIf="less" style="text-align: start !important;" class="pb-4">
+              <button class="btn btn-info modify-btn" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample" (click)="seeLess()">
+                See less
+              </button>   
+            </div>
+          </div>
+        </div>
+        <div class="row pt-4">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

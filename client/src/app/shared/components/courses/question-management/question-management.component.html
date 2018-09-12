@@ -1,0 +1,71 @@
+  <div class="row pb-4">
+    <div class="col-md-1 pl-0 pr-0"></div>
+    <div class="col-md-11 mt-3 qus-mgmt">
+      <!-- header div starts here -->
+      <div class="row col-md-12 pb-1">
+        <div class="col-md-6">
+         <div *ngIf="isLoadQuestionForm">
+          <h1 *ngIf="formType=='add'" class="flow-h1">Add Question</h1>
+          <h1 *ngIf="formType=='edit'" class="flow-h1">Update Question</h1>
+        </div>
+        <div *ngIf="!isLoadQuestionForm">
+          <h1 class="flow-h1">Questions</h1>
+        </div>
+      </div>
+      <div class="col-md-6 text-right">
+        <a *ngIf="!isLoadQuestionForm" class="btn btn-outline-info add-new text-right" href="javascript:void(0)" (click)="addNewQuestion()"><i class="fa fa-plus-circle"></i> Add</a>
+
+        <a *ngIf="isLoadQuestionForm" class="btn btn-outline-info add-new text-right" href="javascript:void(0)" (click)="showQuestions()"><i class="fa fa-arrow-circle-o-left"></i> Back</a>
+      </div>
+    </div>
+    <hr class="w-100">
+
+    <!-- filter div starts here  *ngIf="formType=='add'"-->
+    <div class="">
+      <div class="row col-md-12 filter-panel py-3">
+        <div class="col-lg-2 col-md-3 pr-0 filter">
+          <h4>Class<span *ngIf="isLoadQuestionForm" class="mendatoryField">*</span></h4>
+          <select class="form-control  pl-2" (change)="selectedStandard($event.target.value)">
+            <option [selected]="!subCatId" disabled hidden>Select Class </option>
+            <option [selected]="subCatId==stnd?._id" value="{{stnd?._id}}" *ngFor="let stnd of standards">{{stnd?.name}}</option>
+          </select>
+        </div>
+
+        <div class="col-lg-3 col-md-3 pr-0 filter">
+          <h4>Course<span *ngIf="isLoadQuestionForm" class="mendatoryField">*</span></h4>
+          <select class="form-control pl-2" (change)="getTopics($event.target.value)" >
+            <option [selected]="!courseId" disabled hidden>Select course </option>
+            <option [selected]="courseId==course?.courseId" value="{{course?.courseId}}" *ngFor="let course of courseList">{{course.title}}</option>
+          </select>
+        </div>
+
+        <div class="col-lg-3 col-md-3 pr-0 filter">
+          <h4>Topic<span *ngIf="isLoadQuestionForm" class="mendatoryField">*</span></h4>
+          <select class="form-control pl-2" (change)="getSubtopics($event.target.value)" >
+            <option [selected]="!topicId" disabled hidden>Select topic </option>
+            <option [selected]="topicId==topic?.topicId" value="{{topic?.topicId}}" *ngFor="let topic of topicList">{{topic.title}}</option>
+          </select>
+        </div> 
+
+        <div class="col-lg-3 col-md-3 pr-0 filter">
+          <h4>Subtopic<span *ngIf="isLoadQuestionForm" class="mendatoryField">*</span></h4>
+          <select class="form-control pl-2" (change)="setSubtopic($event.target.value)" >
+            <option [selected]="!subtopicId" disabled hidden>Select subtopic </option>
+            <option [selected]="subtopicId==subtopic?.subtopicId" value="{{subtopic?.subtopicId}}" *ngFor="let subtopic of subtopicList">{{subtopic.title}}</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <!-- filter div ends here -->
+
+    <div *ngIf="!isLoadQuestionForm">
+      <app-questions [qusConfig]="questionConfig" (updateQuestion)= "updateQuestion($event)" (resetFilters)= "resetFilters($event)" ></app-questions>
+    </div>
+  </div>
+
+  <div *ngIf="isLoadQuestionForm">
+    <app-manage-questions [qusConfig]="questionConfig" (showQuestions)="showQuestions($event)"
+    (setQuestionInfo)="setQuestionDetails($event)" ></app-manage-questions>
+  </div>
+
+</div>

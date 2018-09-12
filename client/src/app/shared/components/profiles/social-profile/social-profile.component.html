@@ -1,0 +1,102 @@
+<div class="container-fluid ">
+  <div class="tab-content tab-resize">
+    <form [formGroup]="SocialProfileForm">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="form-field ">
+            <div class="row">
+              <div class="col-md-3 padding-0">
+                <label class="label-modify "><span class="form_required">*</span>Platform</label>
+              </div>
+              <div class="col-md-7 padding-0">
+                <div class="input-group">
+                  <select class="form-control" formControlName="platform">
+                    <option value="" disabled selected hidden>Select Platform </option>
+                    <option value="{{platform}}" *ngFor="let platform of platforms">{{ platform }}</option>
+                  </select>
+                </div>
+                <div class="" *ngIf="SocialProfileForm.get('platform').touched && SocialProfileForm.get('platform').errors">
+                  <div class="error-msg" *ngIf="SocialProfileForm.get('platform').errors.required">
+                    Platform is required
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="form-field pt-4">
+            <div class="row">
+              <div class="col-md-3 padding-0">
+                <label class="label-modify"><span class="form_required">*</span>Profile Url</label>
+              </div>
+              <div class="col-md-7 padding-0">
+                <div class="input-group">
+                  <span class="input-group-addon"><i class="fa fa fa-link fa-1x"></i></span>
+                  <input type="text" class="form-control" name="" formControlName="socialUrl">
+                </div>
+                <div class="py-1" *ngIf="SocialProfileForm.get('socialUrl').touched && SocialProfileForm.get('socialUrl').errors">
+                  <div class="error-msg" *ngIf="SocialProfileForm.get('socialUrl').errors.required">
+                    Profile Url is required
+                  </div>
+                  <div class="error-msg" *ngIf="SocialProfileForm.get('socialUrl').errors.minlength || SocialProfileForm.get('socialUrl').errors.maxlength">
+                    Please enter valid Profile Url
+                  </div>
+                </div>
+                <div class="form-field  update-button pt-4 pb-2 padding-0">
+                  <input type="button" class="btn btn-success " value="Update" [disabled]="SocialProfileForm.invalid" [ngStyle]="{'cursor':SocialProfileForm.valid ? 'pointer' : 'not-allowed' }" (click)="socaialProfileData(SocialProfileForm)">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+    <div class="table-responsive">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Platform</th>
+            <th>Urls</th>
+            <th class="text-center">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let urls of currentUrl">
+            <td class="tableData-resize" class="platform-name">{{urls.platform}}</td>
+            <td><a href="{{urls.socialUrl}}" class="platform-url">{{urls.socialUrl}}</a></td>
+            <td class="text-center"><a (click)="deleteSocialUrl(urls)"><i  class="fa fa-trash pr-3" aria-hidden="true"></i></a><a (click)="editUrl(urls)" data-toggle="modal" data-target="#profileModal"><i  class="fa fa-edit" aria-hidden="true"></i></a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="modal fade" id="profileModal" tabindex="-1" role="dialog" aria-labelledby="profileModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header modalColor">
+          <h6 class="modal-title modal-heading" id="profileModalLabel">Edit Your Social Url</h6>
+          <button type="button" class="close" data-dismiss="modal" #closeModal aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="error text-center pt-2"></div>
+        <div class="modal-body text-center">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="input-group">
+                <span class="input-group-addon"><i class="fa fa-edit fa-1x"></i></span>
+                <input type="text" class="form-control" value="{{selectURL}}" [(ngModel)]="selectURL">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <div class="col-sm-3">
+            <button type="button" class="btn btn-secondary upload" (click)="editSocialUrl()">Update</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- close modal -->
+  </div>
+</div>

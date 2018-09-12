@@ -1,0 +1,71 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-12">
+
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-1 pl-0 pr-0">
+  </div>
+  <div class="col-md-11 pl-0 pr-3 container-fluid">
+    <div class="container-section">
+      <div class="row add-new-container">
+        <div class="col-8 text-left ">
+          <h4><strong>Assessment Based Performance</strong></h4><br/>
+        </div>
+        <div class="col-4 text-right">
+          <a class="btn btn-outline-info back" [routerLink]="['/', urlPrefix]"><i class="fa fa-arrow-circle-o-left" aria-hidden="true"></i> Back
+          </a>
+        </div>
+      </div>
+      <div class="row col-md-12 pb-2">
+        <div class="col-md-3 form-group py-0 mb-0">
+          <label class="mt-2 mb-0"><strong>Course</strong></label>
+          <select class="form-control" (change)="selectedCourse($event.target.value)">
+            <option selected value="">All Course</option>
+            <option value="{{course.courseId}}" *ngFor="let course of courseFilterData;">{{course?.title}}</option>
+          </select>
+        </div> 
+
+        <div class="col-md-4 form-group py-0 mb-0">
+         <label class="mt-2 mb-0"><strong>Topics</strong></label>
+         <angular2-multiselect [ngModelOptions]="{standalone: true}" 
+         [data]="topicsList" 
+         [(ngModel)]="selectedTopics" [settings]="topicsConfig"
+         (onSelect)="onTopicsChange($event)"
+         (onDeSelect)="onTopicsChange($event)" 
+         (onSelectAll)="onTopicsChange($event)" 
+         (onDeSelectAll)="onTopicsChange($event)"></angular2-multiselect>
+       </div>
+     </div>
+     <hr>
+     <div class="table-responsive table-scroll">
+      <table class="table report">
+        <thead class="">
+          <tr>
+            <th class="text-center">No.</th>
+            <th class="text-center"><strong>Title</strong></th>
+            <th class="text-center"><strong>Total Attampts</strong></th>
+            <th class="text-center"><strong>Max</strong></th>
+            <th class="text-center"><strong>Min</strong></th>
+            <th class="text-center"><strong>Avg</strong></th>
+          </tr>
+        </thead>
+        <div class="col-12 text-center no-data" *ngIf="assessmentWisePerformance.length===0">No data avaliable</div>
+        <tbody>
+          <tr *ngFor="let data of assessmentWisePerformance; let i=index; ">
+            <td class="text-center"><strong>{{i+1}}.</strong></td>
+            <td class="text-center">{{data?.assessment | titleCase}}</td>
+            <td class="text-center">{{data?.totalAttampts}}</td>
+            <td class="text-center text-success">{{data?.max}}</td>
+            <td class="text-center text-danger">{{data?.min}}</td>
+            <td class="text-center text-primary">{{data?.avg}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+</div>

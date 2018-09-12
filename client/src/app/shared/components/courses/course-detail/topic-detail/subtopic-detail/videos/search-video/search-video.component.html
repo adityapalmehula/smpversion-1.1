@@ -1,0 +1,151 @@
+<div class="container-section">
+  <div class="row">
+    <div class="col-md-1 pl-0 pr-0">
+    </div>
+    <div class="col-md-11">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-md-12 col-sm-12  text-center welcomeMessage">
+            <div *ngIf="errMessage" class="alert alert-danger danger-alert" role="alert">
+              <strong>{{errMessage}}</strong>
+            </div>
+          </div>
+        </div>
+        <div class="row pt-2">
+          <div class="col-md-12 col-sm-12 text-right">
+            <a class="btn btn-outline-info back" [routerLink]="['/', urlPrefix, 'courses', courseId, 'topics', topicId, 'subtopics', subTopicId]" [queryParams]="{'tab' : 'videos'}"><i class="fa fa-arrow-circle-o-left" aria-hidden="true"></i>Back
+            </a>
+          </div>
+        </div>
+
+        <!-- Start Listed Video Add -->
+
+        <!-- <form [formGroup]="searchForm">
+          <div class="row search-box">
+            <div class="col-md-10 col-sm-10">
+              <div class="row form-group ">
+                <div class="col-md-2"></div>
+                <div class="col-md-2 col-sm-6">
+                  <label class="control-label" for="Topic status">Source : </label>
+                </div>
+                <div class="col-lg-6 col-md-6 col-sm-6 ">
+                  <div class="form-check form-check-inline mR20">
+                    <input class="form-check-input" type="radio" (click)="setVideoType(sources.YOUTUBE)" name="source" [value]="sources.YOUTUBE" checked formControlName="source"> Youtube
+                  </div>
+                  <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" (click)="setVideoType(sources.VIMEO)" name="source" [value]="sources.VIMEO" formControlName="source"> Vimeo
+                  </div>
+                </div>
+              </div>
+              <div *ngIf="showVideoType" class="row form-group ">
+                <div class="col-md-2"></div>
+                <div class="col-md-2 col-sm-6">
+                  <label class="control-label" for="Topic status">Video Type : </label>
+                </div>
+                <div class="col-lg-6 col-md-6 col-sm-6 ">
+                  <div class="form-check form-check-inline mR20">
+                    <input class="form-check-input" type="radio" name="videoType" [value]="videoTypes.PUBLIC" checked formControlName="videoType"> Public
+                  </div>
+                  <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="videoType" [value]="videoTypes.PRIVATE" formControlName="videoType"> Private
+                  </div>
+                </div>
+              </div>
+              <div class="row form-group">
+                <div class="col-md-2 col-sm-2"></div>
+                <div class="col-md-6 col-sm-6">
+                  <input class="form-control mr-sm-2" type="text" formControlName="searchText" placeholder="Enter your text here to search">
+                  <div *ngIf="searchForm.get('searchText').touched && searchForm.get('searchText').errors">
+                    <div class="error-msg ml-4" *ngIf="searchForm.get('searchText').errors.required">
+                      Search Text is required.
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-2 col-sm-2 text-left">
+                  <button class="btn btn-save my-2 my-sm-0" (click)="searchVideo(searchForm)">Search</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form> -->
+        
+        <!-- End Listed Video Add -->
+        
+        <!-- Start Youtube Unlisted Video Add -->
+          <div class="row form-group">
+            <div class="col-md-2 col-sm-2"></div>
+            <div class="col-md-6 col-sm-6">
+              <input class="form-control mr-sm-2" type="text" [(ngModel)]="searchVideoId" placeholder="Enter Youtube Video Id">
+            </div>
+            <div class="col-md-2 col-sm-2 text-left">
+              <button class="btn btn-save my-2 my-sm-0" (click)="searchYoutubeUnlistedVideo(searchVideoId)">Show</button>
+            </div>
+          </div>
+        <!-- End Youtube Unlisted Video Add -->
+
+        <div class="video-section">
+          <div class="row search-videos" *ngFor="let data of searchResult">
+           <!--  <div class="col-2"></div> -->
+           <div class="col-md-2 col-sm-2 text-right" *ngIf="subTopicId">
+            <a data-toggle="modal" data-target="#addVideoContent" (click)="setVideoInfo(data)">
+              <img [src]="data.thumbnail" class="img-thumbnail" >
+            </a>
+          </div>
+          <div class="col-md-6 col-sm-6 about-video">
+            <a data-toggle="modal" data-target="#addVideoContent" (click)="setVideoInfo(data)">
+              <div>
+                <p class="video-title">{{data.title | words : 10}}</p>
+                <span>{{data.publishedAt | amTimeAgo:true}} ago
+                  <i class="fa fa-circle fa-lg" aria-hidden="true"></i></span>
+                  <span>{{data.viewCount | formatNumber }} Views
+                    <i class="fa fa-circle fa-lg" aria-hidden="true"></i></span>
+                    <span>{{data.channelTitle}}</span>
+                  </div>
+                  <div class="video-description">
+                    <p>{{data.description | words : 60}}</p>
+                  </div>
+                </a>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-2 col-sm-2 paginationColumn">
+                <div *ngIf="pagination">
+                  <pagination class="pagination text-center" [totalItems]="totalItems" [maxSize]="maxSize" [itemsPerPage]="itemsPerPage" [(ngModel)]="currentPage" (pageChanged)="pageChanged($event)"></pagination>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!--Open modal for show video -->
+        <div class="modal fade" id="addVideoContent" tabindex="-1" role="dialog" aria-labelledby="addVideoModalLabel" aria-hidden="true" *ngIf="videoFlag" data-backdrop="static" data-keyboard="false">
+          <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="addVideoModalLabel" *ngIf="subTopicId">Add Video</h5>
+                <button type="button" class="close" title="Close" data-dismiss="modal" aria-label="Close" (click)="closeModal()">
+                  <span class="close" aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div *ngIf="backendErrorMsg">
+                <ul>
+                  <li class="backend-errors" *ngFor="let msg of backendErrorMsg.slice().reverse() ">{{msg}}</li>
+                </ul>
+              </div>
+              <div class="modal-body">
+                <div>
+                  <app-play-video [inputVideoId]="videoId" [playFlag]="1" [initSource]="'searchPage'" [videoSource]="currentSource"></app-play-video>
+                </div>
+              <!-- <div *ngIf="currentSource === sources.VIMEO">
+          <app-vimeo-player [videoId]="videoId"></app-vimeo-player>
+        </div> -->
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-cancel" title="Cancel" data-dismiss="modal" #close (click)="closeModal()">Cancel</button>
+        <button type="button" class="btn btn-save" title="Save" *ngIf="subTopicId" (click)="onSaveVideoContent(close)" title="Save"> Save</button>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+</div>
+</div>

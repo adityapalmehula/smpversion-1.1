@@ -1,0 +1,180 @@
+<div class="row">
+  <div class="col-md-1 pl-0 pr-0">
+  </div>
+  <div class="col-md-11 pl-0 pr-3 container-fluid">
+
+    <div class="row breadcrumb" *ngIf="role!=config.USER_STUDENT">
+      <div class="col-8 text-left mt-2 mb-1 ">
+        <a class="page-heading" [routerLink]="['/', urlPrefix, 'courses']"><i class="fa fa-home" aria-hidden="true"></i> Courses</a> / 
+        <a class="page-heading" [routerLink]="['/', urlPrefix, 'courses',courseId]" [queryParams]="{'tab':'assessments'}"><i class="fa fa-home" aria-hidden="true"></i> Assessments</a> / 
+
+        <a class="page-heading" [routerLink]="['/', urlPrefix, 'courses', courseId,'assessments', assessmentId, 'result']" ><i class="fa fa-home" aria-hidden="true"></i> Results</a> / 
+
+        <span class="breadcrumb-active">Details</span>
+      </div>
+      <div class="col-4 text-right">
+        <a class="btn btn-outline-info back"  [routerLink]="['/', urlPrefix, 'courses', courseId,'assessments', assessmentId, 'result']" ><i class="fa fa-arrow-circle-o-left" aria-hidden="true"></i> Back
+        </a>
+      </div>
+    </div>
+    <div class="row breadcrumb" *ngIf="role==config.USER_STUDENT">
+      <div class="col-8 text-left mt-2 mb-1 ">
+        <a class="page-heading" [routerLink]="['/', urlPrefix, 'mycourses']"><i class="fa fa-home" aria-hidden="true"></i> Courses</a> / 
+        <a class="page-heading" [routerLink]="['/', urlPrefix, 'course-details',courseId,'assessments']" [queryParams]="{'tab':'assessments'}"><i class="fa fa-home" aria-hidden="true"></i> 
+          Assessments</a> /  
+          <a class="page-heading" [routerLink]="['/', urlPrefix, 'course-details',courseId,'assessments','result',assessmentId]"><i class="fa fa-home" aria-hidden="true"></i> 
+            {{assessmentResult?.assessment | titlecase}}</a> / 
+            <span class="breadcrumb-active">Result Details</span>
+          </div>
+          <div class="col-4 text-right">
+           <a class="btn btn-outline-info back" [routerLink]="['/', urlPrefix, 'course-details',courseId,'assessments','result',assessmentId]">
+            <i class="fa fa-arrow-circle-o-left" aria-hidden="true"></i> Back
+          </a>
+        </div>
+      </div>
+      <div class="container-section pb-3">
+        <div class="row pt-3">
+          <div class="col-8 text-left cust-header">
+            <h4>{{assessmentResult?.assessment | titlecase}} Result Details</h4>
+          </div>
+          <div class="col-4 p-0">
+            <div class="row float-right">
+              <div class="view-lable p-1">{{ !isReport ? 'Report View': 'Chart View'}}:</div>
+              <div class="text-right" [attr.title]="!isReport ? 'Report View': 'Chart View'">
+                <label class="switch m-0">
+                  <input type="checkbox" checked (change)="selectedType($event.target.value)">
+                  <span class="slider round"></span>
+                </label> 
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div *ngIf="!isReport">
+          <app-assessment-result-charts [result]="assessmentResult"></app-assessment-result-charts>
+        </div>
+
+        <div *ngIf="isReport">
+         <div class="col-md-12 p-0">
+          <app-assessment-detail-result [assessmentInfo]="assessmentResult"></app-assessment-detail-result>
+        </div> 
+        <div class="cust-panel">
+          <div class="col-md-12 qus-info pt-3 qus-list" *ngFor="let data of assessmentResultDetails; let i= index; ">
+            <div>
+              <h4>Q {{i+1}}. </h4>
+              <div *ngIf="data.question" class="qus" [innerHTML]="data.question"></div>
+              <img class="card-img-top img-fluid" *ngIf="data?.qusIcon" [attr.src]="basePath+data?.qusIcon" title="Click to view image" (click)="viewImage(basePath+data?.qusIcon)">
+            </div>
+
+            <div class="mgt-10 ml-2">
+              <span class="ht-tm-element badge badge-primary">Level: {{data?.level}} </span> |
+              <span class="ht-tm-element badge badge-info">Type: {{data?.qusType}}</span> |
+              <!-- <span class="ht-tm-element badge badge-primary">Categories: {{data?.qusCategories}} </span> | -->
+              <span class="ht-tm-element badge badge-dark">Marks: {{data?.marks}} </span>
+            </div>
+
+            <div class="mt-2">
+              <h4>Options</h4>
+              <ul class="row col-md-12 pl-4">
+                <li class="col-md-6 p-0 mt-2" *ngFor="let opt of data?.options; let i=index; ">
+                  <div *ngIf="opt?.text" class="op-text" [innerHTML]="opt?.text"></div>
+                  <img  *ngIf="opt?.icon" title="Click to view image" class="card-img-top img-fluid" [attr.src]="basePath+opt?.icon" (click)="viewImage(basePath+opt?.icon)">
+                </li>
+              </ul>
+            </div>
+
+            <div class="mt-2">
+              <h4>Your Answers</h4>
+              <ul class="row col-md-12 pl-4">
+                <li class="col-md-12 p-0 mt-2" *ngFor="let ans of data?.userAnswers; let i=index; " >
+                  <div *ngIf="data?.options[ans?.id]?.text" class="op-text"  [class.cust-text-success]="data?.ansStatus==='Correct'"
+                  [class.text-danger]="data?.ansStatus==='Incorrect'" [innerHTML]="data?.options[ans?.id]?.text"></div>
+                  <img *ngIf="data?.options[ans?.id]?.icon" title="Click to view image" class="card-img-top img-fluid" [attr.src]="basePath+data?.options[ans?.id]?.icon" (click)="viewImage(basePath+data?.options[ans?.id]?.icon)">
+                </li>
+              </ul>
+            </div>
+            <div class="mt-2">
+              <h4>Correct Answers</h4>
+              <ul class="row col-md-12 pl-4">
+                <li class="col-md-12 p-0 mt-2" *ngFor="let ans of data?.answers; let i=index; " >
+                  <div *ngIf="data?.options[ans?.id]?.text" class="op-text" [innerHTML]="data?.options[ans?.id]?.text"></div>
+                  <img *ngIf="data?.options[ans?.id]?.icon" title="Click to view image" class="card-img-top img-fluid" [attr.src]="basePath+data?.options[ans?.id]?.icon" (click)="viewImage(basePath+data?.options[ans?.id]?.icon)">
+                </li>
+              </ul>
+            </div>
+
+            <div class="mt-2" *ngIf="data?.solution">
+              <h4>Solution: </h4>
+              <div class="qus">
+                <div *ngIf="data.solution" [innerHTML]="data.solution"></div>
+                <img *ngIf="data?.solutionIcon" class="card-img-top img-fluid" [attr.src]="basePath+data?.solutionIcon" title="Click to view image" (click)="viewImage(basePath+data?.solutionIcon)">
+              </div>
+            </div>
+
+       <!--    <div class="mt-2" *ngIf="data?.hint?.text || data?.hint?.icon">
+            <h4>Hint</h4>
+            <div class="row col-md-12 pl-4">
+              <div *ngIf="data.hint?.text" class="qus" [innerHTML]="data.hint?.text"></div>
+              <img *ngIf="data.hint?.icon" class="card-img-top img-fluid" [attr.src]="basePath+data.hint?.icon" title="Click to view image" (click)="viewImage(basePath+data.hint?.icon)">
+            </div>
+          </div>
+          <div>
+          </div>
+        </div> -->
+
+        <div class="mt-2">
+          <h4>Status:</h4>
+          <div class="qus px-2" [class.correct]="data?.ansStatus==='Correct'"
+          [class.incorrect]="data?.ansStatus==='Incorrect'">
+          <div>{{data?.ansStatus}}</div>
+        </div>
+      </div>
+      <hr class="w-100 mt-2">
+
+        <!-- <div class="table-responsive w-100 d-block d-md-table">
+          <table class="table">
+            <thead class="bg-info">
+              <tr>
+                <th class="text-center">No.</th>
+                <th class="text-center">Question</th>
+                <th class="text-center">Options</th>
+                <th class="text-center">Your Answer</th>
+                <th class="text-center">Correct Answer</th>
+                <th class="text-center">Answer Description</th>
+                <th class="text-center">Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let resultDetail of assessmentResultDetails; let i=index; ">
+                <td class="text-center"><strong>{{i+1}}.</strong></td>
+                <td class=""><div class="qus" [innerHTML]="resultDetail?.question"></div></td>
+                <td class=""><ul>
+                  <li *ngFor="let opt of resultDetail?.options">
+                    <div class="op-text" [innerHTML]="opt?.text"></div>
+                  </li>
+                </ul></td>
+                <td class=""><ul>
+                  <li *ngFor="let ans of resultDetail?.userAnswers">
+                    <div class="op-text" [class.text-success]="resultDetail?.ansStatus==='Correct'"
+                    [class.text-danger]="resultDetail?.ansStatus==='Incorrect'" [innerHTML]="resultDetail?.options[ans?.id]?.text"></div>
+                  </li>
+                </ul></td>
+                <td class=""><ul>
+                  <li *ngFor="let ans of resultDetail?.answers">
+                    <div class="op-text" [innerHTML]="resultDetail?.options[ans?.id]?.text"></div>
+                  </li>
+                </ul></td>
+                <td class="text-center"><div [innerHTML]="resultDetail?.solution"></div></td>
+                <td class="text-left" 
+                [class.text-success]="resultDetail?.ansStatus==='Correct'"
+                [class.text-danger]="resultDetail?.ansStatus==='Incorrect'">{{resultDetail?.ansStatus}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div> -->
+
+      </div>
+    </div>
+  </div>
+</div>
+</div>

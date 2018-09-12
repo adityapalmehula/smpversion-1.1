@@ -1,0 +1,320 @@
+<div class="container-section">
+	<div class="row col-md-12 add-new-container">
+		<div class="col-9 text-left">
+			<h3 class="page-heading">{{title}}<span class="course-rating">
+				<star-rating-comp [starType]="'svg'" [rating]="courseRating"></star-rating-comp>
+			</span></h3>
+			<div class="badge badge-pill" [ngClass]="{'badge-danger': courseStatus === progressStatus[0],
+			'badge-warning': courseStatus === progressStatus[1], 
+			'badge-success': courseStatus === progressStatus[2]}">{{courseStatus}}</div>
+		</div>
+		<div class="col-3 text-right">
+			<a class="btn btn-outline-info back-button" (click)="back()"><i class="fa fa-arrow-circle-o-left" aria-hidden="true"></i> Back
+			</a>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-12"> 
+			<p class="short-description text-left">{{shortDescription}}</p>
+			<p class="long-description text-left">{{longDescription}}</p>
+		</div>
+		<div class="dropdown">
+		</div>
+	</div>
+	<div class="mid-section">
+		<div class="row">
+			<div class="col-md-8">
+				<ol class="list-group">
+					<li class="list-group-item">Course content</li>
+					<li class="list-group-item justify-content-between" *ngFor=" let topic of topics; let i=index " >
+						<div class="d-flex w-100 justify-content-between" data-toggle="collapse" [attr.data-target]='"#topic-"+i' aria-expanded="false" (click)="getSubTopic(topic._id)">
+							<h5 class="mb-1 topicHeading">{{topic.title}}</h5>
+							<span><i class="fa fa-chevron-down"></i></span>
+						</div>
+						<small class="pL10">{{topic.subtopics?.length}} Subtopics</small>
+						<div class="w-100 collapse pL20" [attr.id]='"topic-"+i'>
+							<ol class="list-group">
+								<li class="list-group-item" *ngFor=" let subTopic of subTopics; let j=index ">
+									<div class="d-flex w-100 justify-content-between" data-toggle="collapse" [attr.data-target]='"#subTopic-"+j' aria-expanded="false" >
+										<h5 class="mb-1 topicHeading">{{subTopic.title}}</h5>
+										<span><i class="fa fa-chevron-down"></i></span>
+									</div>
+
+								</li>
+
+							</ol>
+						</div>
+					</li>
+				</ol>
+
+	<!-- 			<table class="table table-bordered table-hover">
+					<thead>
+						<tr class="text-center">
+							<th>Course content</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr *ngIf="topics.length===0">
+							<td>No data avaliable</td>
+						</tr>
+						<tr *ngFor=" let topic of topics; let i=index ">
+							<td class="list" [ngClass]="{'active': chapterType ===topic.title}" (click)="getPlaylists(topic._id, $event,topic.title)">
+								<div class="row" data-toggle="collapse"                                        [attr.data-target]='"#subtopic-"+topic._id'>
+									<div class="col-md-10">
+										<h4 class="topicHeading">
+											{{topic.title}}
+										</h4>
+										<p>{{topic.subtopics?.length}} Subtopics</p>
+									</div>
+									<div class="col-md-2">
+										<i class="fa fa-chevron-down"></i>
+									</div>
+								</div>
+								<div class="row" [attr.id]='"subtopic-"+topic._id' data-toggle="collapse">
+									<div class="col-md-10">
+										<p class="pL20pT5fW300">Chapter - 1 Sin0 and Cos0 </p>
+										<span class="pL20pT5fW300">3 videos, 3 docs & 2 Assessments</span>
+									</div>
+									<div class="col-md-2">
+										<i class="fa fa-chevron-down"></i>
+									</div>
+								</div>
+							</td>
+						</tr>
+					</tbody>
+				</table> -->
+			</div>
+		</div>
+	</div>
+	<div class="mid-section">
+		<div class="row">
+			<!-- topic list start here -->
+			<div class="col-md-2">
+				<table class="table table-bordered table-hover">
+					<thead>
+						<tr class="text-center">
+							<th>Chapters</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr *ngIf="topics.length===0">
+							<td>No data avaliable</td>
+						</tr>
+						<tr *ngFor=" let topic of topics; let i=index ">
+							<td class="list" [ngClass]="{'active': chapterType ===topic.title}" (click)="getPlaylists(topic._id, $event,topic.title)">{{topic.title}}
+								<i *ngIf="topic.status==progressStatus[0]" title="{{progressStatus[0]}}" class="fa fa-circle pending" aria-hidden="true"></i>
+								<i *ngIf="topic.status==progressStatus[1]" title="{{progressStatus[1]}}" class="fa fa-circle in-progress" aria-hidden="true"></i>
+								<i *ngIf="topic.status==progressStatus[2]" title="{{progressStatus[2]}}" class="fa fa-circle complete" aria-hidden="true"></i>
+							</td>
+						</tr>
+						<!--     vertical-align: -webkit-baseline-middle; -->
+					</tbody>
+				</table>
+			</div>
+			<!-- topic list end here -->
+			<!-- Rotating card start -->
+			<div class="row col-md-10 mid-comp-border" *ngIf="componentName==='topicDetails'">
+				<div class="col-lg-10 col-md-9 mid-component-border">
+					<!-- ========= subtopics div component starts here ============ -->
+					<div *ngIf="topicInfoType==='Subtopics'">
+						<div class="row"><span class="col-md-12 text-center heading">Subtopics</span>
+						</div>
+						<div class="card subTopic" *ngFor="let subTopic of subTopics; let i=index ">
+							<div class="card-header" role="tab" id="{{'subTopic'+i}}">
+								<div class="row">
+									<div class="col-8">
+										<h6 class="headingTitle">
+											<a data-toggle="collapse" data-parent="#notesAccordion" href="{{'#subtopics'+i}}" [attr.aria-expanded]="true" 
+											[attr.aria-controls]="'subtopics'+i">
+											{{i+1}} {{' . '+ subTopic?.title}}
+										</a>
+									</h6>
+								</div>
+								<div class="col-4 text-right" >
+									<select class="form-control" #data [(ngModel)]="subTopic.status" (change)="changeStatus(subTopic._id,data)">
+										<option *ngFor="let status of progressStatus; let j=index; " [value]="status" >{{status}}</option>
+									</select>
+								</div>
+							</div>
+						</div>
+
+						<div id="{{'subtopics'+i}}" class="collapse" role="tabpanel" [attr.aria-labelledby]="'subTopic'+i">
+							<div class="card-block">
+								<div class="row">
+									<div class="col-12 description-text" [innerHtml]="subTopic.description"></div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- ========= subtopics div component ends here ============ -->
+				<!-- ========= assessments div components starts here ============ -->
+				<div *ngIf="topicInfoType==='Assessments'">
+					<div class="row mid-head"><span class="col-md-12 text-center heading">Assessments</span></div>
+					<div>
+						<table class="table">
+							<thead class="text-center">
+								<tr class="row quiz-th">
+									<th class="col-md-2">Name</th>
+									<th class="col-lg-2 col-md-2">Total Question</th>
+									<th class="col-md-2">Level</th>
+									<th class="col-md-2">Passing %</th>
+									<th class="col-md-2">Status</th>
+									<th class="col-md-2">View</th>
+								</tr>
+							</thead>
+							<tbody>
+								<div class="text-center no-data" *ngIf="assessments.length===0">No data avaliable</div>
+								<tr class="row" *ngFor="let data of assessments; let i=index; ">
+									<td class="col-md-2">{{data.assessment}}</td>
+									<td class="col-lg-2 col-md-2">{{data.totalQuestion}}</td>
+									<td class="col-md-2">{{data.level}}</td>
+									<td class="col-md-2 text-center">{{data.passPercentage}}%</td>
+									<td class="col-md-2">{{getStatus(data._id)}}</td>
+									<td *ngIf="getStatus(data._id)==='Attended'" class="col-md-1"><a [routerLink]="['/',urlPrefix,'courses','topics','assessments','result',data._id]">View Result</a></td>
+									<td *ngIf="getStatus(data._id)==='Not Attended'" class="col-md-1"><a [routerLink]="['/',urlPrefix,'courses','topics','assessments','play-assessment',data._id]">Take Quiz</a></td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+				<!-- ========= assessments div components ends here ============ -->
+				<!-- ====== Playlist cards components starts here ============== -->
+				<div *ngIf="topicInfoType==='Playlists'">
+					<div class="row"><span class="col-md-12 text-center heading">Playlists</span></div>
+					<div class="col-12 text-center no-data" *ngIf="playlists.length===0">No data avaliable</div>
+					<div class="row cardSection">
+						<span class="error text-center" *ngIf="!playlists"> 
+							There is no data
+						</span>
+						<div class="col-md-4" *ngFor=" let playlist of playlists; let i=index">
+							<div class="card-container manual-flip" [class.hover]="showDesc">
+								<div class="card-content">
+									<div class="front">
+										<div class="header text-center" [style.background-color]="colors[i]">
+											<h3 class="headingTitle">{{playlist.title}}</h3>
+										</div>
+										<div class="content">
+											<div class="main">
+												<h5 class="text-center">Created By :-</h5>
+												<p class="text-center">{{playlist.createrName}}</p>
+												<div class="row status-container">
+													<div class="stats playListItem">
+														<h4>{{playlist.videos.length}}</h4>
+														<p>
+															<i class="fa fa-video-camera" aria-hidden="true" title="Videos"></i>
+														</p>
+													</div>
+													<div class="stats playListItem">
+														<h4>{{playlist.notes.length}}</h4>
+														<p>
+															<i class="fa fa-sticky-note" aria-hidden="true" title="Notes"></i>
+														</p>
+													</div>
+													<div class="stats playListItem">
+														<h4>{{playlist.references.length}}</h4>
+														<p>
+															<i class="fa fa-external-link" aria-hidden="true" title="References"></i>
+														</p>
+													</div>
+													<div class="stats playListItem">
+														<h4>{{playlist.keyPoints.length}}</h4>
+														<p>
+															<i class="fa fa-key" aria-hidden="true" title="KeyPoints"></i>
+														</p>
+													</div>
+													<div class="stats playListItem">
+														<h4>{{playlist.media.length}}</h4>
+														<p>
+															<i class="fa fa-newspaper-o" aria-hidden="true" title="MediaFiles"></i>
+														</p>
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="footer">
+											<div class="row footer-body text-center">
+												<div class="col-6">
+													<button id="{{i}}" [style.color]="colors[i]" #btn class="btn btn-simple" rel="tooltip" title="Show More" (click)="rotateCard(btn)">
+														<i class="fa fa-info"></i> <span class="icon-title"> View more </span>
+														<!-- Show More -->
+													</button>
+												</div>
+												<div class="col-6">
+                            <!--   <button id="{{i}}" [style.color]="colors[i]" (click)="getContents(playlist._id)" class="btn btn-simple" rel="tooltip" title="View Contents"><i class="fa fa-list"></i> <span class="icon-title"> View contents </span>
+                          </button> -->
+                          <button id="{{i}}" [style.color]="colors[i]" [routerLink]="['/',urlPrefix,'topic-playlist-details',playlist._id]" class="btn btn-simple" rel="tooltip" title="View Contents"><i class="fa fa-play-circle-o"></i> <span class="icon-title"> View contents </span>
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- end front panel -->
+                  <div class="back">
+                  	<div class="header text-center" [style.background-color]="colors[i]">
+                  		<h3 class="headingTitle">{{playlist.title}}</h3>
+                  	</div>
+                  	<div class="content">
+                  		<div class="card-text text-left">
+                  			<p>{{playlist.description | words : 40 }}</p>
+                  		</div>
+                  	</div>
+                  	<div class="footer">
+                  		<div class="row footer-body">
+                  			<div class="col-5"></div>
+                  			<div class="col-6">
+                  				<button class="btn btn-simple" [style.color]="colors[i]" #btn rel="tooltip" title="Back" (click)="rotateCard(btn)">
+                  					<i class="fa fa-reply"></i>
+                  					<span class="icon-title"> Back </span>
+                  				</button>
+                  			</div>
+                  		</div>
+                  	</div>
+                  </div>
+                  <!-- end back panel -->
+                </div>
+                <!-- end card -->
+              </div>
+              <!-- end card-container -->
+            </div>
+            <!-- Rotating card end -->
+          </div>
+          <!-- ========= Playlist cards component ends here ============ -->
+        </div>
+      </div>
+      <!--topic details side bar start here -->
+      <div class="col-lg-2 col-md-3">
+      	<table class="table table-bordered table-hover">
+      		<thead>
+      			<tr class="text-center">
+      				<th>Contents</th>
+      			</tr>
+      		</thead>
+      		<tbody>
+      			<tr *ngFor=" let topicDetail of topicDetails;  let i=index " [ngClass]="{'active': topicInfoType ===topicDetail}">
+      				<td class="list" (click)="getTopicDetails(i, $event)">{{topicDetail}}</td>
+      			</tr>
+      		</tbody>
+      	</table>
+      	<div class="bg-clr">
+      		<div class="rating-custm">
+      			<div class="text-center" >Rate this course</div>
+      			<star-rating-comp   [starType]="'svg'" [rating]="stuRating"
+      			[hoverEnabled]="true"
+      			(onClick)="onClick($event)" 
+      			(onRatingChange)="onRatingChange($event)"
+      			(onHoverRatingChange)="onHoverRatingChange($event)">                             
+      		</star-rating-comp>
+      	</div>
+      </div>
+    </div>
+    <!--topic details side bar end here -->
+  </div>
+  <!--topic details component start here -->
+  <div class="col-md-10" *ngIf="componentName==='playlistDetails'">
+  	<app-topic-playlist-details></app-topic-playlist-details>
+  </div>
+</div>
+<!--topic details component start here-->
+<!-- </div>  -->
+</div>

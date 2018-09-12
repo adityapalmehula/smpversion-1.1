@@ -1,0 +1,11 @@
+.card-img-top {
+	height: 50px;
+}
+.stats {
+	font-size: 12px;
+}
+select {
+  background-image: none;
+  background: white;
+  height: 28px;
+}

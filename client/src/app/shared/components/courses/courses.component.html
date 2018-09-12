@@ -1,0 +1,16 @@
+<div *ngIf="role ==='Student'; else author; then student"></div>
+
+<ng-template #author>
+  <app-author-courses></app-author-courses>
+</ng-template>
+
+<ng-template #student>
+  <div *ngIf="userType ==='B2B'">
+    <app-b2b-courses></app-b2b-courses>
+  </div>
+
+  <div *ngIf="userType ==='B2C'">
+    <app-b2c-courses></app-b2c-courses>
+  </div>
+
+</ng-template>
